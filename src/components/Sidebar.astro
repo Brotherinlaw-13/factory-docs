@@ -1,0 +1,200 @@
+---
+interface NavItem {
+  title: string;
+  href: string;
+}
+
+interface NavSection {
+  title: string;
+  icon: string;
+  color: string;
+  items: NavItem[];
+}
+
+const navigation: NavSection[] = [
+  {
+    title: 'Strategy',
+    icon: '🎯',
+    color: 'text-amber-400',
+    items: [
+      { title: 'Project Dashboard', href: '/strategy/project-dashboard' },
+      { title: 'Moonshot Ideas', href: '/strategy/moonshot-ideas' },
+      { title: 'AI Agent Advantage', href: '/strategy/ai-agent-unfair-advantage' },
+    ],
+  },
+  {
+    title: 'Darwin',
+    icon: '🧬',
+    color: 'text-accent',
+    items: [
+      { title: 'Chrome Extension Spec', href: '/darwin/chrome-extension-spec' },
+      { title: 'Pricing Analysis', href: '/darwin/pricing-analysis' },
+    ],
+  },
+  {
+    title: 'Chowdown',
+    icon: '🍽️',
+    color: 'text-orange-400',
+    items: [
+      { title: 'B2B Strategy', href: '/chowdown/b2b-strategy' },
+      { title: 'Blog Drafts (13)', href: '/chowdown/blog-drafts' },
+    ],
+  },
+  {
+    title: 'Pocket Guide',
+    icon: '🧭',
+    color: 'text-blue-400',
+    items: [
+      { title: 'Launch Plan', href: '/pocket-guide/launch-plan' },
+    ],
+  },
+  {
+    title: 'Root Juice',
+    icon: '🌱',
+    color: 'text-green-400',
+    items: [
+      { title: 'Launch Plan', href: '/root-juice/launch-plan' },
+    ],
+  },
+  {
+    title: 'Hire Space',
+    icon: '🏢',
+    color: 'text-purple-400',
+    items: [
+      { title: 'AI Brief Builder', href: '/hire-space/ai-brief-builder-proposal' },
+    ],
+  },
+  {
+    title: 'Marketing',
+    icon: '📣',
+    color: 'text-rose-400',
+    items: [
+      { title: 'Influencer Outreach', href: '/marketing/influencer-outreach-pack' },
+      { title: 'Directory Submissions', href: '/marketing/directory-submissions-overnight' },
+      { title: 'Twitter Queue', href: '/marketing/twitter-queue-week-feb3' },
+      { title: 'Reddit Queue', href: '/marketing/reddit-queue-feb5' },
+    ],
+  },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 border-r border-slate-800 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out overflow-y-auto">
+  <!-- Logo -->
+  <div class="sticky top-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 px-5 py-4 z-10">
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="w-9 h-9 bg-accent/15 rounded-lg flex items-center justify-center border border-accent/30 group-hover:bg-accent/25 transition-colors">
+        <span class="text-accent font-bold text-lg">F</span>
+      </div>
+      <div>
+        <span class="font-bold text-white text-lg tracking-tight">Factory Docs</span>
+        <span class="block text-[10px] text-slate-500 uppercase tracking-wider">Private Knowledge Base</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="px-3 py-4 space-y-1">
+    {navigation.map((section) => {
+      const isActive = section.items.some(item => currentPath.startsWith(item.href));
+      return (
+        <div class="nav-section" data-expanded={isActive ? "true" : "false"}>
+          <button
+            class="nav-section-toggle w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800/80 group"
+            aria-expanded={isActive}
+          >
+            <span class="text-base">{section.icon}</span>
+            <span class={`flex-1 text-left ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>{section.title}</span>
+            <svg
+              class={`nav-chevron w-4 h-4 text-slate-500 transition-transform duration-200 ${isActive ? 'rotate-90' : ''}`}
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <div class={`nav-section-content overflow-hidden transition-all duration-200 ${isActive ? '' : 'max-h-0'}`}>
+            <ul class="mt-1 ml-4 pl-4 border-l border-slate-800 space-y-0.5">
+              {section.items.map((item) => {
+                const itemActive = currentPath === item.href || currentPath.startsWith(item.href + '/');
+                return (
+                  <li>
+                    <a
+                      href={item.href}
+                      class={`block px-3 py-1.5 rounded-md text-sm transition-colors ${
+                        itemActive
+                          ? 'bg-accent/10 text-accent font-medium border-l-2 border-accent -ml-[calc(1rem+1px)] pl-[calc(0.75rem+calc(1rem-1px))]'
+                          : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                      }`}
+                    >
+                      {item.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      );
+    })}
+  </nav>
+</aside>
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm hidden lg:hidden" aria-hidden="true"></div>
+
+<script>
+  // Collapsible sidebar sections
+  document.querySelectorAll('.nav-section-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const section = btn.closest('.nav-section') as HTMLElement;
+      const content = section.querySelector('.nav-section-content') as HTMLElement;
+      const chevron = section.querySelector('.nav-chevron') as HTMLElement;
+      const expanded = section.dataset.expanded === 'true';
+
+      if (expanded) {
+        content.style.maxHeight = '0';
+        section.dataset.expanded = 'false';
+        chevron.classList.remove('rotate-90');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        section.dataset.expanded = 'true';
+        chevron.classList.add('rotate-90');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Set initial heights for expanded sections
+  document.querySelectorAll('.nav-section[data-expanded="true"] .nav-section-content').forEach(el => {
+    (el as HTMLElement).style.maxHeight = (el as HTMLElement).scrollHeight + 'px';
+  });
+
+  // Mobile menu toggle
+  const hamburger = document.getElementById('mobile-menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar?.classList.remove('-translate-x-full');
+    overlay?.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
+  }
+
+  function closeSidebar() {
+    sidebar?.classList.add('-translate-x-full');
+    overlay?.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+  }
+
+  hamburger?.addEventListener('click', openSidebar);
+  overlay?.addEventListener('click', closeSidebar);
+
+  // Close sidebar on link click (mobile)
+  sidebar?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth < 1024) closeSidebar();
+    });
+  });
+</script>

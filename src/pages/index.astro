@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Project {
+  title: string;
+  icon: string;
+  description: string;
+  status: string;
+  statusColor: string;
+  links: { title: string; href: string }[];
+}
+
+const projects: Project[] = [
+  {
+    title: 'Strategy',
+    icon: '🎯',
+    description: 'Cross-project strategy, portfolio dashboard, and meta-thinking about the Factory approach.',
+    status: 'Active',
+    statusColor: 'bg-green-500/20 text-green-400',
+    links: [
+      { title: 'Project Dashboard', href: '/strategy/project-dashboard' },
+      { title: 'Moonshot Ideas', href: '/strategy/moonshot-ideas' },
+      { title: 'AI Agent Advantage', href: '/strategy/ai-agent-unfair-advantage' },
+    ],
+  },
+  {
+    title: 'Darwin',
+    icon: '🧬',
+    description: 'AI-powered A/B testing that auto-optimizes landing pages using natural selection. SaaS revenue model.',
+    status: 'Priority #1',
+    statusColor: 'bg-accent/20 text-accent',
+    links: [
+      { title: 'Chrome Extension Spec', href: '/darwin/chrome-extension-spec' },
+      { title: 'Pricing Analysis', href: '/darwin/pricing-analysis' },
+    ],
+  },
+  {
+    title: 'Chowdown',
+    icon: '🍽️',
+    description: 'Free-forever AI macro tracking. Snap a photo, get your macros. Marketing push underway.',
+    status: 'Priority #2',
+    statusColor: 'bg-orange-500/20 text-orange-400',
+    links: [
+      { title: 'B2B Strategy', href: '/chowdown/b2b-strategy' },
+      { title: 'Blog Drafts (13)', href: '/chowdown/blog-drafts' },
+    ],
+  },
+  {
+    title: 'Pocket Guide',
+    icon: '🧭',
+    description: 'Photo → AI identifies → 3-min voice guide. Travel companion for summer 2026.',
+    status: 'Paused',
+    statusColor: 'bg-yellow-500/20 text-yellow-400',
+    links: [
+      { title: 'Launch Plan', href: '/pocket-guide/launch-plan' },
+    ],
+  },
+  {
+    title: 'Root Juice',
+    icon: '🌱',
+    description: 'Smart plant care with environment-specific watering schedules and a British botanist personality.',
+    status: 'Paused',
+    statusColor: 'bg-yellow-500/20 text-yellow-400',
+    links: [
+      { title: 'Launch Plan', href: '/root-juice/launch-plan' },
+    ],
+  },
+  {
+    title: 'Hire Space',
+    icon: '🏢',
+    description: 'AI Brief Builder proposal for Hire Space 360 — transforming event sourcing with NLP.',
+    status: 'Proposal',
+    statusColor: 'bg-purple-500/20 text-purple-400',
+    links: [
+      { title: 'AI Brief Builder', href: '/hire-space/ai-brief-builder-proposal' },
+    ],
+  },
+  {
+    title: 'Marketing',
+    icon: '📣',
+    description: 'Cross-product marketing assets: influencer packs, directory submissions, content queues.',
+    status: 'Active',
+    statusColor: 'bg-rose-500/20 text-rose-400',
+    links: [
+      { title: 'Influencer Outreach', href: '/marketing/influencer-outreach-pack' },
+      { title: 'Directory Submissions', href: '/marketing/directory-submissions-overnight' },
+      { title: 'Twitter Queue', href: '/marketing/twitter-queue-week-feb3' },
+      { title: 'Reddit Queue', href: '/marketing/reddit-queue-feb5' },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Home" description="Factory Docs — Private Knowledge Base for all Factory projects">
+  <!-- Hero -->
+  <div class="mb-12">
+    <h1 class="text-4xl font-bold text-white mb-3 tracking-tight">Factory Docs</h1>
+    <p class="text-lg text-slate-400 max-w-2xl">
+      Private knowledge base for the Factory portfolio. Strategy, specs, research, and plans across all projects.
+    </p>
+    <div class="flex gap-3 mt-5">
+      <a href="/strategy/project-dashboard" class="inline-flex items-center gap-2 px-4 py-2 bg-accent/15 text-accent border border-accent/30 rounded-lg text-sm font-medium hover:bg-accent/25 transition-colors">
+        <span>📊</span> View Dashboard
+      </a>
+      <span class="inline-flex items-center px-3 py-2 bg-slate-800/60 text-slate-400 rounded-lg text-sm border border-slate-700/50">
+        26 docs · 7 projects
+      </span>
+    </div>
+  </div>
+
+  <!-- Project Grid -->
+  <div class="grid gap-4 sm:grid-cols-2">
+    {projects.map((project) => (
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition-colors group">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl">{project.icon}</span>
+            <h2 class="text-lg font-semibold text-white">{project.title}</h2>
+          </div>
+          <span class={`px-2 py-0.5 rounded-full text-xs font-medium ${project.statusColor}`}>
+            {project.status}
+          </span>
+        </div>
+        <p class="text-sm text-slate-400 mb-4 leading-relaxed">{project.description}</p>
+        <ul class="space-y-1.5">
+          {project.links.map((link) => (
+            <li>
+              <a href={link.href} class="flex items-center gap-2 text-sm text-slate-300 hover:text-accent transition-colors group/link">
+                <svg class="w-3.5 h-3.5 text-slate-600 group-hover/link:text-accent/60 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+                {link.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

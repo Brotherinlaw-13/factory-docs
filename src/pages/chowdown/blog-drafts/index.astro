@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+
+const allDocs = await getCollection('docs');
+const blogDrafts = allDocs
+  .filter(entry => entry.slug.startsWith('chowdown/blog-drafts/'))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<BaseLayout title="Chowdown Blog Drafts" description="13 queued blog posts for the Chowdown nutrition blog">
+  <Breadcrumb slug="chowdown/blog-drafts" title="Blog Drafts" />
+
+  <h1 class="text-3xl font-bold text-white mb-2">Chowdown Blog Drafts</h1>
+  <p class="text-slate-400 mb-8">
+    {blogDrafts.length} queued posts for the Chowdown nutrition blog. These are ready for publishing or review.
+  </p>
+
+  <div class="space-y-3">
+    {blogDrafts.map((draft) => (
+      <a
+        href={`/chowdown/blog-drafts/${draft.slug.split('/').pop()}`}
+        class="block bg-slate-900/70 border border-slate-800 rounded-lg p-4 hover:border-accent/40 hover:bg-slate-900 transition-all group"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <h2 class="text-base font-medium text-white group-hover:text-accent transition-colors truncate">
+              {draft.data.title}
+            </h2>
+            {draft.data.description && (
+              <p class="text-sm text-slate-400 mt-1 line-clamp-2">{draft.data.description}</p>
+            )}
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            {draft.data.pubDate && (
+              <span class="text-xs text-slate-500">{draft.data.pubDate}</span>
+            )}
+            {draft.data.date && !draft.data.pubDate && (
+              <span class="text-xs text-slate-500">{draft.data.date}</span>
+            )}
+            <svg class="w-4 h-4 text-slate-600 group-hover:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+        {draft.data.tags && (
+          <div class="flex gap-1.5 mt-2 flex-wrap">
+            {draft.data.tags.slice(0, 4).map((tag: string) => (
+              <span class="px-2 py-0.5 bg-slate-800 text-slate-500 rounded text-xs">{tag}</span>
+            ))}
+          </div>
+        )}
+      </a>
+    ))}
+  </div>
+</BaseLayout>

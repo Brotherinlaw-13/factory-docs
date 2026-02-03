@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import DocLayout from '../layouts/DocLayout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs
+    .filter(entry => !entry.slug.startsWith('chowdown/blog-drafts/'))
+    .map(entry => ({
+      params: { slug: entry.slug },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<DocLayout title={entry.data.title} description={entry.data.description} slug={entry.slug}>
+  <Content />
+</DocLayout>

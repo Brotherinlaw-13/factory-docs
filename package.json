@@ -1,0 +1,30 @@
+{
+  "name": "factory-docs",
+  "version": "1.0.0",
+  "description": "Private knowledge base for all Factory projects. Strategy, research, specs, and plans.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brotherinlaw-13/factory-docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brotherinlaw-13/factory-docs/issues"
+  },
+  "homepage": "https://github.com/Brotherinlaw-13/factory-docs#readme",
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@tailwindcss/typography": "^0.5.19",
+    "astro": "^5.17.1",
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19"
+  }
+}

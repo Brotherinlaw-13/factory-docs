@@ -1,0 +1,54 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+}
+
+const { slug, title } = Astro.props;
+
+const sectionNames: Record<string, string> = {
+  'strategy': '🎯 Strategy',
+  'darwin': '🧬 Darwin',
+  'chowdown': '🍽️ Chowdown',
+  'pocket-guide': '🧭 Pocket Guide',
+  'root-juice': '🌱 Root Juice',
+  'hire-space': '🏢 Hire Space',
+  'marketing': '📣 Marketing',
+};
+
+const parts = slug.split('/');
+const section = parts[0];
+const sectionLabel = sectionNames[section] || section;
+
+// Build breadcrumb items
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: sectionLabel, href: `/${section}` },
+];
+
+// If there's a deeper nesting (e.g., chowdown/blog-drafts/xxx)
+if (parts.length > 2) {
+  crumbs.push({ label: 'Blog Drafts', href: '/chowdown/blog-drafts' });
+}
+
+crumbs.push({ label: title, href: '' });
+---
+
+<nav aria-label="Breadcrumb" class="mb-6">
+  <ol class="flex items-center gap-1.5 text-sm text-slate-500 flex-wrap">
+    {crumbs.map((crumb, i) => (
+      <li class="flex items-center gap-1.5">
+        {i > 0 && (
+          <svg class="w-3.5 h-3.5 text-slate-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        )}
+        {crumb.href ? (
+          <a href={crumb.href} class="hover:text-accent transition-colors">{crumb.label}</a>
+        ) : (
+          <span class="text-slate-300 font-medium">{crumb.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

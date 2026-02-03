@@ -1,0 +1,19 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  slug: string;
+}
+
+const { title, description, slug } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Breadcrumb slug={slug} title={title} />
+  <article class="doc-content">
+    <slot />
+  </article>
+</BaseLayout>
