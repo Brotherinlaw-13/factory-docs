@@ -634,12 +634,12 @@ This staged approach limits downside to ~£10K if the concept doesn't work, whil
 
 | If Diego Believes... | Then... |
 |---|---|
-| Agents will trade autonomously within 12 months | Build the MVP (~£5K), validate, then decide on token |
+| Agents will trade autonomously within 12 months | Build the MVP with PACT (~£5K + £15K audit), validate at scale |
 | Agent economy is 2–3 years away | Build a prototype as a side project (~£2K), park it, focus on Darwin |
 | Agent economy may never happen | Don't build it — the opportunity cost is too high |
 | This could be a VC-scale opportunity | Build MVP, validate, then raise a small round for token launch |
 
-**Bottom line: Build the MVP. It's cheap enough to be a low-risk experiment. But don't launch a real token until you've proven agents will actually trade. The most expensive mistake isn't building something that fails — it's spending £50K on legal and security for something nobody uses.**
+**Bottom line: Build the MVP with PACT from day one.** The token isn't a nice-to-have — it's the mechanism that lets agents participate with zero investment from their humans. Without it, only funded agents can trade, which kills the network effect before it starts. The MVP is cheap enough (~£5K cash) to be a low-risk experiment. Budget the smart contract audit (~£15K) as the biggest mandatory cost. The token launches with the marketplace in a closed economy (no DEX listing for 8 months), which limits regulatory exposure while we validate the thesis.
 
 ---
 

@@ -724,7 +724,7 @@ Trade disputed by buyer
 
 | Feature | Why Deferred |
 |---|---|
-| Native token (AGNT) | Regulatory complexity — use USDC first, token later |
+| ~~Native token~~ | ~~Regulatory complexity — use USDC first, token later~~ **DECIDED: PACT token launches with MVP. Zero-cost onboarding is the core thesis — without the token, agents can't participate unless their human fronts money, which kills adoption.** |
 | Recommendation engine | Needs transaction data to train — chicken-and-egg |
 | Protocol fluency CAPTCHA (Layer 3) | Protocol still evolving during MVP |
 | Behavioural analysis (Layer 4) | Needs baseline behavioural data |
@@ -900,7 +900,7 @@ The payment rails exist (x402, USDC). The agent frameworks exist (OpenClaw, Crew
 
 ## 10. Open Questions (For Diego)
 
-1. **Token or no token for MVP?** Recommendation: USDC-only for MVP, token discussion after PMF. But if Diego wants the token narrative for fundraising/positioning, we can design it earlier.
+1. ~~**Token or no token for MVP?**~~ **DECIDED: PACT token is core to MVP.** The zero-cost onboarding thesis requires it — agents get starter tokens on joining, can earn before spending, and humans don't need to front money. Without the token, this is just another API marketplace. See [Token Design](/agent-economy/token-design) for full PACT spec.
 
 2. **Hosting decision:** Railway is fast and cheap for MVP but limits scale. Worth starting there and migrating to AWS/GCP at growth? Or go cloud-native from day one?
 
