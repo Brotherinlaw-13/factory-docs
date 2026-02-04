@@ -1,0 +1,376 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Gantt data - weeks 1-12
+const phases = [
+  {
+    name: 'Phase 1: Foundation',
+    color: 'bg-blue-500',
+    start: 1,
+    end: 3,
+    tasks: [
+      { name: 'PostgreSQL schema + Fastify API scaffold', week: 1, duration: 1 },
+      { name: 'PACT token contract (ERC-20, Base L2)', week: 1, duration: 2 },
+      { name: 'Agent identity system (DID + API keys)', week: 2, duration: 2 },
+      { name: 'Onboarding faucet (5 PACT starter grant)', week: 2, duration: 1 },
+      { name: 'Reverse CAPTCHA (capability challenge)', week: 3, duration: 1 },
+    ],
+  },
+  {
+    name: 'Phase 2: Core Marketplace',
+    color: 'bg-amber-500',
+    start: 3,
+    end: 6,
+    tasks: [
+      { name: 'Knowledge listing & discovery (Meilisearch)', week: 3, duration: 2 },
+      { name: 'Escrow smart contract', week: 4, duration: 2 },
+      { name: 'Trade negotiation protocol', week: 4, duration: 2 },
+      { name: 'Quality preview system', week: 5, duration: 1 },
+      { name: 'Reputation engine v1', week: 5, duration: 2 },
+      { name: 'Content scanning pipeline (injection, PII)', week: 6, duration: 1 },
+    ],
+  },
+  {
+    name: 'Phase 3: Human Layer',
+    color: 'bg-green-500',
+    start: 6,
+    end: 9,
+    tasks: [
+      { name: 'Human dashboard (auth, portfolio view)', week: 6, duration: 2 },
+      { name: 'Budget manager + approval workflows', week: 7, duration: 2 },
+      { name: 'Activity feed + notifications', week: 8, duration: 1 },
+      { name: 'Agent earnings & analytics', week: 8, duration: 2 },
+      { name: 'Kill switch + spending limits', week: 9, duration: 1 },
+    ],
+  },
+  {
+    name: 'Phase 4: Launch Prep',
+    color: 'bg-red-500',
+    start: 9,
+    end: 12,
+    tasks: [
+      { name: 'Smart contract audit', week: 9, duration: 2, human: true },
+      { name: 'Penetration test (API + dashboard)', week: 10, duration: 1, human: true },
+      { name: 'Seed agents (5-10 knowledge producers)', week: 10, duration: 2 },
+      { name: 'Framework SDKs (OpenClaw, CrewAI)', week: 10, duration: 2 },
+      { name: 'Legal review (token classification)', week: 9, duration: 2, human: true },
+      { name: 'Beta launch (closed, 50 agents)', week: 11, duration: 1 },
+      { name: 'Public launch', week: 12, duration: 1, milestone: true },
+    ],
+  },
+];
+
+// Kanban data
+const columns = [
+  {
+    title: '📋 Backlog',
+    color: 'border-slate-600',
+    cards: [
+      { title: 'MCP server integration', tags: ['P2', 'Tech'], effort: 'M' },
+      { title: 'A2A / AP2 protocol bridges', tags: ['P2', 'Tech'], effort: 'L' },
+      { title: 'Recommendation engine', tags: ['P2', 'ML'], effort: 'L' },
+      { title: 'Knowledge compounding (resale tracking)', tags: ['P2', 'Feature'], effort: 'L' },
+      { title: 'Mobile dashboard', tags: ['P3', 'UI'], effort: 'M' },
+      { title: 'Multi-chain settlement', tags: ['P3', 'Crypto'], effort: 'XL' },
+      { title: 'Automated dispute resolution', tags: ['P2', 'Feature'], effort: 'L' },
+      { title: 'DEX listing (month 9)', tags: ['P2', 'Crypto'], effort: 'M' },
+    ],
+  },
+  {
+    title: '🎯 To Do (MVP)',
+    color: 'border-amber-500',
+    cards: [
+      { title: 'PACT token contract (ERC-20)', tags: ['P0', 'Crypto'], effort: 'M', owner: '🏰' },
+      { title: 'Escrow smart contract', tags: ['P0', 'Crypto'], effort: 'L', owner: '🏰' },
+      { title: 'PostgreSQL schema design', tags: ['P0', 'Tech'], effort: 'S', owner: '🏰' },
+      { title: 'Fastify API scaffold', tags: ['P0', 'Tech'], effort: 'M', owner: '🏰' },
+      { title: 'Agent identity (DID + keys)', tags: ['P0', 'Auth'], effort: 'M', owner: '🏰' },
+      { title: 'Onboarding faucet (5 PACT)', tags: ['P0', 'Feature'], effort: 'S', owner: '🏰' },
+      { title: 'Reverse CAPTCHA', tags: ['P1', 'Feature'], effort: 'M', owner: '🏰' },
+      { title: 'Meilisearch listing index', tags: ['P0', 'Tech'], effort: 'M', owner: '🏰' },
+      { title: 'Trade negotiation protocol', tags: ['P0', 'Feature'], effort: 'L', owner: '🏰' },
+      { title: 'Reputation engine v1', tags: ['P0', 'Feature'], effort: 'L', owner: '🏰' },
+      { title: 'Content scanning pipeline', tags: ['P1', 'Security'], effort: 'M', owner: '🏰' },
+      { title: 'Human dashboard (Next.js)', tags: ['P0', 'UI'], effort: 'L', owner: '🏰' },
+      { title: 'Budget manager + approvals', tags: ['P1', 'UI'], effort: 'M', owner: '🏰' },
+      { title: 'OpenClaw SDK integration', tags: ['P1', 'SDK'], effort: 'M', owner: '🏰' },
+      { title: 'CrewAI SDK integration', tags: ['P1', 'SDK'], effort: 'M', owner: '🏰' },
+      { title: 'Seed 5-10 knowledge agents', tags: ['P0', 'Growth'], effort: 'L', owner: '🏰' },
+    ],
+  },
+  {
+    title: '🔨 In Progress',
+    color: 'border-blue-500',
+    cards: [
+      { title: 'Deep research & strategy', tags: ['Done', 'Research'], effort: '-', owner: '🏰', note: '7 docs complete' },
+    ],
+  },
+  {
+    title: '⏳ Needs Diego',
+    color: 'border-purple-500',
+    cards: [
+      { title: 'Smart contract audit (~£15K)', tags: ['P0', 'Security'], effort: '$$$', owner: '👤' },
+      { title: 'Legal review — token classification', tags: ['P0', 'Legal'], effort: '$$$', owner: '👤' },
+      { title: 'Pen test (API + dashboard)', tags: ['P1', 'Security'], effort: '$$', owner: '👤' },
+      { title: 'Domain name purchase', tags: ['P1', 'Infra'], effort: '$', owner: '👤' },
+      { title: 'Wallet setup (Base deployer)', tags: ['P0', 'Crypto'], effort: 'S', owner: '👤' },
+      { title: 'Review & approve token design', tags: ['P0', 'Decision'], effort: 'S', owner: '👤' },
+      { title: 'Name decision (marketplace)', tags: ['P1', 'Decision'], effort: 'S', owner: '👤' },
+      { title: 'Go/no-go decision on build', tags: ['P0', 'Decision'], effort: '-', owner: '👤' },
+    ],
+  },
+  {
+    title: '✅ Done',
+    color: 'border-green-500',
+    cards: [
+      { title: 'Agent Economy deep research', tags: ['Research'], owner: '🏰' },
+      { title: 'Marketplace architecture design', tags: ['Design'], owner: '🏰' },
+      { title: 'PACT token design', tags: ['Design'], owner: '🏰' },
+      { title: 'Marketing & viral strategy', tags: ['Strategy'], owner: '🏰' },
+      { title: 'Competitive deep dive (40+ projects)', tags: ['Research'], owner: '🏰' },
+      { title: 'Cost analysis & unit economics', tags: ['Finance'], owner: '🏰' },
+      { title: 'Security threat model (10 categories)', tags: ['Security'], owner: '🏰' },
+      { title: 'ROI comparison (7 projects)', tags: ['Strategy'], owner: '🏰' },
+    ],
+  },
+];
+
+const weeks = Array.from({ length: 12 }, (_, i) => i + 1);
+
+const tagColors: Record<string, string> = {
+  'P0': 'bg-red-500/20 text-red-400',
+  'P1': 'bg-amber-500/20 text-amber-400',
+  'P2': 'bg-blue-500/20 text-blue-400',
+  'P3': 'bg-slate-500/20 text-slate-400',
+  'Tech': 'bg-cyan-500/20 text-cyan-400',
+  'Crypto': 'bg-purple-500/20 text-purple-400',
+  'Feature': 'bg-green-500/20 text-green-400',
+  'UI': 'bg-pink-500/20 text-pink-400',
+  'Security': 'bg-red-500/20 text-red-300',
+  'Auth': 'bg-yellow-500/20 text-yellow-400',
+  'SDK': 'bg-indigo-500/20 text-indigo-400',
+  'ML': 'bg-violet-500/20 text-violet-400',
+  'Growth': 'bg-emerald-500/20 text-emerald-400',
+  'Research': 'bg-teal-500/20 text-teal-400',
+  'Design': 'bg-sky-500/20 text-sky-400',
+  'Strategy': 'bg-orange-500/20 text-orange-400',
+  'Finance': 'bg-lime-500/20 text-lime-400',
+  'Legal': 'bg-rose-500/20 text-rose-400',
+  'Infra': 'bg-stone-500/20 text-stone-400',
+  'Decision': 'bg-amber-500/20 text-amber-300',
+  'Done': 'bg-green-500/20 text-green-400',
+};
+
+const effortColors: Record<string, string> = {
+  'S': 'text-green-400',
+  'M': 'text-amber-400',
+  'L': 'text-orange-400',
+  'XL': 'text-red-400',
+  '$': 'text-green-400',
+  '$$': 'text-amber-400',
+  '$$$': 'text-red-400',
+};
+---
+
+<BaseLayout title="Agent Economy Roadmap" description="Gantt chart and Kanban board for the Agent Economy marketplace build.">
+
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium mb-4">
+      🪙 Agent Economy — Project Roadmap
+    </div>
+    <h1 class="text-3xl md:text-4xl font-black text-white mb-3">Roadmap</h1>
+    <p class="text-slate-400 text-lg">Timeline and task board for the Agent Economy marketplace build.</p>
+
+    <!-- Tab switcher -->
+    <div class="flex gap-2 mt-6" id="tab-nav">
+      <button class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-tab="gantt">📊 Gantt Chart</button>
+      <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-tab="kanban">📋 Kanban Board</button>
+    </div>
+  </div>
+
+  <!-- GANTT CHART -->
+  <div id="gantt-tab" class="tab-content">
+
+    <!-- Key -->
+    <div class="flex flex-wrap gap-4 mb-6 text-xs text-slate-400">
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-blue-500"></span> Foundation</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500"></span> Core Marketplace</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-green-500"></span> Human Layer</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-red-500"></span> Launch Prep</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full border-2 border-purple-400 bg-transparent"></span> Needs Diego</span>
+      <span class="flex items-center gap-1.5">🚀 Milestone</span>
+    </div>
+
+    <!-- Chart -->
+    <div class="overflow-x-auto -mx-6 px-6">
+      <div class="min-w-[800px]">
+        <!-- Week headers -->
+        <div class="grid gap-0" style={`grid-template-columns: 280px repeat(12, 1fr)`}>
+          <div class="text-xs text-slate-500 font-medium py-2 pr-4">Task</div>
+          {weeks.map(w => (
+            <div class="text-xs text-slate-500 font-medium py-2 text-center border-l border-slate-800">
+              W{w}
+            </div>
+          ))}
+        </div>
+
+        <!-- Phase groups -->
+        {phases.map(phase => (
+          <div class="mb-2">
+            <!-- Phase header -->
+            <div class="grid gap-0" style={`grid-template-columns: 280px repeat(12, 1fr)`}>
+              <div class="text-sm font-bold text-white py-2 flex items-center gap-2">
+                <span class={`w-2 h-2 rounded-full ${phase.color}`}></span>
+                {phase.name}
+              </div>
+              {weeks.map(w => (
+                <div class={`border-l border-slate-800/50 ${w >= phase.start && w <= phase.end ? `${phase.color}/5` : ''}`}></div>
+              ))}
+            </div>
+
+            <!-- Tasks -->
+            {phase.tasks.map(task => (
+              <div class="grid gap-0 group hover:bg-slate-800/30 rounded" style={`grid-template-columns: 280px repeat(12, 1fr)`}>
+                <div class="text-xs text-slate-300 py-1.5 pr-3 flex items-center gap-1.5 truncate">
+                  {task.human && <span class="text-[10px]">👤</span>}
+                  {task.milestone && <span class="text-[10px]">🚀</span>}
+                  <span class="truncate">{task.name}</span>
+                </div>
+                {weeks.map(w => (
+                  <div class="border-l border-slate-800/30 py-1.5 px-0.5">
+                    {w >= task.week && w < task.week + task.duration && (
+                      <div class={`h-5 rounded ${task.milestone ? 'bg-gradient-to-r from-amber-500 to-red-500' : task.human ? 'border-2 border-purple-400 bg-purple-400/10' : phase.color} ${w === task.week ? 'rounded-l-md' : ''} ${w === task.week + task.duration - 1 ? 'rounded-r-md' : ''}`}></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+
+        <!-- Timeline markers -->
+        <div class="grid gap-0 mt-4 pt-3 border-t border-slate-800" style={`grid-template-columns: 280px repeat(12, 1fr)`}>
+          <div class="text-xs text-slate-500">Milestones</div>
+          {weeks.map(w => (
+            <div class="text-center text-[10px] text-slate-500 border-l border-slate-800/30">
+              {w === 3 && '🔧 API live'}
+              {w === 6 && '💱 Trading live'}
+              {w === 9 && '👤 Dashboard'}
+              {w === 12 && '🚀 Launch'}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary boxes -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
+      <div class="bg-slate-900/70 border border-slate-800 rounded-lg p-4 text-center">
+        <div class="text-2xl font-black text-white">12</div>
+        <div class="text-xs text-slate-400">Weeks to launch</div>
+      </div>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-lg p-4 text-center">
+        <div class="text-2xl font-black text-white">~£20K</div>
+        <div class="text-xs text-slate-400">Cash investment</div>
+      </div>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-lg p-4 text-center">
+        <div class="text-2xl font-black text-amber-400">70%</div>
+        <div class="text-xs text-slate-400">Rook can build solo</div>
+      </div>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-lg p-4 text-center">
+        <div class="text-2xl font-black text-purple-400">30%</div>
+        <div class="text-xs text-slate-400">Needs Diego</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KANBAN BOARD -->
+  <div id="kanban-tab" class="tab-content hidden">
+
+    <!-- Key -->
+    <div class="flex flex-wrap gap-3 mb-6 text-xs text-slate-400">
+      <span>🏰 = Rook builds</span>
+      <span>👤 = Diego needed</span>
+      <span>Effort: <span class="text-green-400">S</span> <span class="text-amber-400">M</span> <span class="text-orange-400">L</span> <span class="text-red-400">XL</span></span>
+    </div>
+
+    <div class="overflow-x-auto -mx-6 px-6">
+      <div class="flex gap-3 min-w-[1200px] pb-4">
+        {columns.map(col => (
+          <div class="flex-1 min-w-[220px]">
+            <!-- Column header -->
+            <div class={`border-t-2 ${col.color} bg-slate-900/70 rounded-t-lg px-3 py-2.5 mb-2`}>
+              <h3 class="text-sm font-bold text-white">{col.title}</h3>
+              <span class="text-[10px] text-slate-500">{col.cards.length} items</span>
+            </div>
+
+            <!-- Cards -->
+            <div class="space-y-2">
+              {col.cards.map(card => (
+                <div class="bg-slate-900/70 border border-slate-800 rounded-lg p-3 hover:border-slate-700 transition-colors group">
+                  <div class="flex items-start justify-between gap-2 mb-2">
+                    <h4 class="text-xs font-medium text-white leading-tight">{card.title}</h4>
+                    {card.owner && <span class="text-xs flex-shrink-0">{card.owner}</span>}
+                  </div>
+                  {card.note && <p class="text-[10px] text-slate-500 mb-2 italic">{card.note}</p>}
+                  <div class="flex items-center gap-1 flex-wrap">
+                    {card.tags?.map(tag => (
+                      <span class={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${tagColors[tag] || 'bg-slate-500/20 text-slate-400'}`}>{tag}</span>
+                    ))}
+                    {card.effort && (
+                      <span class={`text-[10px] ml-auto font-mono ${effortColors[card.effort] || 'text-slate-400'}`}>{card.effort}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-6">
+      {columns.map(col => (
+        <div class="bg-slate-900/70 border border-slate-800 rounded-lg p-3 text-center">
+          <div class="text-lg font-black text-white">{col.cards.length}</div>
+          <div class="text-[10px] text-slate-400 truncate">{col.title.replace(/^[^\s]+\s/, '')}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+
+        // Update button states
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Show/hide content
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.getElementById(tab + '-tab')?.classList.remove('hidden');
+      });
+    });
+  </script>
+
+  <style>
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.5);
+      color: rgb(148, 163, 184);
+      border: 1px solid rgb(51, 65, 85);
+    }
+    .tab-btn:hover {
+      background: rgba(30, 41, 59, 0.8);
+      color: white;
+    }
+    .tab-btn.active {
+      background: rgba(245, 158, 11, 0.15);
+      color: rgb(245, 158, 11);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+  </style>
+</BaseLayout>
