@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Local LLM Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">AI Infrastructure</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Local LLM Handbook</h1>
+    <p class="cover-subtitle">Run AI models on your own hardware: complete guide to setup, models, and cost savings</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">Why Go Local</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">Hardware Guide</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">Software Setup</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Model Selection</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Integration</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Advanced Topics</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">Quick Reference Appendix</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Complete Local LLM Handbook</h1>
+<p><em>A practical guide to running large language models on your own hardware.</em></p>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>Why Go Local</h1>
+
+<p>Every prompt you send to ChatGPT, Claude, or Gemini travels to someone else&rsquo;s computer, gets processed on someone else&rsquo;s GPU, and passes through someone else&rsquo;s content filters. Your data — your code, your documents, your ideas — becomes training fodder for the next model version. For personal use, that trade-off might be acceptable. For anything serious, it&rsquo;s a liability.</p>
+<p><strong>Privacy is the obvious reason, but it&rsquo;s not the only one.</strong></p>
+<p>Running models locally means your data never leaves your machine. No terms of service. No data retention policies. No wondering whether that proprietary code you pasted into the chat window is now part of a training dataset. For anyone working with client data, medical records, legal documents, or proprietary code, local inference isn&rsquo;t a luxury — it&rsquo;s a requirement.</p>
+<p><strong>Then there&rsquo;s cost.</strong> Let&rsquo;s do the maths. A moderate ChatGPT Plus user pays $20/month — that&rsquo;s £192/year. A developer using the API for coding assistance might spend £30–80/month on tokens, totalling £360–960/year. A team of five? Multiply accordingly. Meanwhile, a one-time investment of £400–800 in hardware gives you unlimited inference forever. No per-token billing. No surprise invoices. The hardware pays for itself within 6–12 months, and you own it outright.</p>
+<p><strong>Offline capability</strong> matters more than people think. Aeroplanes, trains, rural areas, security-restricted environments — local models work everywhere. No internet required. No API outages. No rate limits.</p>
+<p><strong>Customisation</strong> is the final piece. Local models can be fine-tuned on your data, run without content filters, and configured exactly as you need them. You control the system prompt, the temperature, the context window, and the model weights. No one can deprecate your model or change its behaviour overnight.</p>
+<p>The barrier to entry has collapsed. Two years ago, running a capable model locally required a £3,000 GPU. Today, a £400 mini PC runs models that rival GPT-3.5. The question is no longer <em>whether</em> you can run LLMs locally — it&rsquo;s <em>why you haven&rsquo;t started yet</em>.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>Hardware Guide</h1>
+
+<h3>How LLMs Actually Use Your Hardware</h3>
+<p>Before spending money, understand what you&rsquo;re buying and why.</p>
+<p>LLMs are, at their core, enormous matrices of numbers (called <strong>weights</strong> or <strong>parameters</strong>). When you run a model, your hardware loads these weights into memory and performs billions of mathematical operations to generate each token. The speed of generation depends on two things: where the weights live, and how fast they can be read.</p>
+<p><strong>Memory capacity</strong> determines which models you can load. A 7-billion parameter model quantised to 4-bit precision needs roughly 4–5 GB of memory. A 70B model needs 35–40 GB. If the model doesn&rsquo;t fit in memory, it either won&rsquo;t load or will partially offload to disk — which is unusably slow.</p>
+<p><strong>Memory bandwidth</strong> determines how fast tokens are generated. This is the single most important spec for local LLM performance. DDR5 RAM delivers roughly 50–80 GB/s. An RTX 3090&rsquo;s GDDR6X delivers 936 GB/s. Apple&rsquo;s M4 unified memory sits at around 120 GB/s. This is why GPU inference is dramatically faster than CPU inference — not because of compute power, but because of memory bandwidth.</p>
+<p><strong>GPU vs CPU inference:</strong> If your model fits entirely in VRAM, GPU inference wins by a factor of 10–20x. If the model is too large for VRAM and must be split across GPU and system RAM, performance drops significantly. Pure CPU inference on modern DDR5 is surprisingly usable for models up to 14B parameters — expect 8–15 tokens per second, which is perfectly readable.</p>
+<h3>Budget Tiers</h3>
+<h4>£200 Tier: &ldquo;Getting Started&rdquo;</h4>
+<p>At this price, you&rsquo;re looking at the second-hand market or entry-level mini PCs.</p>
+<p><strong>Best option: Used office PC + GPU.</strong> A Dell OptiPlex or Lenovo ThinkCentre from eBay (£80–120) paired with a used GTX 1070 8GB or P40 24GB (£60–100) gets you into GPU-accelerated inference. The Nvidia Tesla P40 is a hidden gem — 24 GB of VRAM for around £80–100 used, though it needs an aftermarket cooler and a PSU with the right power connector. It&rsquo;s ugly, loud, and astonishingly capable for the money.</p>
+<p><strong>Alternative: Beelink EQ12 or similar N100 mini PC</strong> (£130–160). Intel N100, 16 GB DDR5. Good enough for 7B models on CPU at ~5–8 tokens/second. Fanless, tiny, sips power. Decent for experimentation but you&rsquo;ll outgrow it quickly.</p>
+<h4>£400 Tier: &ldquo;The Sweet Spot&rdquo;</h4>
+<p>This is where local LLM gets genuinely useful.</p>
+<p><strong>Minisforum UM780 XTX</strong> (~£350–400 barebones). AMD Ryzen 7 7840HS with Radeon 780M iGPU. Supports up to 64 GB DDR5-5600. The iGPU can accelerate inference via ROCm/Vulkan, and the CPU alone handles 7B–14B models comfortably at 10–15 tok/s. Two M.2 slots, USB4, compact form factor. This is the mini PC I&rsquo;d recommend to most people.</p>
+<p><strong>Beelink SER8</strong> (~£380–420). Same Ryzen 7 8845HS platform. Very similar performance to the UM780 XTX with slightly newer silicon. Excellent build quality. Either of these paired with 32 GB DDR5 (£60–80) gives you a capable local LLM box for under £500 all-in.</p>
+<p><strong>AOOSTAR GEM12</strong> (~£350–400). AMD Ryzen 9 6900HX variant with OCuLink port — this is significant because it means you can add an external GPU later without Thunderbolt overhead. If you think you might want a GPU path in the future, this is the mini PC to buy.</p>
+<h4>£800 Tier: &ldquo;No Compromises&rdquo;</h4>
+<p><strong>Mac Mini M2 Pro (16-core GPU, 32 GB)</strong> — available refurbished for £700–800. Apple&rsquo;s unified memory architecture is genuinely special for LLM inference. The 32 GB of unified memory is accessible to both CPU and GPU at 200 GB/s bandwidth. This means a 32 GB Mac can run models that would require 32 GB of VRAM on a discrete GPU — but at roughly 2–3x the bandwidth of DDR5. For models in the 14B–30B range, the Mac Mini offers the best tokens-per-pound ratio of any hardware at this price.</p>
+<p><strong>Mac Mini M4 Pro (24 GB)</strong> — from £599 new. Faster CPU and GPU than the M2 Pro, but only 24 GB in the base model. The 48 GB variant (£999) is the ultimate local LLM machine for most users — it runs quantised 70B models comfortably.</p>
+<p><strong>RTX 3060 12GB route</strong> — pair a used RTX 3060 12GB (£180–220) with a decent desktop (or your existing PC). 12 GB VRAM handles quantised models up to 13B parameters entirely on GPU at 30–50 tok/s. The 3060&rsquo;s memory bandwidth (360 GB/s) is modest by GPU standards, but still 5–7x faster than DDR5. Best price-to-VRAM ratio in the Nvidia lineup.</p>
+<p><strong>RTX 3090 24GB</strong> — the king of consumer local LLM, available used for £550–700. 24 GB GDDR6X at 936 GB/s. Runs quantised 30B models on GPU, and handles 70B models with partial CPU offloading. If you have a desktop with a 750W+ PSU and a case that fits a triple-slot card, this is the single best GPU you can buy for local inference. The RTX 4090 is faster but costs £1,600+ — the 3090 offers 80% of the performance at 40% of the price.</p>
+<h3>The eGPU Path</h3>
+<p>If you&rsquo;ve got a mini PC or laptop and want GPU acceleration without building a desktop, external GPUs are an option.</p>
+<p><strong>OCuLink</strong> is the preferred connection — it&rsquo;s essentially a direct PCIe x4 link with minimal overhead. The AOOSTAR GEM12 and some Minisforum models support it. Pair an OCuLink enclosure (£30–60) with a desktop GPU and you&rsquo;ve got external GPU inference with roughly 85–90% of native PCIe performance.</p>
+<p><strong>Thunderbolt 3/4 eGPU enclosures</strong> (Razer Core X, Sonnet Breakaway) work but add latency and bandwidth constraints. For LLM inference — where you&rsquo;re streaming weights from VRAM, not doing real-time rendering — the Thunderbolt bottleneck is less painful than for gaming. Expect 70–80% of native GPU performance. Enclosures cost £150–250 used.</p>
+<p><strong>My recommendation:</strong> If you&rsquo;re building new, buy the AOOSTAR GEM12 with OCuLink and add a GPU when budget allows. If you&rsquo;re adding to an existing Thunderbolt laptop, it works but manage your expectations.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>Software Setup</h1>
+
+<h3>Ollama — The Easy Path</h3>
+<p>Ollama is where most people should start. It handles model downloading, quantisation selection, and serving in a single binary with a clean CLI.</p>
+<p><strong>Installation:</strong></p>
+<pre><code class="language-bash"># Linux / WSL
+curl -fsSL https://ollama.com/install.sh | sh
+
+# macOS
+brew install ollama
+
+# Or download from https://ollama.com/download
+</code></pre>
+<p><strong>Running your first model:</strong></p>
+<pre><code class="language-bash"># Start the Ollama service (runs in background)
+ollama serve
+
+# Pull and run a model
+ollama run llama3.1:8b
+
+# For a smaller, faster model
+ollama run phi3:mini
+
+# For coding
+ollama run deepseek-coder-v2:16b
+</code></pre>
+<p>That&rsquo;s it. You&rsquo;re running a local LLM. Type a prompt and it responds. Press Ctrl+D to exit.</p>
+<p><strong>Useful commands:</strong></p>
+<pre><code class="language-bash">ollama list              # Show downloaded models
+ollama pull qwen2.5:14b  # Download without running
+ollama rm mistral:7b     # Delete a model
+ollama show llama3.1:8b  # Show model details
+ollama ps                # Show running models
+</code></pre>
+<p><strong>Exposing the API:</strong></p>
+<p>Ollama automatically runs an OpenAI-compatible API on <code>http://localhost:11434</code>. Any tool that supports the OpenAI API can point at this endpoint.</p>
+<pre><code class="language-bash"># Test with curl
+curl http://localhost:11434/v1/chat/completions \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+    &quot;model&quot;: &quot;llama3.1:8b&quot;,
+    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello&quot;}]
+  }'
+</code></pre>
+<h3>llama.cpp — Maximum Control</h3>
+<p>If Ollama is the friendly wrapper, llama.cpp is the engine underneath. It&rsquo;s a C/C++ implementation of LLM inference that compiles to a single binary. Use it when you need fine-grained control over quantisation, context length, batch size, or GPU layer offloading.</p>
+<pre><code class="language-bash"># Build from source
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+cmake -B build -DGGML_CUDA=ON  # For Nvidia GPU support
+cmake --build build --config Release -j
+
+# Run a GGUF model
+./build/bin/llama-cli -m models/your-model.gguf -p &quot;Your prompt&quot; \
+  -ngl 35    # Number of layers to offload to GPU
+  -c 4096    # Context window size
+  -t 8       # CPU threads
+</code></pre>
+<p>The <code>-ngl</code> flag is crucial for partial GPU offloading. If your model is too large for VRAM, offload as many layers as fit and the rest run on CPU.</p>
+<h3>LM Studio — The GUI Option</h3>
+<p>LM Studio provides a polished desktop application for downloading, running, and chatting with local models. It&rsquo;s built on llama.cpp but wraps everything in a clean interface with a model browser, chat UI, and local API server.</p>
+<p>Download from <a href="https://lmstudio.ai">lmstudio.ai</a>. Available for Windows, macOS, and Linux.</p>
+<p>Best for: people who want a graphical interface, easy model browsing from Hugging Face, and a one-click local API server. It auto-detects your hardware and suggests compatible models.</p>
+<h3>text-generation-webui (oobabooga)</h3>
+<p>The Swiss Army knife. A web-based interface supporting multiple backends (llama.cpp, ExLlamaV2, transformers, AutoGPTQ). More complex to set up but offers features like character cards, chat history, extensions, and multi-model management.</p>
+<pre><code class="language-bash"># One-line installer
+git clone https://github.com/oobabooga/text-generation-webui
+cd text-generation-webui
+./start_linux.sh  # or start_windows.bat / start_macos.sh
+</code></pre>
+<h3>Docker Setups</h3>
+<p>For reproducible deployments, Docker is the way:</p>
+<pre><code class="language-bash"># Ollama in Docker
+docker run -d -v ollama:/root/.ollama \
+  -p 11434:11434 --name ollama ollama/ollama
+
+# With GPU support (Nvidia)
+docker run -d --gpus all -v ollama:/root/.ollama \
+  -p 11434:11434 --name ollama ollama/ollama
+
+# Open WebUI — a ChatGPT-like interface for Ollama
+docker run -d -p 3000:8080 \
+  --add-host=host.docker.internal:host-gateway \
+  -v open-webui:/app/backend/data \
+  --name open-webui ghcr.io/open-webui/open-webui:main
+</code></pre>
+<p>Open WebUI deserves special mention — it gives you a polished, multi-user chat interface with conversation history, model switching, RAG document upload, and web search integration. It&rsquo;s essentially self-hosted ChatGPT pointed at your local models.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>Model Selection</h1>
+
+<h3>The Model Landscape</h3>
+<p>The open-weight model ecosystem has exploded. Here&rsquo;s what matters as of early 2025:</p>
+<p><strong>Meta Llama 3.1 / 3.2</strong> — The default recommendation. Available in 1B, 3B, 8B, and 70B sizes. The 8B model is the best general-purpose model at its size. The 70B competes with GPT-4 on many benchmarks. Excellent instruction following, strong reasoning. Start here.</p>
+<p><strong>Mistral / Mixtral</strong> — Mistral 7B punches well above its weight. Mixtral 8x7B uses a mixture-of-experts architecture — only 12B parameters are active per token, but it has 46B total, giving it broader knowledge. Good for multilingual tasks.</p>
+<p><strong>Qwen 2.5</strong> — Alibaba&rsquo;s models. The Qwen 2.5 14B and 32B variants are outstanding — arguably the best open models at their respective sizes. Particularly strong at coding and structured output. The 72B model rivals Llama 70B. Don&rsquo;t sleep on these.</p>
+<p><strong>Microsoft Phi-3 / Phi-4</strong> — Small but mighty. Phi-3 Mini (3.8B) delivers surprisingly coherent output for its size. Phi-4 (14B) competes with much larger models on reasoning benchmarks. Ideal when you&rsquo;re RAM-constrained.</p>
+<p><strong>Google Gemma 2</strong> — Available in 2B, 9B, and 27B. The 9B and 27B models are strong generalists. Google&rsquo;s training data gives them broad knowledge, particularly for factual queries.</p>
+<p><strong>DeepSeek-V3 / DeepSeek-R1</strong> — DeepSeek-R1 is the reasoning specialist. It &ldquo;thinks&rdquo; through problems step-by-step and excels at maths, logic, and coding. Available in distilled versions (1.5B to 70B). The 14B distilled version is exceptional for its size. Use this when you need chain-of-thought reasoning.</p>
+<h3>Quantisation Explained</h3>
+<p>Models are trained in 16-bit floating point (FP16/BF16). A 7B parameter model at full precision needs ~14 GB. Quantisation reduces precision to shrink the model and speed up inference, with minimal quality loss.</p>
+<p><strong>GGUF</strong> is the standard format for llama.cpp and Ollama. When downloading models, you&rsquo;ll see quantisation labels:</p>
+<table>
+<thead>
+<tr>
+<th>Quantisation</th>
+<th>Bits</th>
+<th>Size (7B)</th>
+<th>Quality Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q2_K</td>
+<td>2-bit</td>
+<td>~2.5 GB</td>
+<td>Significant degradation. Emergency only.</td>
+</tr>
+<tr>
+<td>Q4_K_M</td>
+<td>4-bit</td>
+<td>~4.0 GB</td>
+<td>Sweet spot. Minimal quality loss. Use this.</td>
+</tr>
+<tr>
+<td>Q5_K_M</td>
+<td>5-bit</td>
+<td>~5.0 GB</td>
+<td>Slightly better than Q4. Worth it if it fits.</td>
+</tr>
+<tr>
+<td>Q6_K</td>
+<td>6-bit</td>
+<td>~5.5 GB</td>
+<td>Near-original quality.</td>
+</tr>
+<tr>
+<td>Q8_0</td>
+<td>8-bit</td>
+<td>~7.0 GB</td>
+<td>Indistinguishable from FP16 for most tasks.</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>16-bit</td>
+<td>~14 GB</td>
+<td>Full precision. Rarely needed locally.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The rule: Use Q4_K_M unless you have a specific reason not to.</strong> It offers 95%+ of the original model&rsquo;s capability at roughly a quarter of the memory. If you have spare RAM/VRAM, step up to Q5_K_M or Q6_K.</p>
+<h3>Task Recommendations</h3>
+<p><strong>Coding:</strong> DeepSeek-Coder-V2 16B, Qwen 2.5 Coder 14B/32B, or Llama 3.1 8B. For pure code completion, the dedicated coding models are noticeably better than general-purpose models.</p>
+<p><strong>Creative writing:</strong> Llama 3.1 70B (if you can run it), Mistral 7B, or Qwen 2.5 14B. Larger models produce more coherent long-form text.</p>
+<p><strong>Chat / assistant:</strong> Llama 3.1 8B or Qwen 2.5 14B. Fast, capable, good instruction following.</p>
+<p><strong>RAG (retrieval-augmented generation):</strong> Qwen 2.5 14B or Llama 3.1 8B. You want good instruction following and accurate information extraction. Speed matters here since RAG involves frequent queries.</p>
+<p><strong>Reasoning / maths:</strong> DeepSeek-R1 (distilled 14B or 32B). Purpose-built for step-by-step reasoning.</p>
+<h3>Right Model for Your RAM — Cheat Sheet</h3>
+<table>
+<thead>
+<tr>
+<th>Available Memory</th>
+<th>Best Model (Q4_K_M)</th>
+<th>Tokens/sec (CPU)</th>
+<th>Tokens/sec (GPU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4 GB</td>
+<td>Phi-3 Mini 3.8B</td>
+<td>6–10</td>
+<td>25–40</td>
+</tr>
+<tr>
+<td>8 GB</td>
+<td>Llama 3.1 8B</td>
+<td>8–12</td>
+<td>30–50</td>
+</tr>
+<tr>
+<td>12 GB VRAM</td>
+<td>Qwen 2.5 14B</td>
+<td>—</td>
+<td>25–40</td>
+</tr>
+<tr>
+<td>16 GB</td>
+<td>Qwen 2.5 14B</td>
+<td>5–8</td>
+<td>—</td>
+</tr>
+<tr>
+<td>24 GB VRAM</td>
+<td>DeepSeek-R1 32B (distilled)</td>
+<td>—</td>
+<td>20–35</td>
+</tr>
+<tr>
+<td>32 GB</td>
+<td>Qwen 2.5 32B</td>
+<td>3–6</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48 GB</td>
+<td>Llama 3.1 70B</td>
+<td>2–4</td>
+<td>—</td>
+</tr>
+<tr>
+<td>24 GB VRAM + 32 GB RAM</td>
+<td>Llama 3.1 70B (partial offload)</td>
+<td>—</td>
+<td>8–15</td>
+</tr>
+</tbody>
+</table>
+<p><em>CPU speeds assume DDR5-5600. GPU speeds assume RTX 3090. Your results will vary.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Integration</h1>
+
+<h3>VS Code + Continue</h3>
+<p><a href="https://continue.dev">Continue</a> is an open-source AI coding assistant that plugs into VS Code and JetBrains IDEs. Point it at your local Ollama instance and you&rsquo;ve got autocomplete, inline editing, and chat — all running on your hardware.</p>
+<p><strong>Setup:</strong></p>
+<ol>
+<li>Install the Continue extension from the VS Code marketplace.</li>
+<li>Open Continue settings (Ctrl+Shift+P → &ldquo;Continue: Open Config&rdquo;).</li>
+<li>Add your local model:</li>
+</ol>
+<pre><code class="language-json">{
+  &quot;models&quot;: [
+    {
+      &quot;title&quot;: &quot;Local Qwen Coder&quot;,
+      &quot;provider&quot;: &quot;ollama&quot;,
+      &quot;model&quot;: &quot;qwen2.5-coder:14b&quot;
+    }
+  ],
+  &quot;tabAutocompleteModel&quot;: {
+    &quot;title&quot;: &quot;Local Autocomplete&quot;,
+    &quot;provider&quot;: &quot;ollama&quot;,
+    &quot;model&quot;: &quot;qwen2.5-coder:7b&quot;
+  }
+}
+</code></pre>
+<p>Use a smaller model (7B) for autocomplete (speed matters) and a larger model (14B+) for chat and inline edits.</p>
+<h3>Obsidian</h3>
+<p>The <a href="https://github.com/brianpetro/obsidian-smart-connections">Obsidian Smart Connections</a> plugin enables semantic search across your vault using local embeddings. The <a href="https://github.com/logancyang/obsidian-copilot">Copilot</a> plugin connects to Ollama for in-note AI assistance — summarisation, rewriting, Q&amp;A against your notes.</p>
+<p>Configure Copilot to use <code>http://localhost:11434</code> as the API endpoint and select your preferred model. Your notes never leave your machine.</p>
+<h3>Terminal Tools</h3>
+<p><strong>aider</strong> — AI pair programming in the terminal. Connects to local models via Ollama or any OpenAI-compatible API. Excellent for code refactoring and working across multiple files.</p>
+<pre><code class="language-bash">pip install aider-chat
+aider --model ollama/qwen2.5-coder:14b
+</code></pre>
+<p><strong>fabric</strong> — AI-powered CLI for summarising, extracting, and transforming text. Pipe anything into it.</p>
+<pre><code class="language-bash">cat article.md | fabric --pattern summarize --model ollama/llama3.1:8b
+</code></pre>
+<p><strong>shell-gpt / mods</strong> — Ask questions from the command line, pipe in data, get structured output. Useful for scripts and automation.</p>
+<h3>OpenAI-Compatible Endpoints</h3>
+<p>This is the key architectural insight: <strong>most local inference servers expose an OpenAI-compatible API.</strong> Ollama, LM Studio, llama.cpp server, vLLM, and text-generation-webui all do this.</p>
+<p>This means any application, library, or service that supports the OpenAI API can be redirected to your local model by changing two things:</p>
+<pre><code>Base URL: http://localhost:11434/v1  (or your server's address)
+API Key:  any-string-works           (local servers don't validate keys)
+</code></pre>
+<p>In Python with the OpenAI SDK:</p>
+<pre><code class="language-python">from openai import OpenAI
+
+client = OpenAI(
+    base_url=&quot;http://localhost:11434/v1&quot;,
+    api_key=&quot;not-needed&quot;
+)
+
+response = client.chat.completions.create(
+    model=&quot;llama3.1:8b&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Explain quantum computing&quot;}]
+)
+</code></pre>
+<p>This compatibility layer is powerful. You can swap between cloud and local models by changing a single environment variable. Build against the OpenAI API, deploy against your local server.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Advanced Topics</h1>
+
+<h3>Fine-Tuning with LoRA</h3>
+<p>Fine-tuning adapts a pre-trained model to your specific data or task. <strong>LoRA</strong> (Low-Rank Adaptation) makes this feasible on consumer hardware by training a small set of adapter weights rather than modifying the entire model.</p>
+<p>Tools: <a href="https://github.com/unslothai/unsloth">Unsloth</a> is the fastest option — it reduces VRAM requirements by 60–70% and supports QLoRA (quantised fine-tuning). You can fine-tune a 7B model on a single 12 GB GPU in under an hour.</p>
+<p>Use cases: teaching a model your company&rsquo;s coding style, training on domain-specific terminology (legal, medical), or creating a model that outputs in a specific format consistently.</p>
+<p><strong>Start with a strong base model, prepare 500–2,000 high-quality examples in the Alpaca or ChatML format, and train for 1–3 epochs.</strong> More data isn&rsquo;t always better — quality and diversity matter far more than volume.</p>
+<h3>RAG Pipeline</h3>
+<p>Retrieval-Augmented Generation connects your LLM to external knowledge. The basic pipeline:</p>
+<ol>
+<li><strong>Chunk</strong> your documents into passages (500–1,000 tokens each).</li>
+<li><strong>Embed</strong> each chunk using a local embedding model (e.g., <code>nomic-embed-text</code> via Ollama).</li>
+<li><strong>Store</strong> embeddings in a vector database (ChromaDB, Qdrant, or pgvector).</li>
+<li><strong>Query:</strong> embed the user&rsquo;s question, find the most similar chunks, inject them into the prompt.</li>
+<li><strong>Generate:</strong> the LLM answers using the retrieved context.</li>
+</ol>
+<p>Tools: LangChain and LlamaIndex handle the orchestration. For a simpler approach, Open WebUI has built-in RAG — upload documents and ask questions directly.</p>
+<h3>Monitoring and Performance</h3>
+<p>Track your local inference with:</p>
+<ul>
+<li><strong><code>ollama ps</code></strong> — shows loaded models and VRAM usage.</li>
+<li><strong><code>nvidia-smi</code></strong> — GPU utilisation and memory (Nvidia).</li>
+<li><strong><code>nvtop</code> / <code>btop</code></strong> — real-time hardware monitoring.</li>
+<li>Tokens per second is shown in Ollama&rsquo;s output — watch this number. If it drops below 5 tok/s, your model is too large for your hardware.</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Quick Reference Appendix</h1>
+
+<h3>Hardware Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Hardware</th>
+<th>Price (£)</th>
+<th>Memory</th>
+<th>Bandwidth</th>
+<th>Best Model Size</th>
+<th>Tok/s (est.)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel N100 Mini PC</td>
+<td>130–160</td>
+<td>16 GB DDR5</td>
+<td>38 GB/s</td>
+<td>7B</td>
+<td>5–8</td>
+</tr>
+<tr>
+<td>Minisforum UM780 XTX</td>
+<td>350–450*</td>
+<td>32–64 GB DDR5</td>
+<td>77 GB/s</td>
+<td>14B–32B</td>
+<td>8–15</td>
+</tr>
+<tr>
+<td>Beelink SER8</td>
+<td>380–450*</td>
+<td>32–64 GB DDR5</td>
+<td>77 GB/s</td>
+<td>14B–32B</td>
+<td>8–15</td>
+</tr>
+<tr>
+<td>Mac Mini M2 Pro 32GB</td>
+<td>700–800</td>
+<td>32 GB Unified</td>
+<td>200 GB/s</td>
+<td>14B–30B</td>
+<td>12–20</td>
+</tr>
+<tr>
+<td>Mac Mini M4 Pro 48GB</td>
+<td>999</td>
+<td>48 GB Unified</td>
+<td>273 GB/s</td>
+<td>30B–70B</td>
+<td>15–25</td>
+</tr>
+<tr>
+<td>Desktop + RTX 3060 12GB</td>
+<td>400–550</td>
+<td>12 GB VRAM</td>
+<td>360 GB/s</td>
+<td>8B–13B (GPU)</td>
+<td>30–50</td>
+</tr>
+<tr>
+<td>Desktop + RTX 3090 24GB</td>
+<td>700–900</td>
+<td>24 GB VRAM</td>
+<td>936 GB/s</td>
+<td>14B–30B (GPU)</td>
+<td>40–70</td>
+</tr>
+<tr>
+<td>Tesla P40 (used)</td>
+<td>80–100</td>
+<td>24 GB VRAM</td>
+<td>346 GB/s</td>
+<td>14B–30B (GPU)</td>
+<td>15–25</td>
+</tr>
+</tbody>
+</table>
+<p><em>Barebones price; add RAM and storage.</em></p>
+<h3>Model Compatibility Matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Q4 Size</th>
+<th>8 GB RAM</th>
+<th>16 GB</th>
+<th>24 GB VRAM</th>
+<th>32 GB</th>
+<th>48 GB</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phi-3 Mini 3.8B</td>
+<td>2.2 GB</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Edge, mobile, quick tasks</td>
+</tr>
+<tr>
+<td>Llama 3.1 8B</td>
+<td>4.7 GB</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>General purpose, chat</td>
+</tr>
+<tr>
+<td>Gemma 2 9B</td>
+<td>5.4 GB</td>
+<td>⚠️</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Factual queries, QA</td>
+</tr>
+<tr>
+<td>Qwen 2.5 14B</td>
+<td>8.9 GB</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Coding, structured output</td>
+</tr>
+<tr>
+<td>Mistral Nemo 12B</td>
+<td>7.1 GB</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Multilingual, general</td>
+</tr>
+<tr>
+<td>DeepSeek-R1 14B</td>
+<td>8.9 GB</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Reasoning, maths</td>
+</tr>
+<tr>
+<td>Qwen 2.5 32B</td>
+<td>19 GB</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Best mid-range all-rounder</td>
+</tr>
+<tr>
+<td>DeepSeek-R1 32B</td>
+<td>19 GB</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>Advanced reasoning</td>
+</tr>
+<tr>
+<td>Llama 3.1 70B</td>
+<td>40 GB</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>Near-GPT-4 performance</td>
+</tr>
+<tr>
+<td>Mixtral 8x7B</td>
+<td>26 GB</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>Broad knowledge, multilingual</td>
+</tr>
+</tbody>
+</table>
+<p><em>✅ = runs well | ⚠️ = tight, may be slow | ❌ = won&rsquo;t fit</em></p>
+<h3>Troubleshooting</h3>
+<p><strong>Model loads but generation is extremely slow (&lt;2 tok/s)</strong>
+Your model is too large for available memory and is swapping to disk. Solution: use a smaller model or a more aggressive quantisation (Q4_K_M instead of Q8).</p>
+<p><strong>CUDA out of memory</strong>
+Reduce the number of GPU layers (<code>-ngl</code> in llama.cpp) or use a smaller quantisation. In Ollama, try a smaller model variant.</p>
+<p><strong>Ollama can&rsquo;t find my GPU</strong>
+Ensure Nvidia drivers are installed (<code>nvidia-smi</code> should work). For AMD GPUs, you need ROCm installed. On macOS, Metal acceleration is automatic.</p>
+<p><strong>&ldquo;Template not found&rdquo; or garbled output</strong>
+You&rsquo;re likely using a base model instead of an instruct/chat variant. Always use the <code>-instruct</code> or <code>-chat</code> tagged versions for conversational use.</p>
+<p><strong>Context window exceeded</strong>
+Default context is often 2048–4096 tokens. Increase it: <code>ollama run llama3.1:8b --num-ctx 8192</code>. Note: larger context uses more memory.</p>
+<p><strong>Docker container can&rsquo;t access GPU</strong>
+Install the Nvidia Container Toolkit: <code>sudo apt install nvidia-container-toolkit</code> and restart Docker. Use <code>docker run --gpus all</code>.</p>
+<p><strong>Model quality seems poor compared to ChatGPT</strong>
+Local models are smaller. Adjust expectations: a local 8B model ≈ GPT-3.5 level. For GPT-4 level, you need 70B+. Also ensure you&rsquo;re using the instruct/chat variant and an appropriate system prompt.</p>
+<p><strong>Performance tips:</strong>
+- Close other applications to free RAM
+- Use <code>mlock</code> to prevent model from being swapped: set <code>OLLAMA_KEEP_ALIVE=-1</code>
+- On multi-GPU systems, specify which GPU: <code>CUDA_VISIBLE_DEVICES=0</code>
+- Flash attention can reduce VRAM usage: enable with <code>--flash-attn</code> in llama.cpp</p>
+<hr />
+<p><em>This guide is maintained and updated regularly. You own it forever — including all future updates. Questions? Reach out via the email on your Gumroad receipt.</em></p>
+<p><em>Last updated: February 2025</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Local LLM Handbook</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

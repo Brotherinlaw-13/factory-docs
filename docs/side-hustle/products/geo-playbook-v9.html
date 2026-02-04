@@ -1,0 +1,3745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The GEO Playbook: How to Get Your Brand Cited by AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ROOK DIGITAL — Product Template
+   Premium PDF-ready template for Gumroad digital products
+   ============================================================ */
+
+/* --- CSS Variables --- */
+:root {
+  --teal: #10B981;
+  --teal-dark: #059669;
+  --teal-light: #D1FAE5;
+  --teal-bg: #ECFDF5;
+  --amber: #F59E0B;
+  --amber-dark: #D97706;
+  --amber-light: #FEF3C7;
+  --amber-bg: #FFFBEB;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --slate-300: #CBD5E1;
+  --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9;
+  --slate-50: #F8FAFC;
+  --bg: #FAFAFA;
+  --bg-white: #FFFFFF;
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --note-bg: #F1F5F9;
+  --note-border: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 700px;
+  --page-padding: 2rem;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--bg);
+}
+
+/* --- Page Container --- */
+.page-container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--page-padding);
+}
+
+/* ============================================================
+   COVER PAGE
+   ============================================================ */
+.cover-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%);
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+
+.cover-page::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 80%;
+  height: 200%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-page::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -20%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(16,185,129,0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+
+.cover-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.cover-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+}
+
+.cover-subtitle {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cover-divider {
+  width: 60px;
+  height: 3px;
+  background: rgba(255,255,255,0.4);
+  margin: 0 auto 2rem;
+  border-radius: 2px;
+}
+
+.cover-byline {
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.cover-meta {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+/* ============================================================
+   TABLE OF CONTENTS
+   ============================================================ */
+.toc-page {
+  page-break-after: always;
+  padding: 4rem 0;
+}
+
+.toc-page h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--teal-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.toc-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--slate-200);
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: toc-counter;
+}
+
+.toc-list li {
+  counter-increment: toc-counter;
+  margin-bottom: 0;
+}
+
+.toc-list li a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  text-decoration: none;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--slate-100);
+  transition: all 0.2s ease;
+  gap: 1rem;
+}
+
+.toc-list li a:hover {
+  color: var(--teal);
+  padding-left: 0.5rem;
+}
+
+.toc-list li a::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teal);
+  min-width: 2rem;
+}
+
+.toc-chapter-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  flex: 1;
+}
+
+.toc-chapter-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ============================================================
+   CHAPTER HEADINGS & TYPOGRAPHY
+   ============================================================ */
+
+/* --- Chapter / H1 --- */
+.chapter {
+  page-break-before: always;
+  padding-top: 3rem;
+}
+
+.chapter:first-of-type {
+  page-break-before: avoid;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--slate-900);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.03em;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--teal);
+  position: relative;
+}
+
+h1 .chapter-number {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+/* --- H2 --- */
+h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--slate-800);
+  line-height: 1.3;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  padding-left: 1rem;
+  border-left: 4px solid var(--teal);
+}
+
+/* --- H3 --- */
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--slate-700);
+  line-height: 1.4;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+h3::before {
+  content: '▸ ';
+  color: var(--teal);
+  font-weight: 400;
+}
+
+/* --- H4 --- */
+h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--slate-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* --- Paragraphs --- */
+p {
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+}
+
+/* --- Strong & Em --- */
+strong {
+  font-weight: 700;
+  color: var(--slate-900);
+}
+
+em {
+  font-style: italic;
+  color: var(--slate-700);
+}
+
+/* --- Links --- */
+a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: rgba(16, 185, 129, 0.3);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.2s;
+}
+
+a:hover {
+  text-decoration-color: var(--teal);
+}
+
+/* --- Horizontal Rule --- */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--slate-200);
+  margin: 2.5rem 0;
+}
+
+/* ============================================================
+   CODE
+   ============================================================ */
+
+/* --- Inline Code --- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--slate-100);
+  color: var(--teal-dark);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--slate-200);
+  font-weight: 500;
+}
+
+/* --- Code Blocks --- */
+pre {
+  background: var(--slate-800);
+  color: #E2E8F0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  position: relative;
+  border: 1px solid var(--slate-700);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Code block language label */
+pre[data-lang]::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--slate-700);
+  color: var(--slate-400);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0 10px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Syntax highlight colours for code blocks */
+pre .keyword { color: #C084FC; }    /* purple */
+pre .string { color: #34D399; }     /* green */
+pre .comment { color: #64748B; font-style: italic; }  /* grey */
+pre .function { color: #60A5FA; }   /* blue */
+pre .number { color: #FB923C; }     /* orange */
+pre .operator { color: #F472B6; }   /* pink */
+pre .variable { color: #38BDF8; }   /* sky */
+pre .type { color: #FBBF24; }       /* amber */
+
+/* ============================================================
+   CALLOUT BOXES
+   ============================================================ */
+.callout {
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+  border-left: 4px solid;
+  font-size: 0.95rem;
+}
+
+.callout-icon {
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+}
+
+.callout-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tip — teal */
+.callout-tip {
+  background: var(--teal-bg);
+  border-color: var(--teal);
+}
+.callout-tip .callout-title {
+  color: var(--teal-dark);
+}
+
+/* Warning — amber */
+.callout-warning {
+  background: var(--amber-bg);
+  border-color: var(--amber);
+}
+.callout-warning .callout-title {
+  color: var(--amber-dark);
+}
+
+/* Note — grey */
+.callout-note {
+  background: var(--note-bg);
+  border-color: var(--note-border);
+}
+.callout-note .callout-title {
+  color: var(--slate-600);
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.925rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--slate-200);
+}
+
+thead {
+  background: var(--slate-800);
+  color: white;
+}
+
+th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+tr:nth-child(even) td {
+  background: var(--slate-50);
+}
+
+tr:hover td {
+  background: var(--teal-bg);
+}
+
+/* ============================================================
+   BLOCKQUOTES
+   ============================================================ */
+blockquote {
+  border-left: 4px solid var(--teal);
+  background: var(--slate-50);
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--slate-600);
+}
+
+blockquote p {
+  color: var(--slate-600);
+  margin-bottom: 0.5rem;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+blockquote cite, blockquote .attribution {
+  display: block;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--teal-dark);
+  margin-top: 0.75rem;
+}
+
+/* ============================================================
+   LISTS
+   ============================================================ */
+ul, ol {
+  margin: 1rem 0 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul > li {
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+
+/* Nested bullets */
+ul ul > li::before {
+  background: transparent;
+  border: 2px solid var(--teal);
+  width: 5px;
+  height: 5px;
+}
+
+ul ul ul > li::before {
+  background: var(--slate-400);
+  border: none;
+  width: 4px;
+  height: 4px;
+  border-radius: 1px;
+}
+
+ol {
+  list-style: none;
+  counter-reset: ol-counter;
+  padding-left: 0;
+}
+
+ol > li {
+  counter-increment: ol-counter;
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+ol > li::before {
+  content: counter(ol-counter);
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--teal);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+li > p {
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.page-footer {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  margin-top: 4rem;
+  border-top: 1px solid var(--slate-200);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.page-footer a {
+  color: var(--teal);
+  font-weight: 500;
+}
+
+.page-footer .footer-brand {
+  font-weight: 600;
+  color: var(--slate-500);
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.text-muted { color: var(--text-muted); }
+.text-teal { color: var(--teal); }
+.text-amber { color: var(--amber); }
+.text-small { font-size: 0.85rem; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.page-break { page-break-before: always; }
+
+/* Chapter intro — first paragraph after heading */
+.chapter-intro {
+  font-size: 1.1rem;
+  color: var(--slate-500);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+/* Highlight box */
+.highlight-box {
+  background: linear-gradient(135deg, var(--teal-bg), var(--slate-50));
+  border: 1px solid var(--teal-light);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  @page {
+    margin: 1.5cm 2cm;
+    size: A4;
+  }
+
+  body {
+    background: white;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page-container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .cover-page {
+    min-height: 0;
+    height: 100vh;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    margin: -1.5cm -2cm;
+    padding: 3cm 2cm;
+    width: calc(100% + 4cm);
+  }
+
+  h1 { font-size: 22pt; }
+  h2 { font-size: 16pt; }
+  h3 { font-size: 13pt; }
+  h4 { font-size: 11pt; }
+
+  pre {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    break-inside: avoid;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 9pt;
+    border: 1px solid #ccc;
+  }
+
+  .callout {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    break-inside: avoid;
+  }
+
+  table {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    break-inside: avoid;
+    font-size: 9pt;
+  }
+
+  thead {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  blockquote {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    break-inside: avoid;
+  }
+
+  .chapter {
+    page-break-before: always;
+  }
+
+  .chapter:first-of-type {
+    page-break-before: avoid;
+  }
+
+  .toc-page {
+    page-break-after: always;
+  }
+
+  a {
+    color: var(--teal) !important;
+    text-decoration: none;
+  }
+
+  a[href]::after {
+    content: none; /* Remove default URL display */
+  }
+
+  .page-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #ddd;
+    padding: 0.5rem 0;
+    background: white;
+  }
+
+  tr:nth-child(even) td {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE (browser preview)
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --page-padding: 1.25rem;
+  }
+
+  .cover-title {
+    font-size: 2.2rem;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+
+  pre {
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+    img {
+        max-width: 90%; height: auto; margin: 1.5rem auto; display: block;
+        border-radius: 8px; border: 1px solid var(--slate-200); padding: 8px;
+        background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    @media print {
+        img { break-inside: avoid; max-width: 90%;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     COVER PAGE
+     ============================================================ -->
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Digital Product</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem;">The GEO Playbook: How to Get Your Brand Cited by AI</h1>
+    <p class="cover-subtitle">The Definitive Guide to Generative Engine Optimisation</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">v2.0 · February 2026</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+<div class="page-container">
+  <div class="toc-page">
+    <h2>Table of Contents</h2>
+    <p class="toc-subtitle">Everything you'll find inside this guide</p>
+    <ol class="toc-list">
+      <li><a href="#1-the-shift-why-search-will-never-be-the-same"><span class="toc-chapter-title">Chapter 011. The Shift: Why Search Will Never Be the Same</span></a></li>
+      <li><a href="#2-what-is-generative-engine-optimisation-geo"><span class="toc-chapter-title">Chapter 022. What Is Generative Engine Optimisation (GEO)?</span></a></li>
+      <li><a href="#3-how-ai-engines-select-their-sources"><span class="toc-chapter-title">Chapter 033. How AI Engines Select Their Sources</span></a></li>
+      <li><a href="#4-the-four-engines-a-platform-by-platform-overview"><span class="toc-chapter-title">Chapter 044. The Four Engines: A Platform-by-Platform Overview</span></a></li>
+      <li><a href="#5-platform-deep-dives-engine-by-engine-optimisation"><span class="toc-chapter-title">Chapter 055. Platform Deep Dives: Engine-by-Engine Optimisation</span></a></li>
+      <li><a href="#6-the-12-pillars-of-geo-ready-content"><span class="toc-chapter-title">Chapter 066. The 12 Pillars of GEO-Ready Content</span></a></li>
+      <li><a href="#7-before-after-real-optimisation-examples"><span class="toc-chapter-title">Chapter 077. Before &amp; After: Real Optimisation Examples</span></a></li>
+      <li><a href="#8-the-content-audit-framework"><span class="toc-chapter-title">Chapter 088. The Content Audit Framework</span></a></li>
+      <li><a href="#9-the-geo-audit-checklist"><span class="toc-chapter-title">Chapter 099. The GEO Audit Checklist</span></a></li>
+      <li><a href="#10-implementation-roadmap-your-first-30-days"><span class="toc-chapter-title">Chapter 1010. Implementation Roadmap: Your First 30 Days</span></a></li>
+      <li><a href="#11-measuring-ai-visibility"><span class="toc-chapter-title">Chapter 1111. Measuring AI Visibility</span></a></li>
+      <li><a href="#12-geo-vs-seo-allies-not-rivals"><span class="toc-chapter-title">Chapter 1212. GEO vs. SEO: Allies, Not Rivals</span></a></li>
+      <li><a href="#13-whats-coming-next"><span class="toc-chapter-title">Chapter 1313. What&rsquo;s Coming Next</span></a></li>
+      <li><a href="#14-appendix-resources-tools-and-further-reading"><span class="toc-chapter-title">Chapter 1414. Appendix: Resources, Tools, and Further Reading</span></a></li>
+    </ol>
+  </div>
+
+  <!-- ============================================================
+       CONTENT START
+       ============================================================ -->
+  <div class="chapter"><h1 id="1-the-shift-why-search-will-never-be-the-same"><span class="chapter-number">Chapter 01</span>1. The Shift: Why Search Will Never Be the Same</h1>
+<p>For twenty-five years, the game was simple: rank on Google, win the click, earn the
+customer. Entire industries, from content marketing to link building to technical SEO, were
+built around a single behaviour: a person types a query, scans ten blue links, and chooses
+one.
+That behaviour is dying.
+ChatGPT surpassed 100 million users faster than any application in history, reaching that
+milestone in just two months. Google&rsquo;s AI Overviews now appear across billions of searches
+every month. Perplexity processes millions of research queries daily. Claude is the go-to
+reasoning engine for professionals making high-stakes decisions. And users are not clicking
+through to websites; they are reading the AI&rsquo;s synthesised answer and moving on.</p>
+<h2 id="the-numbers-that-should-worry-every-marketer">The Numbers That Should Worry Every Marketer</h2>
+<p><img alt="The Decline of Traditional Click-Through Rates" src="images/2026-02-03-geo-ctr-decline.png" /></p>
+<p>The data is unambiguous. Here is what published research and industry reporting tells us
+about the shift already underway:
+These are not projections. These are measurements of what is already happening.
+METRIC
+FINDING
+SOURCE
+Click-through rate
+decline
+20-60% drop on queries where AI
+Overviews appear
+Multiple industry studies,
+2024-25
+ChatGPT monthly active
+users
+300M+ as of late 2025
+OpenAI
+Google AI Overviews
+reach
+Appearing on billions of monthly searches
+Google I/O 2025
+Perplexity monthly
+queries
+500M+ and growing rapidly
+Perplexity, Q4 2025
+Zero-click searches
+Over 65% of Google searches now end
+without a click
+SparkToro / Datos, 2025
+AI search adoption
+79% of consumers use AI search weekly
+Botify State of AI Search,
+2025</p>
+<h2 id="the-brand-discovery-problem">The Brand Discovery Problem</h2>
+<p>When a user asks &ldquo;What&rsquo;s the best project management tool for remote teams?&rdquo;, the AI
+does not return a list of links. It names specific brands. If yours is not mentioned, you do not
+exist in that moment.
+Consider this scenario. A marketing director in Birmingham needs a new CRM. Five years
+ago, she would have typed &ldquo;best CRM for agencies&rdquo; into Google, clicked three or four
+results, and compared features. Today, she opens ChatGPT and types: &ldquo;I run a 40-person
+marketing agency. We need a CRM that integrates with HubSpot, handles complex deal
+pipelines, and costs under £80 per seat. What would you recommend?&rdquo;
+ChatGPT names three tools. If your CRM is not one of them, you never had a chance.
+This is the new reality:</p>
+<h2 id="case-study-the-saas-company-that-disappeared">Case Study: The SaaS Company That Disappeared</h2>
+<p>A mid-market project management platform (anonymised at their request) tracked their
+inbound leads from January to September 2025. Despite maintaining stable Google rankings
+(positions 3-6 for their primary keywords), they observed a 31% decline in organic traffic
+from those same keywords. When they investigated, they discovered that Google AI
+Overviews had been activated for 68% of their target queries, and their brand was cited in
+only 12% of those overviews. Meanwhile, two competitors, one of whom ranked lower in
+organic results, were cited in over 70% of the same AI Overviews because those
+competitors had invested heavily in structured content, expert commentary, and third-party
+brand mentions.
+The lesson: organic rankings alone no longer guarantee traffic. AI citation is the new
+gatekeeper.
+The citation is the new click. Being cited as a source inside an AI-generated response is
+becoming more valuable than ranking #1 on a traditional SERP.
+Brand discovery is conversational. Users are asking AI for recommendations the way
+they would ask a trusted colleague.
+Visibility is binary. In a list of ten blue links, being #7 still gets some traffic. In an AI
+response that names three brands, being #4 means being invisible.</p>
+<h2 id="what-this-means-for-you">What This Means for You</h2>
+<p>This is not a prediction. It is already happening. And the brands that understand how to
+optimise for this new reality will dominate the next decade. The good news is that the
+playbook for doing so is clear, actionable, and, for now, a genuine competitive advantage.
+Most businesses have not even begun thinking about this.
+Welcome to Generative Engine Optimisation.</p>
+</div><div class="chapter"><h1 id="2-what-is-generative-engine-optimisation-geo"><span class="chapter-number">Chapter 02</span>2. What Is Generative Engine Optimisation (GEO)?</h1>
+<p>Generative Engine Optimisation (GEO) is the practice of optimising your content, brand
+presence, and digital footprint so that AI-powered search engines, including ChatGPT,
+Claude, Perplexity, Google AI Overviews, Gemini, and others, cite, reference, or recommend
+your brand in their generated responses.
+The term was first formalised in a landmark 2023 research paper from Princeton, Georgia
+Tech, the Allen Institute, and IIT Delhi, later accepted at KDD 2024, one of the most
+prestigious data science conferences in the world. The researchers demonstrated that
+targeted optimisation strategies could boost content visibility in generative engine
+responses by up to 40%.</p>
+<h2 id="geo-in-one-sentence">GEO in One Sentence</h2>
+<p>SEO gets you ranked. GEO gets you cited.</p>
+<h2 id="why-optimisation-and-not-marketing">Why &ldquo;Optimisation&rdquo; and Not &ldquo;Marketing&rdquo;?</h2>
+<p>GEO is deliberately framed as optimisation because, like SEO before it, it involves
+understanding how a system works and structuring your content to align with that system&rsquo;s
+selection criteria. It is not about gaming; it is about making your content genuinely useful to
+AI engines that are trying to give their users the best possible answer.</p>
+<h2 id="the-three-layers-of-geo">The Three Layers of GEO</h2>
+<h2 id="the-geo-maturity-model">The GEO Maturity Model</h2>
+<p>Most organisations fall into one of four stages. Understanding where you are helps you
+prioritise what to do first.
+Most businesses reading this playbook are at Stage 1 or 2. The goal is to move to Stage 3
+within 30 days and Stage 4 within 90 days.
+LAYER
+WHAT IT COVERS
+WHY IT MATTERS
+KEY ACTIONS
+Content
+Layer
+How your pages are written,
+structured, and formatted
+AI engines need to
+parse, understand, and
+extract from your
+content
+Restructure existing
+pages, add statistics,
+include quotable
+definitions
+Authority
+Layer
+Brand mentions, citations,
+reviews, and trust signals
+across the web
+AI engines cross-
+reference multiple
+sources to validate
+claims
+Build mentions on review
+sites, earn press
+coverage, grow forum
+presence
+Technical
+Layer
+Crawlability, schema
+markup, server-side
+rendering, and robots.txt
+configuration
+AI crawlers must be able
+to access and interpret
+your content
+Audit robots.txt,
+implement schema,
+ensure SSR
+STAGE
+NAME
+DESCRIPTION
+TYPICAL AI
+VISIBILITY
+1
+Invisible
+No GEO consideration; content written for humans
+only or for traditional SEO
+0-5% of target
+prompts
+2
+Incidental
+Some AI citations happen by accident, usually
+because of strong existing SEO
+5-20% of target
+prompts
+3
+Intentional
+Active GEO optimisation underway; content
+restructured, schema added, mentions growing
+20-50% of target
+prompts
+4
+Dominant
+Comprehensive GEO programme; cited consistently
+across engines for target topics
+50%+ of target
+prompts</p>
+<h2 id="the-economics-of-geo">The Economics of GEO</h2>
+<p>Why does this matter commercially? Consider the maths:
+Note: total site visits may decrease, but total brand impressions increase dramatically. The
+user who reads the AI&rsquo;s recommendation of your product and then visits your site directly
+two days later is not captured by click attribution, yet the sale is real. GEO is as much a
+brand strategy as a traffic strategy.</p>
+</div><div class="chapter"><h1 id="3-how-ai-engines-select-their-sources"><span class="chapter-number">Chapter 03</span>3. How AI Engines Select Their Sources</h1>
+<p>Understanding why an AI engine cites one source over another is the foundation of GEO.
+While the exact algorithms are proprietary, extensive testing, published research, and
+reverse-engineering have revealed consistent patterns.
+SCENARIO
+TRADITIONAL SEO
+GEO-OPTIMISED
+Monthly searches for target
+query
+10,000
+10,000
+Traffic reaching AI answer (no
+click)
+0% (users clicked)
+60% (users read AI answer)
+Users who see your brand in AI
+answer
+N/A
+4,200 (70% citation rate × 60%)
+Users who click to your site from
+AI
+N/A
+630 (15% click-through from
+citation)
+Users who click from organic
+result
+2,500 (25% CTR for
+position 3)
+1,000 (10% CTR, reduced by AI
+answer)
+Total brand impressions
+2,500
+5,200
+Total site visits
+2,500
+1,630</p>
+<h2 id="31-the-retrieval-augmented-generation-rag-pipeline">3.1 The Retrieval-Augmented Generation (RAG) Pipeline</h2>
+<p>Most modern AI search engines use a process called Retrieval-Augmented Generation
+(RAG). Understanding this pipeline is essential because each step represents an opportunity
+to optimise.
+Step-by-step breakdown:
+Optimisation opportunities at each stage:
+Query decomposition. The user&rsquo;s prompt is broken into sub-queries. A question like 
+&ldquo;What&rsquo;s the best CRM for small businesses in the UK?&rdquo; might become three separate
+searches: &ldquo;top CRM software,&rdquo; &ldquo;CRM for small businesses,&rdquo; and &ldquo;UK CRM tools.&rdquo;
+1
+Source retrieval. The engine searches its index (or the live web) for relevant sources.
+This step resembles traditional search: domain authority, relevance, and freshness all
+matter.
+2
+Relevance scoring. Retrieved sources are scored for topical relevance, authority,
+recency, and specificity. Typically, the engine retrieves 20-50 candidate sources and
+narrows to the top 5-10.
+3
+Synthesis and generation. The language model reads the top-scoring sources and
+generates a response, weaving in information from multiple pages. This is where the AI
+decides what to say and who to credit.
+4
+Citation assignment. Some engines (Perplexity, Google AI Overviews) attach source
+citations to specific claims. Others (ChatGPT, Claude) may mention sources
+conversationally or provide them when asked.
+5
+RAG STAGE
+WHAT HAPPENS
+YOUR OPTIMISATION LEVER
+Query
+decomposition
+Prompt split into sub-
+queries
+Ensure content addresses specific sub-topics, not
+just broad themes
+Source retrieval
+Engine searches for
+relevant pages
+SEO fundamentals: ranking, domain authority,
+indexing, crawlability
+Relevance scoring
+Sources scored and
+filtered
+Content specificity, recency, statistical density,
+structural clarity
+Synthesis
+AI reads and combines
+sources
+Quotable passages, clear definitions, extractable
+facts</p>
+<h2 id="32-the-seven-signals-ai-engines-use-to-select-sources">3.2 The Seven Signals AI Engines Use to Select Sources</h2>
+<p><img alt="The Seven Signals AI Engines Use to Select Sources" src="images/2026-02-03-geo-seven-signals.png" /></p>
+<p>Based on the GEO research paper, industry testing, and extensive analysis, here are the
+primary signals that determine whether your content gets cited:
+RAG STAGE
+WHAT HAPPENS
+YOUR OPTIMISATION LEVER
+Citation
+AI attributes claims to
+sources
+Brand name proximity to key claims, clear
+authorship, schema markup
+SIGNAL
+DESCRIPTION
+IMPACT
+HOW TO OPTIMISE
+Topical
+Authority
+Depth and breadth of coverage on
+a specific topic across your domain
+★★★★★
+Build content clusters with
+10-20 articles per core topic
+Citation
+Density
+How often your brand or domain is
+mentioned across external sources
+★★★★★
+Earn brand mentions on 20+
+external sites per key topic
+Content
+Structure
+Clear headings, direct answers,
+lists, and tables that LLMs can
+parse
+★★★★☆
+Use semantic HTML, tables,
+and lists; lead with direct
+answers
+Statistical
+Evidence
+Inclusion of data points,
+percentages, and research-backed
+claims
+★★★★☆
+Add 3-5 statistics per page,
+all with named sources
+Recency
+How recently content was
+published or updated
+★★★★☆
+Update key pages quarterly;
+show visible &ldquo;Last updated&rdquo;
+dates
+E-E-A-T
+Signals
+Demonstrated Experience,
+Expertise, Authoritativeness, and
+Trustworthiness
+★★★★☆
+Include author bios, expert
+quotes, credentials, and real
+case studies
+Quotability
+Concise, well-phrased statements
+that can be extracted as standalone
+claims
+★★★☆☆
+Write &ldquo;tweetable&rdquo; opening
+sentences for every section</p>
+<h2 id="33-the-consensus-effect">3.3 The &ldquo;Consensus Effect&rdquo;</h2>
+<p>AI engines do not just find information; they look for consensus. If multiple independent
+sources agree on a claim, the AI is far more likely to present it as fact. This is why brand
+mentions across diverse, authoritative sources matter enormously.
+A single brilliant blog post will not move the needle. Twenty mentions across industry
+publications, review sites, forums, and expert blogs will.
+How the consensus effect works in practice:
+Imagine a user asks: &ldquo;What is the best email marketing platform for e-commerce?&rdquo;
+The AI retrieves 30 sources. It finds that: - 18 sources mention Klaviyo as a top
+recommendation - 12 sources mention Mailchimp - 7 sources mention Omnisend - 2 sources
+mention your platform, &ldquo;MailFlow&rdquo;
+The AI will almost certainly name Klaviyo first, Mailchimp second, and possibly Omnisend
+third. MailFlow, despite potentially having a superior product, does not get mentioned
+because it lacks the consensus signal.
+The lesson: GEO is not just about optimising your own website. It is about ensuring your
+brand appears across the entire ecosystem of sources that AI engines consult.</p>
+<h2 id="34-source-diversity-and-trust-tiers">3.4 Source Diversity and Trust Tiers</h2>
+<p>AI engines weight sources differently based on their perceived trust level. Through extensive
+testing, we can categorise sources into tiers:
+TRUST TIER
+SOURCE TYPE
+EXAMPLES
+WEIGHT
+Tier 1:
+Institutional
+Academic papers, government sites,
+established encyclopaedias
+.gov, .edu, Wikipedia,
+PubMed
+Highest
+Tier 2:
+Editorial
+Major publications with editorial
+oversight
+Forbes, TechCrunch,
+BBC, industry journals
+High
+Tier 3: Expert
+Recognised expert blogs, industry
+analysts, professional associations
+Gartner, HBR blogs,
+professional body sites
+High
+Tier 4:
+Community
+User-generated content with voting/
+curation mechanisms
+Reddit, Stack Overflow,
+Quora, G2 reviews
+Medium-
+High</p>
+<p>Key insight: Your own website (Tier 5) carries less weight than external mentions (Tiers
+1-4). This is why an external mention strategy is at least as important as on-site optimisation.</p>
+</div><div class="chapter"><h1 id="4-the-four-engines-a-platform-by-platform-overview"><span class="chapter-number">Chapter 04</span>4. The Four Engines: A Platform-by-Platform Overview</h1>
+<p>Each major AI engine has distinct retrieval behaviours, data sources, and citation patterns.
+Optimising for all four requires understanding their differences.</p>
+<h2 id="41-chatgpt-openai">4.1 ChatGPT (OpenAI)</h2>
+<p>TRUST TIER
+SOURCE TYPE
+EXAMPLES
+WEIGHT
+Tier 5: Brand
+Company websites, brand blogs,
+product pages
+Your own site
+Medium
+Tier 6:
+General
+Generic blogs, article directories,
+low-authority sites
+Content farms, thin
+affiliate sites
+Low
+ATTRIBUTE
+DETAIL
+Data sources
+Bing search index, GPTBot crawler, licensed publisher data, training data (pre-
+cutoff)
+Citation style
+Inline citations when browsing is active; conversational mentions from training
+data
+Crawler
+GPTBot (User-Agent: GPTBot )
+Key ranking factors
+Brand authority in training data, Bing ranking position, content depth
+Monthly active
+users
+300M+ (as of late 2025)
+Primary use case
+General questions, recommendations, research, creative tasks</p>
+<h2 id="42-claude-anthropic">4.2 Claude (Anthropic)</h2>
+<h2 id="43-perplexity-ai">4.3 Perplexity AI</h2>
+<p>ATTRIBUTE
+DETAIL
+Data sources
+Web search (when enabled), training data, uploaded documents
+Citation style
+Conservative: cites sources when using web search; otherwise draws from
+training knowledge
+Crawler
+ClaudeBot (User-Agent: ClaudeBot )
+Key ranking
+factors
+Quality and depth of training data representation, accuracy, nuance
+Primary use case
+Professional analysis, complex reasoning, technical research, document review
+ATTRIBUTE
+DETAIL
+Data sources
+Real-time web search (multiple search engines), its own index
+Citation style
+Numbered inline citations with direct source links: the most transparent of all
+engines
+Crawler
+PerplexityBot (User-Agent: PerplexityBot )
+Key ranking
+factors
+Topical relevance, content freshness, domain authority, structured data
+Monthly queries
+500M+ (as of Q4 2025)
+Primary use case
+Fact-checking, research, current events, comparison shopping</p>
+<h2 id="44-google-ai-overviews-sge">4.4 Google AI Overviews (SGE)</h2>
+<h2 id="45-cross-platform-comparison-matrix">4.5 Cross-Platform Comparison Matrix</h2>
+<p><img alt="AI Engine Comparison: Citation Behaviour" src="images/2026-02-03-geo-platform-comparison.png" /></p>
+<p>ATTRIBUTE
+DETAIL
+Data sources
+Google&rsquo;s search index, Knowledge Graph, licensed content
+Citation style
+Source cards with thumbnails displayed alongside the AI Overview
+Crawler
+Googlebot (standard crawler)
+Key ranking factors
+Traditional Google ranking signals + E-E-A-T + structured data
+Reach
+Billions of monthly searches
+Primary use case
+Quick answers, local queries, product comparisons, definitions
+FACTOR
+CHATGPT
+CLAUDE
+PERPLEXITY
+GOOGLE AI
+OVERVIEWS
+Real-time web
+access
+❌ (via Bing)
+❌ (when
+enabled)
+❌ (primary)
+❌ (via Google index)
+Inline citations
+Sometimes
+Sometimes
+Always
+Always
+Favours fresh
+content
+Moderate
+Low
+High
+High
+Respects
+robots.txt
+Yes
+Yes
+Yes
+Yes
+Key search
+backbone
+Bing
+Various
+Multiple
+Google
+Number of
+sources cited
+3-6
+2-5
+5-15
+3-8
+Training data
+influence
+High
+High
+Low
+Low</p>
+</div><div class="chapter"><h1 id="5-platform-deep-dives-engine-by-engine-optimisation"><span class="chapter-number">Chapter 05</span>5. Platform Deep Dives: Engine-by-Engine Optimisation</h1>
+<p>This section provides specific, actionable optimisation tactics for each AI engine. While
+many GEO principles apply universally, each platform has unique characteristics that reward
+tailored strategies.</p>
+<h2 id="51-chatgpt-deep-dive">5.1 ChatGPT Deep Dive</h2>
+<p>Understanding ChatGPT&rsquo;s source selection:
+ChatGPT draws from two distinct pools: its training data (for queries where browsing is not
+triggered) and live web search via Bing (for queries requiring current information). This dual-
+source nature means you need to optimise for both.
+Training data optimisation:
+ChatGPT&rsquo;s training data includes a vast corpus of web content, books, and licensed
+material. Brands that appeared frequently in high-quality content before the training cutoff
+have an inherent advantage. While you cannot retroactively change training data, you can:
+FACTOR
+CHATGPT
+CLAUDE
+PERPLEXITY
+GOOGLE AI
+OVERVIEWS
+User base size
+Largest
+Growing
+Growing fast
+Largest (via Google
+Search)
+Best for B2B
+★★★★☆
+★★★★★
+★★★★☆
+★★★☆☆
+Best for B2C
+★★★★★
+★★★☆☆
+★★★★☆
+★★★★★
+Best for local
+★★☆☆☆
+★☆☆☆☆
+★★★☆☆
+★★★★★
+Ensure your brand has a strong, accurate Wikipedia presence
+Maintain an active, high-quality presence on platforms heavily represented in training
+data (Reddit, Stack Overflow, major news outlets)
+Publish on platforms with data licensing agreements with OpenAI (e.g., Associated Press,
+specific publishers)</p>
+<p>Live search optimisation (Bing-dependent):
+When ChatGPT browses the web, it uses Bing as its search backbone. This means Bing SEO
+directly influences ChatGPT citations.
+ChatGPT-specific content tactics:
+BING OPTIMISATION TACTIC
+WHY IT MATTERS FOR CHATGPT
+Submit your sitemap to Bing Webmaster Tools
+Ensures full indexing in Bing, which feeds
+ChatGPT
+Optimise for Bing&rsquo;s ranking factors (social signals carry
+more weight than on Google)
+Higher Bing rank = more likely to be
+retrieved by ChatGPT
+Ensure fast page load times
+Bing weights page speed heavily in its
+ranking algorithm
+Use clear meta descriptions
+ChatGPT often surfaces meta descriptions
+as part of its synthesis
+Build links from .edu and .gov domains
+Bing places a higher premium on
+institutional links than Google does
+Write &ldquo;definition-first&rdquo; content. ChatGPT frequently quotes the first sentence of a
+page when defining a concept. Ensure your opening sentence is a clean, authoritative
+definition.
+1
+Create comprehensive comparison pages. ChatGPT excels at comparative
+recommendations (&ldquo;X vs Y&rdquo; or &ldquo;Best tools for Z&rdquo;). Build thorough, balanced comparison
+content that the model can synthesise.
+2
+Include brand + category associations. ChatGPT often relies on co-occurrence
+patterns. If your brand is consistently mentioned alongside your target category (e.g.,
+&ldquo;MailFlow, the email marketing platform for e-commerce&rdquo;), the model learns that
+association.
+3
+Leverage Reddit strategically. Reddit is one of the most heavily represented platforms
+in ChatGPT&rsquo;s training data. Genuine participation in relevant subreddits, including
+helpful answers that mention your brand naturally, can influence training-data-based
+recommendations.
+4
+Robots.txt configuration:
+5</p>
+<p>Testing protocol for ChatGPT:
+Run these prompts monthly and track results:</p>
+<h2 id="52-claude-deep-dive">5.2 Claude Deep Dive</h2>
+<p>Understanding Claude&rsquo;s source selection:
+Claude is built by Anthropic with a strong emphasis on accuracy, nuance, and safety. This
+makes Claude uniquely valuable for professional and B2B contexts: users trust Claude for
+high-stakes research, technical analysis, and balanced recommendations. Claude&rsquo;s web
+search, when enabled, tends to retrieve fewer but higher-quality sources.
+What makes Claude different:</p>
+<pre><code>User-agent: GPTBot
+Allow: /
+</code></pre>
+<p>TEST PROMPT
+WHAT YOU ARE MEASURING
+&ldquo;What is [your product category]?&rdquo;
+Whether your brand appears in the
+definition
+&ldquo;What are the best [product category] tools?&rdquo;
+Whether you are in the recommendation
+list
+&ldquo;Compare [your brand] vs [competitor]&rdquo;
+How accurately the AI describes your
+product
+&ldquo;[Your brand] review&rdquo;
+What the AI says about your reputation
+&ldquo;I need a [product] that does [specific feature]. What do you
+recommend?&rdquo;
+Whether you appear for feature-specific
+queries</p>
+<p>Claude-specific content tactics:
+CHARACTERISTIC
+IMPLICATION FOR GEO
+Emphasis on accuracy and
+truthfulness
+Content with hedging, caveats, and balanced perspectives
+performs better
+Trained on high-quality, long-form
+content
+In-depth articles outperform short-form listicles
+Conservative citation style
+Getting cited by Claude means your content passed a high
+quality bar
+Strong at technical and professional
+topics
+B2B and technical content gets disproportionate
+representation
+Prefers primary sources
+Original research and first-party data are strongly favoured
+Write with intellectual honesty. Claude&rsquo;s training emphasises nuance. Content that
+acknowledges trade-offs, limitations, and alternative perspectives is more likely to be
+cited than content that makes absolute, unqualified claims.
+1
+❌ &ldquo;Our platform is the best solution for every business.&rdquo;
+2
+❌ &ldquo;Our platform is particularly well-suited for teams of 20-100 with complex workflows,
+though businesses with simpler needs may find lighter-weight alternatives more cost-
+effective.&rdquo;
+3
+Include methodology sections. When presenting data or research, explain how the
+data was collected. Claude values transparency and is more likely to cite sources that
+show their working.
+4
+Build technical depth. Claude users tend to ask more technical, specific questions than
+ChatGPT users. Ensure your content goes deep enough to answer questions like:
+&ldquo;What&rsquo;s the architecture behind [your product]?&rdquo; or &ldquo;How does [your product] handle
+[specific edge case]?&rdquo;
+5
+Publish on platforms Claude respects. Focus on:
+6
+Academic and research platforms (arXiv, Google Scholar)
+7
+Technical blogs and documentation
+8
+Industry journals with peer review or editorial standards
+9
+Professional association publications
+10</p>
+<p>Claude user persona:
+Understanding who uses Claude helps you tailor content for AI citation:</p>
+<h2 id="53-perplexity-deep-dive">5.3 Perplexity Deep Dive</h2>
+<p>Understanding Perplexity&rsquo;s source selection:
+Perplexity is the most citation-transparent AI engine. Every response includes numbered
+inline citations linking directly to source URLs. This makes it the most measurable platform
+for GEO, and the one where optimisation has the most immediate, visible impact.
+Perplexity&rsquo;s retrieval characteristics:
+Robots.txt configuration:
+11</p>
+<pre><code>User-agent: ClaudeBot
+Allow: /
+</code></pre>
+<p>SEGMENT
+TYPICAL QUERY
+CONTENT NEEDED
+Software
+developers
+&ldquo;What&rsquo;s the best approach to
+[technical problem]?&rdquo;
+Technical documentation, architecture
+guides, code examples
+Business
+analysts
+&ldquo;Compare [solution A] vs [solution B]
+for [specific use case]&rdquo;
+Detailed comparison pages with real
+metrics
+Researchers
+&ldquo;What does the evidence say about
+[topic]?&rdquo;
+Literature reviews, original research,
+meta-analyses
+Consultants
+&ldquo;Create a framework for [business
+challenge]&rdquo;
+Frameworks, templates, methodology
+explanations
+Legal/
+compliance
+&ldquo;What are the requirements for
+[regulation]?&rdquo;
+Regulatory guides, compliance
+checklists</p>
+<p>Perplexity-specific content tactics:
+BEHAVIOUR
+DETAIL
+Sources per response
+5-15 (significantly more than other engines)
+Real-time indexing
+Perplexity crawls the live web for every query; freshness is critical
+Source diversity
+Tends to cite a mix of authoritative sites and niche experts
+Content format
+preference
+Strong preference for structured, data-rich content
+Update sensitivity
+Content updated within the last 30 days has a measurable citation
+advantage
+Publish and update frequently. Perplexity&rsquo;s real-time crawling means that a page
+updated yesterday will often outperform a higher-authority page updated six months
+ago. Implement a weekly content refresh schedule for your highest-priority pages.
+1
+Structure content as Q&amp;A. Perplexity decomposes user queries into sub-questions and
+searches for direct answers. Using question-format headings (H2: &ldquo;How much does X
+cost?&rdquo;, H3: &ldquo;What are the key features of X?&rdquo;) aligns perfectly with this behaviour.
+2
+Load pages with structured data. Perplexity&rsquo;s parser favours pages with:
+3
+Comparison tables
+4
+Numbered lists
+5
+Clear section headings
+6
+Statistics with named sources
+7
+FAQ schema markup
+8
+Optimise for long-tail, specific queries. Perplexity users tend to ask highly specific
+questions. Instead of targeting &ldquo;best CRM,&rdquo; target &ldquo;best CRM for 20-person marketing
+agencies that integrates with HubSpot and Xero.&rdquo;
+9
+Create &ldquo;source-worthy&rdquo; content. Because Perplexity shows its sources prominently,
+users can and do click through. Make sure your cited pages deliver on the promise: the
+content should be comprehensive, current, and visually professional.
+10
+Robots.txt configuration:
+11</p>
+<p>Perplexity citation scoring matrix:
+Based on analysis of 500+ Perplexity responses across multiple industries, here is what
+correlates most strongly with citation:</p>
+<h2 id="54-google-ai-overviews-deep-dive">5.4 Google AI Overviews Deep Dive</h2>
+<p>Understanding Google AI Overviews&rsquo; source selection:
+Google AI Overviews (formerly Search Generative Experience) is unique because it is built
+on top of Google&rsquo;s existing search infrastructure. This means traditional SEO is a direct
+prerequisite for AI Overview citation: Google almost exclusively cites pages already ranking
+in the top 10 organic results.</p>
+<pre><code>User-agent: PerplexityBot
+Allow: /
+</code></pre>
+<p>FACTOR
+CORRELATION WITH
+CITATION
+ACTIONABLE STEP
+Content freshness
+(updated &lt; 30 days)
+Very Strong
+Update key pages at least monthly
+Presence of statistics/data
+points
+Strong
+Include 3+ data points per page
+Question-format headings
+Strong
+Rewrite H2/H3 tags as questions
+Domain authority (DR 50+)
+Moderate-Strong
+Build backlinks through traditional SEO
+Table/list formatting
+Moderate
+Add at least one table per major page
+Page load speed (&lt; 2
+seconds)
+Moderate
+Optimise images, use CDN, enable
+caching
+Original research or data
+Strong
+Publish proprietary surveys,
+benchmarks, case studies</p>
+<p>Google AI Overviews retrieval characteristics:
+Google AI Overviews-specific content tactics:
+Priority schema types for AI Overviews:
+BEHAVIOUR
+DETAIL
+Source selection
+pool
+Predominantly from existing top 10 organic results
+Citation format
+Source cards with site name, favicon, page title, and thumbnail
+Query types
+Informational, comparative, and local queries most commonly trigger AI
+Overviews
+Schema influence
+FAQ, HowTo, and Product schema significantly increase citation probability
+Click-through impact
+AI Overviews reduce organic CTR by 20-60% for featured queries
+SEO is your entry ticket. Unlike other AI engines where brand mentions and content
+quality alone can earn citations, Google AI Overviews requires traditional ranking. If you
+are not in the top 10 organic results for a query, you will almost never be cited in the AI
+Overview for that query. Prioritise traditional SEO for your most important keywords.
+1
+Implement comprehensive schema markup. Google AI Overviews use schema to
+understand content structure at a granular level.
+2
+SCHEMA TYPE
+BEST FOR
+AI OVERVIEW IMPACT
+FAQPage
+Q&amp;A content, knowledge
+bases
+High: directly feeds AI answer generation
+HowTo
+Tutorials, guides,
+processes
+High: step-by-step content is frequently
+featured
+Product
+Product pages,
+comparisons
+High: commercial query answers pull from
+product schema
+Article
+Blog posts, news,
+analysis
+Medium: helps identify freshness and
+authorship</p>
+<p>Note: Google-Extended  is the specific user agent for Google&rsquo;s AI training and Gemini.
+Allowing both Googlebot  and Google-Extended  ensures full visibility.
+Google AI Overview trigger analysis:
+Not all queries generate AI Overviews. Understanding which types do helps you prioritise.
+SCHEMA TYPE
+BEST FOR
+AI OVERVIEW IMPACT
+LocalBusiness
+Location-based
+businesses
+High: critical for local AI Overview features
+Organisation
+Company pages, about
+pages
+Medium: establishes entity identity
+Review  / 
+AggregateRating
+Review pages,
+testimonials
+Medium-High: social proof influences
+recommendation
+Optimise your Google Business Profile. For local and commercial queries (&ldquo;best
+restaurants near me,&rdquo; &ldquo;plumber in Manchester&rdquo;), Google AI Overviews pull heavily from
+Business Profile data. Ensure yours is complete, current, and has strong reviews.
+1
+Write concise, direct opening paragraphs. Google AI Overviews frequently pull the
+first 1-2 sentences of a page as the core of a cited passage. Make sure your opening
+paragraph is a standalone, factual answer to the query your page targets.
+2
+Build authoritative, original content. Pages with original research, proprietary data, or
+named expert quotes are cited more frequently than pages that simply aggregate
+existing information.
+3
+Robots.txt configuration:
+4</p>
+<pre><code>User-agent: Googlebot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+</code></pre>
+</div><div class="chapter"><h1 id="6-the-12-pillars-of-geo-ready-content"><span class="chapter-number">Chapter 06</span>6. The 12 Pillars of GEO-Ready Content</h1>
+<p>These are the actionable strategies that move the needle. Each pillar is grounded in
+published research, platform testing, and real-world results.</p>
+<h2 id="pillar-1-lead-with-a-direct-quotable-answer">Pillar 1: Lead with a Direct, Quotable Answer</h2>
+<p>AI engines scan for concise, extractable answers, typically within the first 100 words of a
+page. Open every article with a clear, definitional statement.
+Rule of thumb: If an AI can&rsquo;t quote your opening paragraph as a standalone answer,
+rewrite it.
+The &ldquo;Wikipedia Test&rdquo;: Look at how Wikipedia opens its articles. The first sentence is always
+a clean, factual definition. Apply this principle to every page on your site.
+QUERY TYPE
+AI OVERVIEW
+FREQUENCY
+EXAMPLE
+OPTIMISATION
+PRIORITY
+Informational
+&ldquo;What is&hellip;&rdquo;
+Very High (80%+)
+&ldquo;What is generative
+engine optimisation?&rdquo;
+Highest: ensure definition-
+first content
+Comparative
+&ldquo;Best&hellip;&rdquo;
+High (60-70%)
+&ldquo;Best project
+management tools
+2026&rdquo;
+High: build comparison
+pages
+How-to queries
+High (60-70%)
+&ldquo;How to improve email
+deliverability&rdquo;
+High: use HowTo schema,
+step-by-step format
+Local queries
+Moderate-High
+(50-60%)
+&ldquo;Best Italian restaurant
+in Leeds&rdquo;
+High for local businesses:
+optimise GBP
+Transactional
+queries
+Low-Moderate
+(20-30%)
+&ldquo;Buy running shoes
+online&rdquo;
+Lower: Google tends to show
+shopping results instead
+Navigational
+queries
+Low (10-15%)
+&ldquo;Facebook login&rdquo;
+Low: users already know
+where they are going</p>
+<p>Example for a project management tool:
+The second version contains: a clear definition, a target audience, key features, and a
+credibility signal (3,000 agencies, 40 countries). Any AI engine could extract and cite this as
+a definitive description.</p>
+<h2 id="pillar-2-structure-for-machine-readability">Pillar 2: Structure for Machine Readability</h2>
+<p>Use semantic HTML and clear hierarchy:
+AI engines parse structured content far more effectively than dense paragraphs.
+Content structure scoring guide:
+❌ &ldquo;Welcome to ProjectFlow! We&rsquo;re passionate about helping teams do their best work.&rdquo;
+❌ &ldquo;ProjectFlow is a cloud-based project management platform designed for agencies and
+consultancies. It combines resource scheduling, time tracking, and client collaboration in
+a single dashboard, used by over 3,000 agencies across 40 countries.&rdquo;
+H1 for the page title (one per page)
+H2 for major sections
+H3 for sub-topics within sections
+Bulleted and numbered lists for steps, features, and comparisons
+Tables for structured comparisons
+Bold text for key terms and definitions
+ELEMENT
+GEO
+IMPACT
+HOW TO IMPLEMENT
+Proper heading
+hierarchy
+High
+Every page: H1 &gt; H2 &gt; H3, no skipped levels
+Tables
+High
+At least one data table per major page
+Numbered/bulleted lists
+Medium-High
+Use for any content involving steps, features, or
+options
+Bold key terms
+Medium
+Bold the first instance of every important term</p>
+<h2 id="pillar-3-embed-statistics-and-data-points">Pillar 3: Embed Statistics and Data Points</h2>
+<p><img alt="GEO Optimisation Impact on AI Visibility" src="images/2026-02-03-geo-optimisation-impact.png" /></p>
+<p>The GEO research paper found that content containing statistics and cited data achieved 
+30-40% higher visibility in AI-generated responses compared to content without them.
+Every major claim should be supported by a number.
+The statistical density benchmark:
+Where to find credible statistics:
+ELEMENT
+GEO
+IMPACT
+HOW TO IMPLEMENT
+FAQ sections
+High
+Add 3-5 Q&amp;A pairs at the bottom of relevant pages
+Table of contents
+Medium
+Add to any page over 1,500 words
+❌ &ldquo;Our product significantly reduces onboarding time.&rdquo;
+❌ &ldquo;Our product reduces onboarding time by 47%, based on a 2025 study of 1,200
+enterprise users (Source: Forrester Research).&rdquo;
+CONTENT LENGTH
+MINIMUM STATISTICS
+OPTIMAL STATISTICS
+Under 500 words
+2
+3-4
+500-1,500 words
+4
+6-8
+1,500-3,000 words
+8
+12-15
+Over 3,000 words
+12
+15-20
+Industry analyst reports (Gartner, Forrester, McKinsey, Deloitte)
+Government data (ONS, BLS, Eurostat)
+Academic research papers (Google Scholar)
+Industry association surveys
+Your own customer data and case studies (the most valuable source of all)</p>
+<h2 id="pillar-4-include-expert-quotations">Pillar 4: Include Expert Quotations</h2>
+<p>Content with attributed expert quotes performs measurably better in generative engines.
+The original research showed that adding quotations from credible sources improved
+visibility by up to 25% in GEO benchmarks.
+Name real people. Include their credentials. Make the quotes specific and substantive.
+Expert quote formula:
+&ldquo;[Specific, substantive claim],&rdquo; says [Full Name], [Title] at [Organisation]. 
+&ldquo;[Supporting context or additional insight].&rdquo;
+Example:
+&ldquo;The biggest mistake brands make in GEO is focusing solely on their own website,&rdquo;
+says Dr. Sarah Chen, Director of Search Research at the Digital Marketing Institute. 
+&ldquo;AI engines prioritise consensus across multiple sources. If your brand only appears
+on your own domain, you&rsquo;re invisible to the algorithm.&rdquo;
+Finding experts to quote:
+SOURCE
+HOW TO USE
+LinkedIn
+Find industry leaders willing to provide quotes for coverage
+HARO / Qwoted / Help a B2B Writer
+Journalist platforms where experts volunteer quotes
+Industry conferences
+Quote speakers (with attribution) from public talks
+Your own team
+Internal subject-matter experts with genuine credentials
+Academic researchers
+Quote published papers with proper citation</p>
+<h2 id="pillar-5-build-topical-authority-through-content-clusters">Pillar 5: Build Topical Authority Through Content Clusters</h2>
+<p>Do not write one article: build a content cluster. A comprehensive hub page linking to 10-20
+supporting articles on related sub-topics signals deep expertise to AI engines.
+Content cluster scoring:</p>
+<h2 id="pillar-6-earn-brand-mentions-everywhere">Pillar 6: Earn Brand Mentions Everywhere</h2>
+<p>Unlike traditional SEO, unlinked brand mentions appear to carry significant weight in GEO.
+AI engines do not need a hyperlink to register that your brand is associated with a topic; they
+just need to see your name mentioned in context.
+Priority platforms for brand mentions:
+Hub: &ldquo;Complete Guide to Remote Work Tools&rdquo;
+├── &ldquo;Best Video Conferencing Platforms 2026&rdquo;
+├── &ldquo;How to Choose a Project Management Tool&rdquo;
+├── &ldquo;Remote Team Communication: Slack vs Teams vs Discord&rdquo;
+├── &ldquo;Asynchronous Work: A Manager&rsquo;s Guide&rdquo;
+├── &ldquo;Remote Onboarding: A Step-by-Step Process&rdquo;
+├── &ldquo;Cybersecurity for Remote Teams&rdquo;
+├── &ldquo;Time Zone Management for Distributed Teams&rdquo;
+└── &hellip; (10+ more supporting articles)
+CLUSTER SIZE
+AUTHORITY SIGNAL
+TYPICAL AI VISIBILITY LIFT
+1 article (standalone)
+Minimal
+Baseline
+3-5 articles (small cluster)
+Moderate
+10-15% improvement
+6-12 articles (medium cluster)
+Strong
+20-35% improvement
+13-20 articles (large cluster)
+Very strong
+35-50% improvement
+20+ articles (comprehensive hub)
+Dominant
+50%+ improvement</p>
+<h2 id="pillar-7-optimise-for-conversational-queries">Pillar 7: Optimise for Conversational Queries</h2>
+<p>People ask AI engines questions differently than they type into Google. Queries are longer,
+more conversational, and often multi-part.
+Traditional search: &ldquo;best CRM small business&rdquo; AI query: &ldquo;I run a 12-person marketing
+agency in Manchester. What CRM would you recommend and why?&rdquo;
+Structure your content to answer the intent behind the conversation, not just the keyword.
+Conversational query patterns to optimise for:
+PLATFORM
+STRATEGY
+EFFORT
+LEVEL
+IMPACT
+Industry
+publications
+Guest posts, expert commentary,
+contributed articles
+High
+Very High
+Reddit
+Genuine participation in relevant
+subreddits
+Medium
+High
+YouTube
+Video mentions, descriptions,
+transcripts
+Medium
+High
+Podcast show
+notes
+Guest appearances on relevant
+podcasts
+Medium
+Medium-High
+Wikipedia
+Article creation (if notable) or mention
+in relevant articles
+Very High
+Very High
+G2 / Trustpilot /
+Capterra
+Encourage authentic customer
+reviews
+Medium
+High
+Quora / Stack
+Overflow
+Expert answers mentioning your
+brand naturally
+Low-Medium
+Medium
+LinkedIn articles
+Thought leadership from team
+members
+Low
+Medium
+GitHub
+Open-source contributions,
+documentation
+Medium
+Medium (for tech
+brands)</p>
+<h2 id="pillar-8-publish-original-research-and-proprietary-data">Pillar 8: Publish Original Research and Proprietary Data</h2>
+<p>Nothing earns AI citations faster than being a primary source. If you can publish original
+surveys, benchmark reports, case studies with real numbers, or industry analysis that no
+one else has, you become the source that every AI must cite.
+Types of original research and their GEO value:
+PATTERN
+EXAMPLE
+CONTENT STRATEGY
+Recommendation
+request
+&ldquo;What would you recommend
+for&hellip;&rdquo;
+Create recommendation guides with
+criteria-based suggestions
+Scenario-based
+&ldquo;I have [specific situation].
+What should I&hellip;&rdquo;
+Include diverse use cases and scenarios in
+your content
+Comparison
+&ldquo;Which is better, X or Y, for
+[use case]?&rdquo;
+Build detailed comparison pages with use-
+case context
+Explanation
+&ldquo;Explain [concept] in simple
+terms&rdquo;
+Write jargon-free explanations alongside
+technical content
+Opinion-seeking
+&ldquo;What do experts think
+about&hellip;&rdquo;
+Include expert quotes and diverse
+perspectives
+RESEARCH TYPE
+EFFORT
+GEO
+VALUE
+EXAMPLE
+Customer survey
+Medium
+Very High
+&ldquo;We surveyed 500 UK marketing managers
+and found that&hellip;&rdquo;
+Benchmark report
+High
+Highest
+&ldquo;2026 Email Marketing Benchmarks:
+Analysis of 2 Billion Emails&rdquo;
+Case study with
+metrics
+Low-
+Medium
+High
+&ldquo;How [Client] reduced churn by 23% in 90
+days&rdquo;
+Industry analysis
+Medium
+High
+&ldquo;State of AI in UK Financial Services: 2026
+Report&rdquo;</p>
+<h2 id="pillar-9-keep-content-ruthlessly-fresh">Pillar 9: Keep Content Ruthlessly Fresh</h2>
+<p>Perplexity and Google AI Overviews both heavily favour recent content. Implement a content
+refresh calendar:
+Include visible &ldquo;Last updated&rdquo; dates; both AI crawlers and users value recency signals.
+Content freshness priority matrix:
+RESEARCH TYPE
+EFFORT
+GEO
+VALUE
+EXAMPLE
+Proprietary data
+visualisation
+Low
+Medium-
+High
+Charts and graphs from your own platform
+data
+Monthly: Update key statistics, check links, revise any outdated claims
+Quarterly: Add new examples, expand sections, incorporate new research
+Bi-annually: Restructure and expand based on new queries you are seeing
+Annually: Full rewrite with updated research and fresh expert contributions
+CONTENT TYPE
+REFRESH
+FREQUENCY
+WHY
+Product comparisons
+Monthly
+Features and pricing change constantly
+Industry statistics
+Quarterly
+New data releases make old numbers
+obsolete
+How-to guides
+Quarterly
+Tools and processes evolve
+Evergreen definitions
+Bi-annually
+Core concepts change slowly
+Case studies
+Annually
+Results and context may shift
+Technical
+documentation
+As needed
+Must match current product/service reality</p>
+<h2 id="pillar-10-implement-comprehensive-schema-markup">Pillar 10: Implement Comprehensive Schema Markup</h2>
+<p>Structured data helps AI engines understand what your content is, not just what it says.
+Essential schema types for GEO: - Article : publication date, author, headline - FAQPage :
+question-and-answer pairs - HowTo : step-by-step processes - Product : specifications,
+pricing, reviews - Organisation : brand identity and contact details - Person : author
+expertise and credentials
+Schema implementation priority:</p>
+<h2 id="pillar-11-ensure-technical-accessibility-for-ai-crawlers">Pillar 11: Ensure Technical Accessibility for AI Crawlers</h2>
+<p>AI crawlers differ from traditional search crawlers. Many struggle with:
+SCHEMA
+TYPE
+PRIORITY
+PAGES TO APPLY
+IMPACT ON GEO
+FAQPage
+Highest
+FAQ pages, knowledge base, product
+pages with Q&amp;A sections
+Direct feed into AI
+answers
+Article
+High
+All blog posts, guides, and editorial
+content
+Freshness signals,
+authorship
+HowTo
+High
+Tutorials, process guides, onboarding
+content
+Step-by-step citation
+Product
+High
+Product pages, pricing pages,
+comparison pages
+Commercial query
+answers
+Organisation
+Medium
+Homepage, about page
+Brand entity
+recognition
+Person
+Medium
+Author pages, team pages
+E-E-A-T signals
+LocalBusiness
+High (if
+local)
+Location pages, contact pages
+Local AI Overview
+features
+Client-side JavaScript rendering: Use server-side rendering (SSR) or static site
+generation (SSG) where possible
+Paywalled or gated content: AI crawlers typically cannot log in or bypass access
+restrictions</p>
+<p>Robots.txt audit: Check that you are not blocking AI crawlers. The major user agents to
+allow:
+Technical accessibility checklist:
+Heavily dynamic content: Ensure critical information is in the initial HTML response</p>
+<pre><code>User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+</code></pre>
+<p>FACTOR
+TEST
+TOOL
+AI crawlers
+allowed
+Check robots.txt for GPTBot, ClaudeBot,
+PerplexityBot, Google-Extended
+Manual review or
+robots.txt validator
+Server-side
+rendering
+View page source (not inspect element); is key
+content in the HTML?
+Browser &ldquo;View Source&rdquo;
+Page load speed
+Under 3 seconds for full page load
+Google PageSpeed
+Insights
+Mobile
+responsive
+Content accessible and readable on mobile
+devices
+Google Mobile-Friendly
+Test
+HTTPS
+Site uses HTTPS, no mixed content warnings
+Browser security indicator
+Schema
+validation
+Schema markup is valid and complete
+Google Rich Results Test</p>
+<h2 id="pillar-12-write-for-synthesis-not-just-ranking">Pillar 12: Write for Synthesis, Not Just Ranking</h2>
+<p>Traditional SEO content often buries the answer to pad word count. AI engines extract and
+synthesise; they do not reward length for its own sake.
+Write every paragraph as if it might be the only paragraph the AI reads. Make each section
+self-contained, factual, and valuable in isolation.
+The &ldquo;extraction test&rdquo;: For each major section of your content, ask: &ldquo;If an AI pulled just this
+paragraph and showed it to a user, would it make sense on its own? Would it be useful?
+Would it be accurate?&rdquo; If the answer to any of these is no, rewrite it.
+Synthesis-friendly writing patterns:
+FACTOR
+TEST
+TOOL
+Sitemap
+XML sitemap is current and submitted to Bing
+Webmaster Tools
+Bing Webmaster Tools
+PATTERN
+EXAMPLE
+WHY IT WORKS
+Definition-first
+&ldquo;GEO is the practice of&hellip;&rdquo;
+AI can extract as a standalone
+answer
+Claim + evidence
+&ldquo;Email marketing ROI averages £36:£1
+(DMA, 2025)&rdquo;
+Citable with built-in source
+Comparison
+structure
+&ldquo;Tool A costs £50/mo; Tool B costs £80/
+mo but includes&hellip;&rdquo;
+AI can synthesise comparisons from
+structured data
+Step-by-step
+&ldquo;Step 1: Audit your robots.txt. Step 2:
+Check schema markup.&rdquo;
+Clear sequence for how-to answers</p>
+</div><div class="chapter"><h1 id="7-before-after-real-optimisation-examples"><span class="chapter-number">Chapter 07</span>7. Before &amp; After: Real Optimisation Examples</h1>
+<h2 id="example-1-saas-product-page">Example 1: SaaS Product Page</h2>
+<p>✅ Before (traditional marketing copy):
+Welcome to CloudSync, the revolutionary platform that&rsquo;s transforming how teams
+collaborate in the modern workplace. Our innovative solution leverages cutting-edge
+technology to deliver an unparalleled experience. With CloudSync, your team will
+achieve new heights of productivity.
+✅ After (GEO-optimised):
+CloudSync is a cloud-based team collaboration platform used by over 14,000
+organisations across 80 countries. It combines real-time document editing, task
+management, and video conferencing in a single workspace. In a 2025 benchmark
+study by Forrester, teams using CloudSync reported a 34% reduction in context-
+switching and a 28% improvement in project delivery times compared to using
+separate tools.
+Why it works: The optimised version contains a clear definition, specific numbers, a named
+research source, and factual claims an AI can confidently cite. The original is pure fluff; no
+AI would ever quote it.
+GEO score comparison:
+FACTOR
+BEFORE
+AFTER
+Quotable definition
+❌
+❌
+Specific statistics
+❌
+❌ (14,000 orgs, 80 countries, 34%, 28%)
+Named source
+❌
+❌ (Forrester)
+Extractable as standalone
+❌
+❌</p>
+<h2 id="example-2-blog-post-introduction">Example 2: Blog Post Introduction</h2>
+<p>✅ Before:
+In today&rsquo;s fast-paced digital landscape, email marketing remains one of the most
+powerful tools in a marketer&rsquo;s arsenal. But are you really making the most of it? In
+this comprehensive guide, we&rsquo;ll explore everything you need to know about email
+marketing in 2026.
+✅ After:
+Email marketing generates an average return of £36 for every £1 spent, making it the
+highest-ROI channel in digital marketing (DMA, 2025). This guide covers the five
+strategies that drove the best results in 2025-26: segmentation, behavioural triggers,
+interactive emails, AI-powered personalisation, and deliverability optimisation. Each
+section includes benchmarks, examples, and implementation steps.
+Why it works: The optimised version opens with a cited statistic, previews specific content,
+and reads as an authoritative reference. An AI answering &ldquo;What is the ROI of email
+marketing?&rdquo; would cite this immediately.</p>
+<h2 id="example-3-faq-section">Example 3: FAQ Section</h2>
+<p>✅ Before:
+FACTOR
+BEFORE
+AFTER
+Target audience clarity
+❌
+❌ (teams, organisations)</p>
+<p>Q: How long does shipping take? A: Shipping times vary depending on your location
+and the shipping method you choose. We offer several options to meet your needs.
+✅ After:
+Q: How long does shipping take? A: Standard UK delivery takes 3-5 working days.
+Express delivery arrives within 1-2 working days. International shipping to Europe
+takes 5-10 working days and worldwide 10-21 working days. All orders include
+tracking. Orders placed before 2:00 PM GMT on weekdays are despatched the same
+day.
+Why it works: Specificity. AI engines prioritise content that answers questions completely in
+a single passage. Vague answers are never cited.</p>
+<h2 id="example-4-professional-services-about-page">Example 4: Professional Services &ldquo;About&rdquo; Page</h2>
+<p>✅ Before:
+At Smith &amp; Partners, we pride ourselves on delivering exceptional legal services. Our
+team of dedicated professionals is committed to achieving the best outcomes for our
+clients. With decades of combined experience, we bring a wealth of knowledge to
+every case.
+✅ After:</p>
+<p>Smith &amp; Partners is a commercial law firm based in Manchester, specialising in
+technology transactions, data protection (UK GDPR), and intellectual property
+licensing. Founded in 2008, the firm has 34 solicitors across three offices
+(Manchester, London, Edinburgh) and advises over 200 technology companies
+annually, from seed-stage startups to FTSE 250 enterprises. The firm was ranked in
+Legal 500 (2025) for Technology and Telecoms and holds a Chambers UK Band 2
+ranking for IP in the North West.
+Why it works: The original says nothing an AI could cite. The revised version is packed with
+extractable facts: location, specialisms, founding year, team size, client volume, and named
+third-party rankings. When an AI is asked &ldquo;Which law firms in Manchester specialise in
+technology law?&rdquo;, this version provides everything it needs to include Smith &amp; Partners in the
+answer.
+GEO score comparison:</p>
+<h2 id="example-5-e-commerce-product-description">Example 5: E-commerce Product Description</h2>
+<p>✅ Before:
+FACTOR
+BEFORE
+AFTER
+Location specified
+❌
+❌ (Manchester, London, Edinburgh)
+Specialisms named
+❌
+❌ (tech transactions, GDPR, IP)
+Verifiable credentials
+❌
+❌ (Legal 500, Chambers UK)
+Quantified scale
+❌
+❌ (34 solicitors, 200+ clients)
+Founded date
+❌
+❌ (2008)</p>
+<p>Our amazing noise-cancelling headphones deliver an incredible listening experience.
+With state-of-the-art technology and premium materials, these headphones are
+perfect for music lovers who demand the best. Available in three stylish colours.
+✅ After:
+The SonicPro NC-700 noise-cancelling headphones use hybrid active noise
+cancellation with four microphones per ear cup, reducing ambient noise by up to
+38dB. Battery life is rated at 32 hours with ANC enabled and 45 hours without. They
+weigh 254g, support Bluetooth 5.3 with multipoint connection (two devices
+simultaneously), and include USB-C fast charging (15 minutes for 5 hours of
+playback). Rated 4.6/5 across 2,300 reviews on Trustpilot. Available in Graphite
+Black, Arctic White, and Navy Blue. RRP: £249.
+Why it works: The original is undifferentiated marketing copy. The revised version is a
+specification sheet that AI engines can parse, compare, and cite. When a user asks &ldquo;What
+are the best noise-cancelling headphones under £300?&rdquo;, the AI has concrete data to work
+with: specific dB reduction, battery life, weight, Bluetooth version, and price. These are the
+exact data points that AI engines extract for comparison answers.
+GEO score comparison:
+FACTOR
+BEFORE
+AFTER
+Product model name
+❌
+❌ (SonicPro NC-700)
+Technical specifications
+❌
+❌ (38dB, 32hrs, 254g, BT 5.3)
+Social proof
+❌
+❌ (4.6/5, 2,300 reviews)
+Price
+❌
+❌ (£249)
+Comparable data points
+❌
+❌ (every spec is comparable)</p>
+<h2 id="example-6-b2b-case-study">Example 6: B2B Case Study</h2>
+<p>✅ Before:
+&ldquo;Working with DataPulse transformed our business. Their team was incredibly
+professional and the results speak for themselves. We couldn&rsquo;t be happier with the
+partnership.&rdquo; , Happy Client
+✅ After:
+Case Study: How Meridian Logistics Reduced Freight Costs by 19% with DataPulse
+Client: Meridian Logistics, a UK-based 3PL provider with £45M annual revenue and
+120 employees. Challenge: Manual route planning was causing an estimated
+£780,000 in unnecessary fuel costs annually. Solution: DataPulse&rsquo;s AI-powered
+route optimisation platform, deployed across Meridian&rsquo;s fleet of 340 vehicles over a
+12-week rollout. Results: 19% reduction in fuel costs (£148,000 annual saving), 23%
+improvement in delivery punctuality, and ROI achieved in 4.5 months. &ldquo;DataPulse
+paid for itself before the end of Q2. The route optimisation alone saved us more than
+the entire annual licence fee,&rdquo; says James Whitfield, Operations Director at Meridian
+Logistics.
+Why it works: The original is a generic testimonial that no AI would cite. The revised version
+is a structured case study with named client, specific challenge, measurable results, and an
+attributed quote. When an AI is asked &ldquo;What are the benefits of AI route optimisation for
+logistics companies?&rdquo;, this case study provides exactly the kind of evidence it needs.</p>
+</div><div class="chapter"><h1 id="8-the-content-audit-framework"><span class="chapter-number">Chapter 08</span>8. The Content Audit Framework</h1>
+<p>This framework provides a systematic, step-by-step process for auditing your existing
+content for GEO readiness. Use it to evaluate and prioritise improvements across your entire
+site.</p>
+<h2 id="step-1-identify-your-priority-pages">Step 1: Identify Your Priority Pages</h2>
+<p>Not every page needs GEO optimisation. Start with the pages that drive the most business
+value.
+Priority page selection criteria:
+Action: List your top 20 pages by business impact. These are your GEO audit candidates.</p>
+<h2 id="step-2-run-the-geo-readiness-score">Step 2: Run the GEO Readiness Score</h2>
+<p>For each priority page, score it against the following criteria. Each item scores 0 (absent), 1
+(partial), or 2 (fully present).
+GEO Readiness Scorecard:
+CRITERION
+HOW TO ASSESS
+WEIGHT
+Revenue impact
+Pages that directly drive leads, sales, or conversions
+★★★★★
+Search volume
+Pages targeting keywords with significant monthly search volume
+★★★★☆
+Current ranking
+Pages already ranking in top 20 (easier to optimise than starting
+from scratch)
+★★★★☆
+AI query
+relevance
+Pages targeting topics that users commonly ask AI engines about
+★★★★☆
+Competitive gap
+Topics where competitors are being cited but you are not
+★★★★★</p>
+<h3 id="_1"></h3>
+<p>CRITERION
+0 (ABSENT)
+1 (PARTIAL)
+2 (FULLY
+PRESENT)
+SCORE
+1
+Quotable
+opening
+paragraph
+No clear
+definition or
+direct answer
+Definition exists
+but lacks
+specificity
+Clean, extractable
+definition with key
+facts
+/2
+2
+Statistics and
+data points
+No statistics
+1-2 stats without
+named sources
+3+ stats with
+named, credible
+sources
+/2</p>
+<h3 id="_2"></h3>
+<p>CRITERION
+0 (ABSENT)
+1 (PARTIAL)
+2 (FULLY
+PRESENT)
+SCORE
+3
+Expert quotes
+No expert
+quotes
+Generic
+testimonials
+Named experts
+with credentials
+and specific claims
+/2
+4
+Heading
+structure
+Poor or no
+heading
+hierarchy
+Some headings
+but inconsistent
+Full H1 &gt; H2 &gt; H3
+hierarchy, no
+skipped levels
+/2
+5
+Tables and lists
+No tables or
+lists
+Some formatting
+Tables for
+comparisons, lists
+for features/steps
+/2
+6
+FAQ section
+No FAQ
+Partial FAQ
+Comprehensive
+FAQ with question-
+format headings
+/2
+7
+Schema markup
+No schema
+Basic schema
+(Article only)
+Comprehensive
+schema (FAQ,
+HowTo, Product,
+etc.)
+/2
+8
+Freshness
+signals
+No update date,
+content over 12
+months old
+Updated within
+12 months
+Updated within 90
+days with visible
+date
+/2
+9
+External brand
+mentions
+Fewer than 3
+external
+mentions for
+the target topic
+3-10 external
+mentions
+10+ external
+mentions across
+diverse sources
+/2
+10
+AI crawler
+access
+AI crawlers
+blocked in
+robots.txt
+Some crawlers
+allowed
+All major AI
+crawlers explicitly
+allowed
+/2
+11
+Self-contained
+sections
+Sections
+require context
+from other
+parts of the
+page
+Most sections
+standalone
+Every section
+extractable as a
+standalone answer
+/2</p>
+<p>Scoring interpretation:</p>
+<h2 id="step-3-conduct-the-technical-audit">Step 3: Conduct the Technical Audit</h2>
+<p>For each priority page, check the following technical factors:
+Technical audit walkthrough:</p>
+<h3 id="_3"></h3>
+<p>CRITERION
+0 (ABSENT)
+1 (PARTIAL)
+2 (FULLY
+PRESENT)
+SCORE
+12
+Conversational
+query match
+Content targets
+keywords only
+Some
+conversational
+headings
+Content structured
+around natural
+language
+questions
+/2
+SCORE
+RATING
+ACTION
+20-24
+Excellent
+Minor tweaks only; focus on external authority building
+15-19
+Good
+Targeted improvements to specific weak areas
+10-14
+Needs Work
+Significant restructuring and content additions required
+5-9
+Poor
+Major overhaul required; consider rewriting from scratch
+0-4
+Not GEO-Ready
+Full rewrite needed with GEO principles from the ground up
+Check robots.txt (5 minutes)
+1
+Visit yourdomain.com/robots.txt
+2
+Search for: GPTBot, ClaudeBot, PerplexityBot, Google-Extended
+3
+If any are blocked (Disallow), update immediately
+4
+If not mentioned, they are allowed by default (good), but explicitly allowing them is
+better practice
+5
+Validate schema markup (10 minutes per page)
+6
+Use Google&rsquo;s Rich Results Test: search.google.com/test/rich-results
+7
+Paste your page URL
+8</p>
+<h2 id="step-4-audit-content-quality">Step 4: Audit Content Quality</h2>
+<p>Walk through each priority page with these specific checks:
+Opening paragraph audit:
+Statistical density audit:
+Check for: valid FAQ, Article, HowTo, Product schema as appropriate
+9
+Note any errors or warnings for fixing
+10
+Test rendering (5 minutes per page)
+11
+Right-click &gt; View Page Source (not Inspect Element)
+12
+Search for your key content in the raw HTML
+13
+If your main content is not visible in the source, it is JavaScript-rendered and potentially
+invisible to AI crawlers
+14
+Solution: implement server-side rendering or pre-rendering
+15
+Verify page speed (5 minutes per page)
+16
+Run through Google PageSpeed Insights
+17
+Target: LCP under 2.5 seconds, CLS under 0.1, INP under 200ms
+18
+Fix critical speed issues that could prevent AI crawlers from fully loading the page
+19
+Check mobile responsiveness (5 minutes per page)
+20
+Test on Google&rsquo;s Mobile-Friendly Test
+21
+Ensure all content, tables, and media display correctly on mobile
+22
+[ ] Does the first sentence define what the page is about?
+[ ] Could the opening paragraph be quoted as a standalone answer?
+[ ] Does it contain at least one specific fact or statistic?
+[ ] Does it name the brand and category clearly?
+[ ] Count the total number of statistics on the page
+[ ] For each statistic, is the source named?
+[ ] Are statistics from the current or previous year?
+[ ] Do statistics support the page&rsquo;s primary claims?</p>
+<p>Structure audit:
+Expert content audit:</p>
+<h2 id="step-5-audit-external-authority">Step 5: Audit External Authority</h2>
+<p>For each priority topic (not page, but topic), assess your external brand presence:
+Brand mention audit process:
+External authority scorecard:
+[ ] Map the heading hierarchy (H1 &gt; H2 &gt; H3): are there gaps?
+[ ] Count tables: is there at least one per major section?
+[ ] Count lists: are features, steps, and options formatted as lists?
+[ ] Is there an FAQ section?
+[ ] Are there expert quotes with names and credentials?
+[ ] Does the page demonstrate first-hand experience?
+[ ] Is the author identified with a bio and credentials?
+Search for &ldquo;your brand name&rdquo; + &ldquo;topic keyword&rdquo;  across:
+1
+Google (regular search)
+2
+Reddit (via Google: site:reddit.com &ldquo;your brand&rdquo; &ldquo;topic&rdquo; )
+3
+YouTube (search for brand mentions in video titles and descriptions)
+4
+Major industry publications in your sector
+5
+Count the total number of unique external sources mentioning your brand in relation to
+the topic
+6
+Identify gaps: which platforms and publications mention competitors but not you?
+7
+SOURCE TYPE
+YOUR MENTIONS
+TOP COMPETITOR MENTIONS
+GAP
+Industry publications
+?
+?
+?
+Reddit threads
+?
+?
+?</p>
+<h2 id="step-6-prioritise-and-plan">Step 6: Prioritise and Plan</h2>
+<p>With scores complete, prioritise your pages using this matrix:</p>
+</div><div class="chapter"><h1 id="9-the-geo-audit-checklist"><span class="chapter-number">Chapter 09</span>9. The GEO Audit Checklist</h1>
+<p>Use this checklist to audit any page on your site for GEO readiness. This is the condensed,
+reference version of the full Content Audit Framework in Section 8.
+SOURCE TYPE
+YOUR MENTIONS
+TOP COMPETITOR MENTIONS
+GAP
+YouTube mentions
+?
+?
+?
+Review platforms (G2, etc.)
+?
+?
+?
+Wikipedia
+?
+?
+?
+Podcast appearances
+?
+?
+?
+Total
+?
+?
+?
+PRIORITY
+CRITERIA
+ACTION TIMELINE
+P1: Quick
+Wins
+GEO Score 15-19, already ranking well, small
+gaps to fill
+Week 1-2: optimise these first
+P2: High
+Impact
+GEO Score 10-14, high business value,
+requires significant work
+Week 2-4: restructure and
+enhance
+P3: Rebuilds
+GEO Score under 10, high business value,
+needs complete overhaul
+Month 2: full rewrite
+P4: New
+Content
+Topic gaps where you have no content but
+competitors are being cited
+Month 2-3: create new GEO-ready
+content
+P5: Low
+Priority
+Low business value or low AI query
+relevance
+Backlog: address when higher
+priorities are complete</p>
+<h2 id="content-quality">Content Quality</h2>
+<h2 id="content-structure">Content Structure</h2>
+<h2 id="technical-foundation">Technical Foundation</h2>
+<p>[ ] Opening paragraph contains a clear, quotable definition or answer
+[ ] Key claims are supported with statistics, percentages, or named data sources
+[ ] At least 3 statistics with named sources per 1,000 words
+[ ] Expert quotes with attributed names and credentials are included
+[ ] Content answers the query directly: no filler before the answer
+[ ] Each section is self-contained and extractable
+[ ] Content is written in British English consistently (not mixed)
+[ ] &ldquo;Last updated&rdquo; date is visible and accurate
+[ ] Content includes at least one original insight, data point, or framework not available
+elsewhere
+[ ] Proper heading hierarchy (H1 &gt; H2 &gt; H3, no skipped levels)
+[ ] Bulleted or numbered lists used for steps, features, and comparisons
+[ ] At least one data table per major page
+[ ] Key terms and definitions are bold or highlighted
+[ ] FAQ section included with question-format headings
+[ ] Table of contents included for pages over 1,500 words
+[ ] Content sections could be extracted independently and still make sense
+[ ] AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended) are allowed in
+robots.txt
+[ ] Page uses server-side rendering or pre-rendering
+[ ] Schema markup implemented (Article, FAQPage, HowTo, Product, Organisation as
+relevant)
+[ ] Page loads without requiring JavaScript for critical content
+[ ] Core Web Vitals passing (LCP &lt; 2.5s, CLS &lt; 0.1, INP &lt; 200ms)
+[ ] HTTPS enabled</p>
+<h2 id="authority-and-distribution">Authority and Distribution</h2>
+<h2 id="freshness">Freshness</h2>
+</div><div class="chapter"><h1 id="10-implementation-roadmap-your-first-30-days"><span class="chapter-number">Chapter 10</span>10. Implementation Roadmap: Your First 30 Days</h1>
+<p>This section provides a week-by-week action plan for implementing GEO across your
+organisation. Each week builds on the previous one.</p>
+<h2 id="week-1-foundation-and-assessment">Week 1: Foundation and Assessment</h2>
+<p>Goal: Understand your current AI visibility and establish your baseline.
+[ ] Mobile responsive
+[ ] XML sitemap is current and submitted to Bing Webmaster Tools
+[ ] No broken internal or external links
+[ ] Brand is mentioned on at least 10 external authoritative sources for the target topic
+[ ] Content is referenced or linked from industry publications
+[ ] Brand has presence on UGC platforms (Reddit, Quora, YouTube, G2)
+[ ] Google Business Profile is complete and optimised (for local/commercial queries)
+[ ] Wikipedia article exists or brand is mentioned in relevant Wikipedia articles
+[ ] Social proof (reviews, testimonials, case studies) is publicly accessible
+[ ] Brand appears in at least 3 different source trust tiers (see Section 3.4)
+[ ] Content has been updated within the last 90 days
+[ ] Statistics and data points reference the current or previous year
+[ ] No broken links or references to discontinued products/services
+[ ] Content refresh schedule is documented and followed
+[ ] &ldquo;Last updated&rdquo; date reflects the most recent substantive edit</p>
+<p>Week 1 deliverables: - AI visibility baseline data - Robots.txt fixed (if needed) - 20 pages
+scored for GEO readiness - External authority audit for top 5 topics - Prioritised action plan
+for Weeks 2-4</p>
+<h2 id="week-2-quick-wins-and-technical-fixes">Week 2: Quick Wins and Technical Fixes</h2>
+<p>Goal: Implement the changes with the highest impact-to-effort ratio.
+DAY
+TASK
+TIME
+ESTIMATE
+DELIVERABLE
+Mon
+Set up AI visibility tracking: create a
+spreadsheet with 20-30 target prompts
+across all four engines
+2-3 hours
+Tracking spreadsheet
+with baseline data
+Mon
+Run each prompt across ChatGPT, Claude,
+Perplexity, and Google; record brand
+mentions, citations, and competitor presence
+3-4 hours
+Completed baseline
+assessment
+Tue
+Audit robots.txt for all AI crawlers; fix any
+blocks immediately
+30 minutes
+Updated robots.txt
+Tue
+Identify your top 20 pages by business value
+(revenue impact, traffic, strategic
+importance)
+1-2 hours
+Prioritised page list
+Wed-
+Thu
+Run the GEO Readiness Scorecard (Section
+8, Step 2) on all 20 priority pages
+3-4 hours
+Scored pages with
+identified gaps
+Fri
+Conduct the brand mention audit (Section 8,
+Step 5) for your top 5 topics
+2-3 hours
+External authority
+scorecard
+Fri
+Compile findings into a GEO Action Plan
+document
+1-2 hours
+Action plan with
+prioritised tasks</p>
+<p>Week 2 deliverables: - 10 pages with GEO-optimised opening paragraphs - 30+ statistics
+added across priority pages - FAQ schema on 5 pages - 10 new data tables - Freshness
+signals on all priority pages</p>
+<h2 id="week-3-content-depth-and-authority-building">Week 3: Content Depth and Authority Building</h2>
+<p>Goal: Build the content depth and external authority that drive AI citations.
+DAY
+TASK
+TIME
+ESTIMATE
+DELIVERABLE
+Mon
+Rewrite opening paragraphs of your top 10
+pages to lead with quotable definitions
+3-4 hours
+10 updated opening
+paragraphs
+Tue
+Add statistics with named sources to all 10
+pages (minimum 3 per page)
+3-4 hours
+30+ statistics added
+Wed
+Implement FAQ schema on your top 5 pages;
+add FAQ sections where missing
+3-4 hours
+FAQ schema live on 5
+pages
+Thu
+Add at least one data table to each of your top
+10 pages
+2-3 hours
+10 new data tables
+Thu
+Implement Article schema on all blog posts
+that lack it
+2-3 hours
+Article schema
+deployed
+Fri
+Add visible &ldquo;Last updated&rdquo; dates to all priority
+pages; update any statistics older than 12
+months
+2-3 hours
+Freshness signals
+added
+DAY
+TASK
+TIME
+ESTIMATE
+DELIVERABLE
+Mon
+Identify 3 expert sources for quotes; reach out
+via LinkedIn, HARO, or your network
+2-3 hours
+Expert outreach
+initiated
+Mon-
+Tue
+Write 2 new supporting articles for your highest-
+priority content cluster
+6-8 hours
+2 new cluster
+articles published</p>
+<p>Week 3 deliverables: - Expert outreach in progress - 2 new cluster articles published - 5
+guest post pitches sent - Reddit engagement started - Podcast outreach initiated -
+Customer review requests sent</p>
+<h2 id="week-4-measurement-iteration-and-systemisation">Week 4: Measurement, Iteration, and Systemisation</h2>
+<p>Goal: Measure progress, iterate on what is working, and build sustainable systems.
+DAY
+TASK
+TIME
+ESTIMATE
+DELIVERABLE
+Wed
+Submit guest post pitches to 5 industry
+publications in your sector
+2-3 hours
+5 pitches sent
+Wed
+Create or update your Wikipedia presence (if
+brand is notable) or identify relevant Wikipedia
+articles to contribute to
+2-3 hours
+Wikipedia strategy
+documented
+Thu
+Begin Reddit participation strategy: identify 3-5
+relevant subreddits, contribute genuinely helpful
+answers that naturally mention your brand
+2-3 hours
+Reddit engagement
+started
+Fri
+Reach out to 3 relevant podcasts for guest
+appearances
+1-2 hours
+Podcast pitches sent
+Fri
+Encourage 10 existing customers to leave
+reviews on G2, Trustpilot, or relevant review
+platforms
+1-2 hours
+Review request
+emails sent
+DAY
+TASK
+TIME
+ESTIMATE
+DELIVERABLE
+Mon
+Re-run all 20-30 AI visibility prompts; compare
+to Week 1 baseline
+3-4 hours
+Week 4 visibility data
+Mon
+Calculate improvement: how many new
+citations, mentions, and visibility gains?
+1-2 hours
+Progress report</p>
+<p>Week 4 deliverables: - Week 4 visibility data (compared to baseline) - Progress report with
+measurable improvements - 5 additional pages optimised - Monthly content refresh
+calendar - Internal GEO guidelines - Month 2 plan</p>
+<h2 id="30-day-milestone-targets">30-Day Milestone Targets</h2>
+<p>DAY
+TASK
+TIME
+ESTIMATE
+DELIVERABLE
+Tue
+Based on results, identify which optimisations
+had the most impact; double down on those
+2-3 hours
+Updated strategy
+priorities
+Wed
+Optimise 5 more pages using the most
+effective tactics from Weeks 2-3
+4-5 hours
+5 additional pages
+optimised
+Thu
+Set up a monthly content refresh calendar for
+all priority pages
+1-2 hours
+Content refresh
+calendar
+Thu
+Document your GEO process: create internal
+guidelines so any team member can optimise
+new content
+2-3 hours
+Internal GEO
+guidelines document
+Fri
+Plan Month 2: identify next batch of pages,
+new content to create, and authority-building
+actions
+2-3 hours
+Month 2 action plan
+METRIC
+WEEK 1
+BASELINE
+(TYPICAL)
+WEEK 4 TARGET
+HOW TO MEASURE
+Pages GEO-
+optimised
+0
+15-20
+Count of pages that score
+15+ on GEO Readiness
+Scorecard
+AI citation rate
+5-15% of target
+prompts
+20-30% of target
+prompts
+Manual testing across all
+four engines</p>
+</div><div class="chapter"><h1 id="11-measuring-ai-visibility"><span class="chapter-number">Chapter 11</span>11. Measuring AI Visibility</h1>
+<p>You cannot improve what you cannot measure. Here is how to track your GEO performance
+systematically.</p>
+<h2 id="manual-monitoring">Manual Monitoring</h2>
+<p>The prompt test: Regularly ask each AI engine questions that your brand should appear in.
+Track:
+Create a tracking spreadsheet:
+METRIC
+WEEK 1
+BASELINE
+(TYPICAL)
+WEEK 4 TARGET
+HOW TO MEASURE
+External brand
+mentions (for top
+topic)
+Varies
++10 new mentions
+Brand mention audit
+(Section 8, Step 5)
+Schema markup
+coverage
+Varies
+100% of priority
+pages
+Rich Results Test
+Content freshness
+Varies
+100% of priority
+pages updated within
+30 days
+Visible &ldquo;Last updated&rdquo;
+dates
+Whether your brand is mentioned
+Whether your website is cited as a source
+What position your brand appears in (first mentioned? third?)
+What competitors are cited instead
+How the AI describes your brand (accurate? favourable? outdated?)</p>
+<p>Prompt design best practices:
+PROMPT
+ENGINE
+BRAND
+MENTIONED?
+POSITION
+COMPETITORS
+CITED
+SENTIMENT
+DATE
+&ldquo;Best
+CRM for
+agencies
+UK&rdquo;
+ChatGPT
+❌ Yes
+2nd
+HubSpot,
+Pipedrive
+Positive
+03/02/26
+&ldquo;Best
+CRM for
+agencies
+UK&rdquo;
+Perplexity
+❌ No
+N/A
+Salesforce, Zoho
+N/A
+03/02/26
+&ldquo;Best
+CRM for
+agencies
+UK&rdquo;
+Claude
+❌ Yes
+3rd
+HubSpot,
+Salesforce
+Neutral
+03/02/26
+&ldquo;Best
+CRM for
+agencies
+UK&rdquo;
+Google
+AIO
+❌ Yes
+1st
+HubSpot
+Positive
+03/02/26
+PROMPT TYPE
+PURPOSE
+EXAMPLE
+Category prompt
+Test if brand appears for the
+broad category
+&ldquo;What are the best [category] tools?&rdquo;
+Feature prompt
+Test for specific capability
+association
+&ldquo;Which [category] tool is best for
+[feature]?&rdquo;
+Comparison prompt
+Test head-to-head positioning
+&ldquo;Compare [your brand] vs [competitor]&rdquo;
+Recommendation
+prompt
+Test scenario-based citation
+&ldquo;I need [specific use case]. What would
+you recommend?&rdquo;
+Reputation prompt
+Test brand perception accuracy
+&ldquo;Tell me about [your brand]&rdquo;
+Local prompt
+Test geographic association
+&ldquo;Best [category] in [location]&rdquo;</p>
+<h2 id="automated-tools">Automated Tools</h2>
+<p>Several platforms now offer AI visibility tracking. Here is a comparison of the leading
+options:</p>
+<h2 id="key-metrics-to-track">Key Metrics to Track</h2>
+<p>TOOL
+WHAT IT TRACKS
+PRICE RANGE
+(MONTHLY)
+BEST FOR
+Semrush AI
+Visibility Toolkit
+Brand mentions, sentiment,
+share of voice across AI
+engines
+£100-300 (part of
+Semrush
+subscription)
+Comprehensive
+tracking alongside
+traditional SEO
+Profound
+Brand presence in LLM
+responses across GPT,
+Claude, Gemini
+£150-500
+Dedicated AI visibility
+monitoring
+Scrunch AI
+AI citation patterns,
+competitor analysis,
+recommendation tracking
+£100-400
+Competitor intelligence
+Otterly.AI
+Brand appearances in AI-
+generated answers with
+historical tracking
+£80-250
+Affordable entry-level
+tracking
+Peec AI
+AI search results monitoring
+with alert system
+£50-200
+Budget-friendly, alert-
+focused
+Manual tracking
+(spreadsheet)
+Whatever you choose to
+test
+Free (time cost
+only)
+Small businesses,
+early-stage GEO
+METRIC
+DEFINITION
+TARGET
+MEASUREMENT
+FREQUENCY
+AI Share of
+Voice
+% of relevant prompts where
+your brand is cited vs.
+competitors</p>
+<blockquote>
+<p>30%
+Monthly
+Citation
+Frequency
+How often your domain appears
+as a cited source
+Increasing
+month-on-
+month
+Monthly</p>
+</blockquote>
+<h2 id="setting-up-your-measurement-dashboard">Setting Up Your Measurement Dashboard</h2>
+<p>Recommended dashboard structure:
+METRIC
+DEFINITION
+TARGET
+MEASUREMENT
+FREQUENCY
+Brand Sentiment
+Whether AI descriptions of your
+brand are positive, neutral, or
+negative
+Positive
+Monthly
+Source
+Accuracy
+Whether AI engines present
+accurate information about your
+brand</p>
+<blockquote>
+<p>95%
+Monthly
+Prompt
+Coverage
+% of target prompts where your
+brand appears at all
+50%
+Monthly
+Position in
+Response
+Where your brand appears (1st,
+2nd, 3rd mentioned)
+Top 3
+Monthly
+Cross-Engine
+Consistency
+Whether your brand appears
+consistently across all four
+engines
+All four
+Monthly
+SECTION
+METRICS
+DATA SOURCE
+Overview
+Overall AI citation rate, month-on-month trend, top
+engine performance
+Aggregated from all
+tracking
+Engine Breakdown
+Citation rate per engine (ChatGPT, Claude,
+Perplexity, Google AIO)
+Per-engine testing
+Competitor
+Comparison
+Your share of voice vs. top 3 competitors
+Competitive prompt
+testing
+Content
+Performance
+Which pages are being cited most frequently
+Source URL tracking
+Accuracy Tracker
+Any inaccurate AI descriptions of your brand
+Reputation prompts</p>
+</blockquote>
+</div><div class="chapter"><h1 id="12-geo-vs-seo-allies-not-rivals"><span class="chapter-number">Chapter 12</span>12. GEO vs. SEO: Allies, Not Rivals</h1>
+<p>A common misconception is that GEO replaces SEO. It does not. They are deeply
+complementary, and the most effective strategy treats them as two aspects of the same
+programme.</p>
+<h2 id="what-seo-does-for-geo">What SEO Does for GEO</h2>
+<h2 id="what-geo-adds-beyond-seo">What GEO Adds Beyond SEO</h2>
+<p>SECTION
+METRICS
+DATA SOURCE
+Action Items
+Specific optimisation tasks based on measurement
+gaps
+Analysis of weak
+points
+Ranking in Google&rsquo;s top 10 is a prerequisite for being cited in AI Overviews: if you do not
+rank, you will not be cited
+Backlinks build the domain authority that AI engines use as a trust signal during source
+retrieval
+Keyword research identifies the queries that inform your GEO content strategy
+Technical SEO ensures crawlability for both traditional and AI crawlers
+Unlinked mention strategy: building brand presence where links do not matter
+Cross-platform optimisation: ensuring visibility in ChatGPT, Claude, and Perplexity, not
+just Google
+Synthesis-first writing: structuring content for extraction rather than just ranking
+AI crawler management: specifically managing access for GPTBot, ClaudeBot, and
+PerplexityBot
+Prompt-based strategy: optimising for conversational queries, not just keyword strings</p>
+<h2 id="seo-vs-geo-comparison-matrix">SEO vs. GEO Comparison Matrix</h2>
+<h2 id="the-unified-approach">The Unified Approach</h2>
+<p>The most effective strategy is to treat GEO as an extension of your existing SEO
+programme. Every SEO improvement you make, from better content to more backlinks to a
+stronger technical foundation, also improves your GEO performance. The GEO-specific
+additions (structured answers, statistical density, expert quotes, unlinked mentions, AI
+crawler access) layer on top.
+The integration model:
+DIMENSION
+TRADITIONAL SEO
+GEO
+OVERLAP
+Primary goal
+Rank in organic results
+Get cited in AI answers
+Both increase visibility
+Key metric
+Ranking position,
+organic traffic
+AI citation rate, share of
+voice
+Both drive brand
+awareness and leads
+Content
+format
+Long-form, keyword-
+optimised
+Structured, extractable,
+fact-dense
+Both reward quality
+content
+Link building
+Hyperlinks from
+authoritative sites
+Unlinked brand mentions
+across the web
+Links help both;
+mentions help GEO
+more
+Technical
+Crawlability, Core Web
+Vitals, mobile
+AI crawler access, schema,
+SSR
+Technical foundations
+serve both
+Freshness
+Important but not critical
+for all queries
+Critical, especially for
+Perplexity and Google AIO
+Both benefit from
+regular updates
+Target
+keyword
+Short-tail and long-tail
+keywords
+Conversational queries and
+prompts
+Long-tail SEO aligns
+well with GEO
+Measurement
+Google Search Console,
+rank trackers
+AI prompt testing, citation
+monitoring
+Some tools now cover
+both</p>
+<h2 id="budget-allocation-guidance">Budget Allocation Guidance</h2>
+<p>For organisations wondering how to split resources between SEO and GEO:</p>
+</div><div class="chapter"><h1 id="13-whats-coming-next"><span class="chapter-number">Chapter 13</span>13. What&rsquo;s Coming Next</h1>
+<p>GEO is in its infancy. Here is what we expect to see in the next 12-24 months, and how to
+prepare now.
+Traditional SEO Foundation
+├── Keyword research → Informs GEO prompt strategy
+├── Content creation → Apply GEO pillars to all new content
+├── Link building → Add unlinked mention strategy for GEO
+├── Technical SEO → Extend to AI crawler management
+├── Analytics → Add AI visibility monitoring
+└── Content refresh → Align with GEO freshness requirements
+ORGANISATION TYPE
+RECOMMENDED SEO :
+GEO SPLIT
+REASONING
+Early-stage (weak SEO
+foundation)
+80% SEO : 20% GEO
+Build the foundation first; SEO
+directly supports GEO
+Established (strong SEO, weak
+AI visibility)
+50% SEO : 50% GEO
+SEO maintenance plus aggressive
+GEO build-out
+Mature (strong SEO, some AI
+visibility)
+40% SEO : 60% GEO
+GEO is where the marginal gains
+are largest
+Advanced (strong SEO and
+GEO)
+30% SEO : 70% GEO
+SEO in maintenance mode; GEO is
+the growth frontier</p>
+<h2 id="131-ai-engine-advertising">13.1 AI Engine Advertising</h2>
+<p>Paid placements within AI-generated responses are coming. Perplexity has already begun
+testing sponsored results. Google will follow. Microsoft has hinted at ad formats within
+Copilot.
+What this means for you: Organic GEO (earning citations through content quality and
+authority) will become even more valuable as paid options emerge. Just as organic SEO
+became more valuable when Google Ads made the top of the SERP paid-for, organic AI
+citations will carry a premium of trust.
+How to prepare: Build your organic AI visibility now, before advertising makes the space
+more competitive and expensive.</p>
+<h2 id="132-standardised-ai-analytics">13.2 Standardised AI Analytics</h2>
+<p>Just as Google Analytics became the standard for web traffic, tools for measuring AI citation
+performance will mature rapidly. Expect:
+How to prepare: Start measuring now, even with manual methods. The habit of tracking AI
+visibility will put you ahead when automated tools mature.</p>
+<h2 id="133-ai-specific-content-formats">13.3 AI-Specific Content Formats</h2>
+<p>We expect new structured data standards designed specifically for AI consumption, beyond
+current schema.org markup. These might include:
+How to prepare: Implement comprehensive schema now. Organisations that are already
+structured-data-mature will adopt new standards faster.
+Dedicated AI visibility dashboards integrated into existing SEO platforms
+Standardised metrics for AI share of voice
+Attribution models that connect AI citations to conversions
+Machine-readable &ldquo;answer blocks&rdquo; that AI engines can extract directly
+Standardised citation metadata (how your content should be attributed)
+AI-optimised sitemaps with content summaries</p>
+<h2 id="134-personalised-ai-results">13.4 Personalised AI Results</h2>
+<p>As AI engines learn individual user preferences, brand visibility will become more nuanced.
+Your content may be shown to some users and hidden from others based on their history.
+How to prepare: Build broad authority across multiple topics and platforms. The more
+diverse your presence, the more user segments you will reach.</p>
+<h2 id="135-voice-and-multimodal-search">13.5 Voice and Multimodal Search</h2>
+<p>As AI assistants become the primary interface through smart speakers, in-car systems, and
+AR glasses, GEO will expand to optimise for voice synthesis and visual responses.
+Key difference for voice: Voice answers are even more binary than text. A smart speaker
+gives one answer, not a list. Being the single cited source becomes even more critical.
+How to prepare: Write content that sounds natural when read aloud. Test your key
+definitions by reading them out loud: if they sound stilted, rewrite them.</p>
+<h2 id="136-regulatory-scrutiny">13.6 Regulatory Scrutiny</h2>
+<p>Governments are beginning to ask whether AI engines have an obligation to fairly represent
+all sources, not just the ones they prefer. The EU AI Act, UK Online Safety Act, and similar
+legislation may reshape how citations work.
+How to prepare: Focus on genuine quality and authority. Regulatory changes will likely
+penalise manipulation and reward authentic expertise, which is exactly what good GEO
+already emphasises.</p>
+<h2 id="137-timeline-of-expected-changes">13.7 Timeline of Expected Changes</h2>
+<p>DEVELOPMENT
+EXPECTED
+TIMELINE
+IMPACT
+LEVEL
+PREPARATION
+PRIORITY
+AI advertising (Perplexity,
+Google)
+Already started,
+scaling in 2026
+High
+Build organic visibility
+now
+Standardised AI analytics
+H2 2026 - H1 2027
+Medium
+Start manual tracking
+immediately</p>
+<p>Final Thoughts
+The transition from traditional search to AI-powered discovery is not a distant possibility; it is
+happening now. Every month, more users turn to ChatGPT, Claude, Perplexity, and Google
+AI Overviews for the answers that used to require clicking through ten blue links.
+The brands that win in this new landscape will be those that understand a simple truth: AI
+engines don&rsquo;t rank pages. They cite sources. And to be cited, your content must be
+authoritative, structured, specific, evidence-based, and present across the web.
+GEO is not a replacement for good marketing. It is the evolution of it. The fundamentals,
+including genuine expertise, valuable content, and a trustworthy reputation, matter more
+than ever. GEO simply gives you the framework to ensure those fundamentals are visible to
+the machines that are increasingly deciding which brands get recommended and which get
+ignored.
+Your action plan starts now:
+DEVELOPMENT
+EXPECTED
+TIMELINE
+IMPACT
+LEVEL
+PREPARATION
+PRIORITY
+AI-specific content
+formats
+2027
+Medium
+Master current schema
+first
+Personalised AI results
+2026-2027 (gradual)
+High
+Build diverse authority
+Voice-first AI search
+2026-2028
+High for B2C
+Optimise for spoken
+delivery
+Regulatory frameworks
+2027-2028
+Uncertain
+Focus on genuine quality
+Run the baseline assessment (Week 1 of the Implementation Roadmap)
+1
+Fix the technical foundations (robots.txt, schema, crawlability)
+2
+Optimise your top 10 pages using the 12 Pillars
+3
+Build external authority through mentions, reviews, and expert content
+4
+Measure monthly and iterate
+5</p>
+<p>The first-mover advantage in GEO is real, and the window is open. Every week you wait,
+your competitors may be the ones getting cited instead.</p>
+</div><div class="chapter"><h1 id="14-appendix-resources-tools-and-further-reading"><span class="chapter-number">Chapter 14</span>14. Appendix: Resources, Tools, and Further Reading</h1>
+<h2 id="essential-reading">Essential Reading</h2>
+<h2 id="recommended-tools">Recommended Tools</h2>
+<p>RESOURCE
+TYPE
+WHAT YOU WILL LEARN
+&ldquo;GEO: Generative Engine
+Optimization&rdquo; (Aggarwal et al., 2023)
+Research paper
+The foundational academic research
+behind GEO; published at KDD 2024
+Google Search Central Blog
+Official
+documentation
+How Google AI Overviews select and
+cite sources
+Bing Webmaster Guidelines
+Official
+documentation
+How Bing (ChatGPT&rsquo;s search
+backbone) ranks content
+Perplexity AI Blog
+Official
+documentation
+How Perplexity indexes and cites the
+web
+Schema.org Documentation
+Technical
+standard
+Full reference for structured data
+markup
+TOOL
+PURPOSE
+FREE/PAID
+Google Search Console
+Monitor organic rankings and indexing
+Free
+Bing Webmaster Tools
+Monitor Bing indexing (critical for ChatGPT)
+Free
+Google Rich Results Test
+Validate schema markup
+Free
+Google PageSpeed Insights
+Test page load performance
+Free</p>
+<h2 id="ai-crawler-user-agents-reference">AI Crawler User Agents Reference</h2>
+<p>TOOL
+PURPOSE
+FREE/PAID
+Schema Markup Generator
+(Merkle)
+Generate schema code
+Free
+Semrush / Ahrefs
+Comprehensive SEO and emerging GEO
+metrics
+Paid
+Screaming Frog
+Technical site audit
+Free (limited) /
+Paid
+CRAWLER
+USER AGENT
+STRING
+OWNER
+PURPOSE
+GPTBot
+GPTBot
+OpenAI
+Training data and web browsing for
+ChatGPT
+ChatGPT-User
+ChatGPT-User
+OpenAI
+Live web browsing during ChatGPT
+conversations
+ClaudeBot
+ClaudeBot
+Anthropic
+Training data and web access for Claude
+PerplexityBot
+PerplexityBot
+Perplexity
+Real-time web indexing for Perplexity
+answers
+Googlebot
+Googlebot
+Google
+Standard web crawling for Google Search
+and AI Overviews
+Google-
+Extended
+Google-Extended
+Google
+AI training data specifically for Gemini and
+AI features</p>
+<h2 id="recommended-robotstxt-configuration">Recommended Robots.txt Configuration</h2>
+<p><em>End of Playbook</em> <strong>The GEO Playbook</strong> · v2.0 · February 2026 <em>© 2026. All rights
+reserved.</em> 
+<code># Allow all AI crawlers</code> for maximum GEO visibility</p>
+<pre><code>User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+</code></pre>
+<p><code># Standard Googlebot</code> (already allowed by default in most configs)</p>
+<pre><code>User-agent: Googlebot
+Allow: /
+</code></pre>
+<hr />
+<p><em>End of Playbook</em></p>
+<p><strong>The GEO Playbook</strong> v2.0 February 2026</p></div>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://rook.digital">rook.digital</a> · Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "developer-claude-toolkit",
+    "input": "developer-claude-toolkit.md",
+    "title": "The Developer's Claude Toolkit",
+    "subtitle": "40+ battle-tested prompts for code review, debugging, architecture, and shipping faster with AI",
+    "badge": "Developer Tools",
+    "price": 14
+  },
+  {
+    "id": "freelancer-ai-toolkit",
+    "input": "freelancer-ai-toolkit.md",
+    "title": "The Freelancer's AI Toolkit",
+    "subtitle": "Win more clients, deliver faster, and automate the boring stuff with AI-powered workflows",
+    "badge": "Freelancer Guide",
+    "price": 14
+  },
+  {
+    "id": "seo-audit-checklist",
+    "input": "seo-audit-checklist.md",
+    "title": "The SEO Audit Checklist",
+    "subtitle": "A systematic, page-by-page framework to find and fix every SEO issue on your site",
+    "badge": "SEO Guide",
+    "price": 9
+  },
+  {
+    "id": "free-lead-magnet",
+    "input": "free-lead-magnet-10-prompts.md",
+    "title": "10 AI Prompts That Actually Work",
+    "subtitle": "The prompts we use every day for content, code, and strategy. No fluff, just results.",
+    "badge": "Free Guide",
+    "price": 0
+  },
+  {
+    "id": "digital-marketer-prompts",
+    "input": "digital-marketer-prompt-library.md",
+    "title": "The Digital Marketer's Prompt Library",
+    "subtitle": "50+ ready-to-use AI prompts for SEO, ads, email, social, and content strategy",
+    "badge": "Marketing Tools",
+    "price": 14
+  },
+  {
+    "id": "email-marketing-playbook",
+    "input": "email-marketing-ai-playbook.md",
+    "title": "The Email Marketing AI Playbook",
+    "subtitle": "Write better emails, automate sequences, and boost conversions with AI-powered workflows",
+    "badge": "Email Marketing",
+    "price": 12
+  },
+  {
+    "id": "solopreneur-launch-playbook",
+    "input": "solopreneur-launch-playbook.md",
+    "title": "The Solopreneur Launch Playbook",
+    "subtitle": "From idea to first paying customer in 30 days: a practical framework for solo founders",
+    "badge": "Startup Guide",
+    "price": 14
+  },
+  {
+    "id": "vibe-coding-starter-kit",
+    "input": "vibe-coding-starter-kit.md",
+    "title": "The Vibe Coding Starter Kit",
+    "subtitle": "Build real apps with AI as your co-pilot: prompts, workflows, and project templates",
+    "badge": "Developer Tools",
+    "price": 12
+  },
+  {
+    "id": "local-llm-handbook",
+    "input": "flagship-local-llm-handbook.md",
+    "title": "The Local LLM Handbook",
+    "subtitle": "Run AI models on your own hardware: complete guide to setup, models, and cost savings",
+    "badge": "AI Infrastructure",
+    "price": 19
+  },
+  {
+    "id": "self-hosting-survival-guide",
+    "input": "self-hosting-survival-guide.md",
+    "title": "The Self-Hosting Survival Guide",
+    "subtitle": "Escape SaaS subscriptions: set up your own cloud with Nextcloud, Pi-hole, and more",
+    "badge": "Self-Hosting",
+    "price": 14
+  },
+  {
+    "id": "content-creator-prompts",
+    "input": "content-creator-prompt-system.md",
+    "title": "The Content Creator's Prompt System",
+    "subtitle": "A complete AI workflow for ideation, writing, repurposing, and publishing at scale",
+    "badge": "Content Creation",
+    "price": 12
+  }
+]

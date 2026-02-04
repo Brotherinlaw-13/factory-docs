@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Email Marketing AI Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Email Marketing</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Email Marketing AI Playbook</h1>
+    <p class="cover-subtitle">Write better emails, automate sequences, and boost conversions with AI-powered workflows</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">Email Strategy Fundamentals</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">Subject Lines That Get Opened</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">Welcome Sequence</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Sales Sequences</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Newsletter Writing</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Analytics & Optimisation</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">Tool Recommendations</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">Quick Reference</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Email Marketing AI Playbook</h1>
+<p><strong>Write better emails faster. Every prompt you need to build, grow, and monetise your list.</strong></p>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>Email Strategy Fundamentals</h1>
+
+<p>Before you write a single subject line, you need to understand what you&rsquo;re building. Email marketing isn&rsquo;t one thing—it&rsquo;s three distinct systems working together.</p>
+<h3>The Three Email Types</h3>
+<p><strong>Transactional emails</strong> are triggered by an action: order confirmations, password resets, shipping updates. They get the highest open rates (60-80%) because people expect them. Most businesses treat these as afterthoughts. That&rsquo;s a mistake. Every transactional email is a branding opportunity.</p>
+<p><strong>Lifecycle emails</strong> are automated sequences tied to where someone is in their journey with you: welcome sequences, onboarding flows, cart abandonment, win-back campaigns. You build these once, then they run forever. This is where AI saves you the most time.</p>
+<p><strong>Broadcast emails</strong> are one-to-many sends: newsletters, product announcements, flash sales. These keep your audience engaged between lifecycle triggers. They&rsquo;re also where most people start—and where most people get stuck staring at a blank screen.</p>
+<h3>List Building That Actually Works</h3>
+<p>Your list is your business. Full stop. Social media algorithms change. Ad costs rise. Your email list is the one audience you truly own.</p>
+<p>The rules are simple: never buy a list (it destroys your sender reputation), always use double opt-in (it keeps your list clean), and give people a genuine reason to subscribe. That reason is your <strong>lead magnet</strong>—a PDF, checklist, mini-course, discount code, or free tool that&rsquo;s valuable enough to trade an email address for.</p>
+<blockquote>
+<p><strong>AI Prompt — Lead Magnet Ideas:</strong>
+&ldquo;I run a [type of business] serving [target audience]. They struggle with [main problem]. Suggest 10 lead magnet ideas that would be genuinely useful, quick to create, and directly related to my paid offering of [product/service]. For each, give me a compelling title and one-sentence description.&rdquo;</p>
+</blockquote>
+<h3>Segmentation That Matters</h3>
+<p>Forget complex segmentation matrices. For most small businesses, three segments cover 90% of what you need:</p>
+<ol>
+<li><strong>Engagement level</strong> — active (opened/clicked in last 30 days), warm (30-90 days), cold (90+ days)</li>
+<li><strong>Purchase status</strong> — never bought, bought once, repeat buyer</li>
+<li><strong>Interest</strong> — what they signed up for or clicked on most</li>
+</ol>
+<p>Start with engagement level. It&rsquo;s the single highest-impact segment because it determines whether your emails even land in the inbox.</p>
+<h3>Deliverability Essentials</h3>
+<p>None of your clever copy matters if emails land in spam. The non-negotiable basics:</p>
+<ul>
+<li><strong>Authenticate your domain</strong> — set up SPF, DKIM, and DMARC records. Every email platform has guides for this.</li>
+<li><strong>Warm your sending</strong> — new domains should start with 50-100 emails/day and scale up over 2-4 weeks.</li>
+<li><strong>Clean your list quarterly</strong> — remove hard bounces immediately, soft bounces after 3 attempts, and unengaged subscribers after 90 days of silence.</li>
+<li><strong>Watch your spam complaint rate</strong> — stay below 0.1%. Above 0.3% and Gmail will start throttling you.</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>Subject Lines That Get Opened</h1>
+
+<p>Your subject line is the most important piece of copy you&rsquo;ll ever write. It doesn&rsquo;t matter how brilliant the email body is if nobody opens it.</p>
+<p>Here are 10 proven frameworks, each with an AI prompt that generates options tailored to your business.</p>
+<h3>Framework 1: The Curiosity Gap</h3>
+<p>Create an information gap the reader needs to close.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 email subject lines using the curiosity gap technique for [business type]. The email is about [topic]. Each subject line should hint at surprising or counterintuitive information without being clickbait. Keep them under 50 characters.&rdquo;</p>
+</blockquote>
+<h3>Framework 2: The Direct Benefit</h3>
+<p>State exactly what the reader gets.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 benefit-driven email subject lines for [product/service]. Focus on the end result the customer achieves, not features. Use specific numbers or timeframes where possible. Keep them under 45 characters.&rdquo;</p>
+</blockquote>
+<h3>Framework 3: The Urgent Question</h3>
+<p>Ask something the reader can&rsquo;t help but answer internally.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 question-based email subject lines for [audience]. The email covers [topic]. Each question should challenge an assumption or tap into a common frustration. Avoid yes/no questions—use &lsquo;how&rsquo;, &lsquo;why&rsquo;, or &lsquo;what if&rsquo; instead.&rdquo;</p>
+</blockquote>
+<h3>Framework 4: The Personal Touch</h3>
+<p>Use the reader&rsquo;s name or reference their specific situation.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 personalised email subject lines for [business]. Use the merge tag {first_name} naturally. The email is about [topic]. Make them feel like a message from a friend, not a brand.&rdquo;</p>
+</blockquote>
+<h3>Framework 5: The Social Proof</h3>
+<p>Leverage what others have done or said.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 social proof subject lines for [product/service]. Reference customer results, popularity, or collective behaviour. Use specific numbers (e.g., &lsquo;2,847 people already…&rsquo;). Under 50 characters each.&rdquo;</p>
+</blockquote>
+<h3>Framework 6: The Scarcity/Urgency</h3>
+<p>Create genuine time pressure (never fake it).</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 urgency-based email subject lines for [offer]. The deadline is [date/time]. Convey urgency without being spammy or using ALL CAPS. Avoid the word &lsquo;hurry&rsquo;. Under 45 characters.&rdquo;</p>
+</blockquote>
+<h3>Framework 7: The Story Tease</h3>
+<p>Open a narrative loop.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 story-teaser subject lines for [business]. Each should hint at a real scenario, mistake, or transformation related to [topic]. Make the reader want to know what happened next. Under 50 characters.&rdquo;</p>
+</blockquote>
+<h3>Framework 8: The Contrarian</h3>
+<p>Challenge conventional wisdom.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 contrarian email subject lines for [audience]. Challenge a common belief about [topic]. Be thought-provoking but not offensive. The email argues that [your actual point]. Under 50 characters.&rdquo;</p>
+</blockquote>
+<h3>Framework 9: The List/Number</h3>
+<p>Promise a specific, digestible quantity.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 number-based subject lines for an email about [topic] aimed at [audience]. Use odd numbers (they outperform even). Each should promise clear, actionable value. Under 45 characters.&rdquo;</p>
+</blockquote>
+<h3>Framework 10: The One-Word or Ultra-Short</h3>
+<p>Sometimes less is more.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write 5 ultra-short email subject lines (1-4 words) for [business]. The email is about [topic]. Each should be intriguing enough to open on its own. Think text-message energy.&rdquo;</p>
+</blockquote>
+<h3>A/B Testing Your Subject Lines</h3>
+<p>Never guess when you can test. Send version A to 15% of your list and version B to another 15%. Wait 2-4 hours. The winner goes to the remaining 70%. Most email platforms automate this.</p>
+<p>Test one variable at a time: length, emoji vs. no emoji, question vs. statement, personalisation vs. generic. Over time, you&rsquo;ll build a mental model of what your specific audience responds to.</p>
+<h3>What Kills Open Rates</h3>
+<ul>
+<li>ALL CAPS or excessive punctuation (!!!)</li>
+<li>Spam trigger words: &ldquo;free&rdquo;, &ldquo;guarantee&rdquo;, &ldquo;act now&rdquo;, &ldquo;limited time&rdquo; (used carelessly)</li>
+<li>Misleading subject lines that don&rsquo;t match the content</li>
+<li>Sending too frequently without enough value</li>
+<li>Not sending frequently enough (your audience forgets you)</li>
+<li>Poor sender name — use a human name, not &ldquo;noreply@&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>Welcome Sequence</h1>
+
+<p>Your welcome sequence is the highest-leverage automation you&rsquo;ll build. New subscribers are at peak interest — open rates for welcome emails average 50-60%, compared to 20-25% for regular campaigns.</p>
+<p>Here&rsquo;s a 5-email welcome sequence with full prompts for each.</p>
+<h3>Email 1: The Warm Welcome (Sent immediately)</h3>
+<p>Deliver your lead magnet, set expectations, and start the relationship.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a welcome email for [business name]. The subscriber just signed up for [lead magnet]. The email should: (1) deliver the lead magnet with a clear download link placeholder, (2) introduce who I am in 2-3 sentences — I&rsquo;m [brief background], (3) tell them what to expect from my emails — I send [frequency] about [topics], (4) ask one simple question to encourage a reply (this helps deliverability). Tone: [warm/professional/casual]. Keep it under 200 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Email 2: The Quick Win (Sent Day 1)</h3>
+<p>Give them an immediate, actionable result related to your lead magnet.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a follow-up email for [business name], sent one day after someone downloaded [lead magnet]. Share one quick, actionable tip related to [topic] that they can implement in under 10 minutes. The goal is to demonstrate value fast and build trust. End with a soft mention of [product/service] as a way to go deeper, without being salesy. Under 250 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Email 3: The Story (Sent Day 3)</h3>
+<p>Share your origin story or a customer transformation.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a story-driven email for [business name]. Tell the story of [choose one: my journey starting this business / a customer who achieved X result]. Structure: problem → turning point → transformation. The lesson should naturally connect to the value of [product/service]. Keep it personal and conversational, not polished-corporate. Under 300 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Email 4: The Value Bomb (Sent Day 5)</h3>
+<p>Your most useful, shareable piece of content.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write an email for [business name] that provides a genuinely useful [framework/checklist/guide] about [topic]. This should be the kind of email someone bookmarks or forwards to a colleague. Structure it with a brief intro, then the framework in numbered steps or bullet points. Subtly position [product/service] as what makes step [X] easier. Under 350 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Email 5: The Soft Pitch (Sent Day 7)</h3>
+<p>A clear, honest invitation to take the next step.</p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a soft-sell email for [business name]. Recap the value delivered so far in the welcome sequence (the [lead magnet], the [quick win tip], and the [framework]). Then introduce [product/service] as the natural next step. Address the top 2-3 objections [list them]. Include a clear call to action. Be direct but not pushy — think trusted adviser, not car salesman. Under 300 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Timing and Cadence</h3>
+<p>The spacing above (Day 0, 1, 3, 5, 7) is a solid default. Front-load value in the first week while attention is high. If you&rsquo;re in e-commerce, compress to Days 0, 1, 2, 3, 5 — purchase decisions happen faster.</p>
+<h3>Personalisation That Works</h3>
+<p>Beyond {first_name}, use what you know:
+- <strong>Sign-up source</strong> — tailor the story to match where they found you
+- <strong>Lead magnet chosen</strong> — if you have multiple, reference the specific one
+- <strong>Quiz/survey answers</strong> — if your opt-in includes questions, use the data</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>Sales Sequences</h1>
+
+<p>Sales emails are where most people either go too hard (spammy) or too soft (invisible). The prompts below are calibrated for the sweet spot: clear, honest, and effective.</p>
+<h3>Launch Sequence (5 Emails)</h3>
+<p>For new product launches, course openings, or limited-time offers.</p>
+<p><strong>Email 1 — The Announcement (Day 1):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a product launch announcement email for [product name] by [business name]. Price: [£X]. The product solves [problem] for [audience]. Lead with the problem, introduce the solution, and create excitement without hype. Include 3 key benefits and a clear CTA. Mention that [launch offer/bonus] is available until [date]. Under 300 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 2 — The Deep Dive (Day 2):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a launch email that explains what&rsquo;s inside [product name] in detail. Walk through the key components/modules/features. For each, explain the benefit in terms of what the buyer can do or achieve. Include one customer quote or result if possible: [provide it or write &lsquo;create a realistic placeholder&rsquo;]. End with CTA. Under 350 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 3 — The Objection Handler (Day 4):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a launch email for [product name] that addresses the top objections: [list 3-4 objections, e.g., &lsquo;I don&rsquo;t have time&rsquo;, &lsquo;Will this work for my industry?&rsquo;, &lsquo;I&rsquo;ve tried similar things before&rsquo;]. Handle each objection honestly and specifically — don&rsquo;t dismiss concerns. End with CTA and reminder of [deadline/bonus]. Under 300 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 4 — The Social Proof (Day 5):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a launch email for [product name] built around social proof and results. Feature 2-3 customer stories or testimonials: [provide them or write &lsquo;create realistic placeholders for a [type] business&rsquo;]. Frame each as: situation before → action taken → result achieved. End with CTA. Under 300 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 5 — The Final Call (Day 7):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a last-chance email for [product name]. The offer ends [tonight/tomorrow]. Be direct: summarise what they get, what they miss if they don&rsquo;t act, and make the CTA unmissable. Create genuine urgency without manufactured panic. This is the most direct email in the sequence. Under 250 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Cart Abandonment (3 Emails)</h3>
+<p><strong>Email 1 — The Gentle Reminder (1 hour after abandonment):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a cart abandonment email for [business name]. The customer left [product/item type] in their basket. Keep it helpful, not guilt-trippy. Ask if something went wrong. Include a link back to their cart. Under 150 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 2 — The Objection Buster (24 hours):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a second cart abandonment email for [business name]. Address the most common reasons people don&rsquo;t complete a purchase of [product type]: [e.g., shipping costs, not sure about sizing, comparing options]. Offer helpful information for each. Mention [guarantee/return policy] if applicable. Under 200 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 3 — The Incentive (48 hours):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a final cart abandonment email for [business name]. Offer [incentive: e.g., 10% off, free shipping, bonus item] as a nudge. Make it clear this is the last reminder. Include social proof (star rating, review count, or a short testimonial). CTA to complete purchase. Under 150 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Re-engagement Sequence (3 Emails)</h3>
+<p>For subscribers who haven&rsquo;t opened or clicked in 60-90 days.</p>
+<p><strong>Email 1 — The Check-In (Day 1):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a re-engagement email for [business name]. The subscriber hasn&rsquo;t engaged in [X] days. Be honest and human — acknowledge you&rsquo;ve noticed they&rsquo;ve been quiet. Ask if they still want to hear from you. Give them a reason to stay: mention [upcoming content/offer/value]. Include a clear &lsquo;Yes, keep me subscribed&rsquo; button. Under 150 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 2 — The Value Reminder (Day 4):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a second re-engagement email for [business name]. Share your single best piece of content or most useful resource — the thing that makes people say &lsquo;oh, this is good&rsquo;. Present it as &lsquo;in case you missed this&rsquo;. Under 200 words. British English.&rdquo;</p>
+</blockquote>
+<p><strong>Email 3 — The Breakup (Day 7):</strong></p>
+<blockquote>
+<p><strong>Prompt:</strong> &ldquo;Write a final re-engagement email for [business name]. Be warm but clear: if they don&rsquo;t click, you&rsquo;ll remove them from the list. No hard feelings. Make the &lsquo;keep me subscribed&rsquo; button prominent. Mention they can always re-subscribe later. Keep it short and genuine. Under 120 words. British English.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Newsletter Writing</h1>
+
+<p>A good newsletter is the backbone of your email marketing. It keeps you top of mind, builds trust between purchases, and gives people a reason to stay subscribed.</p>
+<h3>The Weekly Newsletter Formula</h3>
+<p>Every strong newsletter follows a simple structure:</p>
+<ol>
+<li><strong>Hook</strong> (1-2 sentences) — Start with something interesting. A question, a surprising stat, a quick story.</li>
+<li><strong>Main content</strong> (1-2 sections) — Your insight, tutorial, or opinion on a topic your audience cares about.</li>
+<li><strong>Curated links</strong> (3-5 items) — Useful resources you&rsquo;ve found. Saves your reader time.</li>
+<li><strong>CTA</strong> (1 sentence) — What you want them to do: reply, check out a product, read a post.</li>
+</ol>
+<blockquote>
+<p><strong>Prompt — Weekly Newsletter Draft:</strong>
+&ldquo;Write a newsletter for [business name], aimed at [audience]. This week&rsquo;s theme is [topic]. Structure: (1) Opening hook — something surprising or thought-provoking about [topic], (2) Main section — share [an insight/tutorial/opinion] with actionable takeaways, (3) Three curated links — I&rsquo;ll provide URLs, write brief descriptions for each: [URL 1 about X], [URL 2 about Y], [URL 3 about Z], (4) Closing CTA — encourage readers to [action]. Tone: [conversational/authoritative/witty]. Under 500 words. British English.&rdquo;</p>
+</blockquote>
+<h3>Content Curation Prompts</h3>
+<p>Finding great content to share is half the work. Use AI to speed up the curation process.</p>
+<blockquote>
+<p><strong>Prompt — Content Discovery:</strong>
+&ldquo;I write a [frequency] newsletter about [topic] for [audience]. Suggest 10 content themes or angles I could cover in upcoming editions. For each, give me: (1) a working title, (2) why my audience would care, (3) a unique take I could offer. Avoid generic topics — think specific, surprising, or contrarian.&rdquo;</p>
+<p><strong>Prompt — Link Descriptions:</strong>
+&ldquo;I&rsquo;m including these links in my newsletter. Write a 1-2 sentence description for each that explains why it&rsquo;s worth reading. Be specific about the value — don&rsquo;t just summarise the title. Links: [paste URLs and brief notes about each]. British English.&rdquo;</p>
+</blockquote>
+<h3>Writing in Your Voice</h3>
+<p>AI-generated text sounds generic unless you train it. Here&rsquo;s how to make AI write like you:</p>
+<blockquote>
+<p><strong>Prompt — Voice Training:</strong>
+&ldquo;Analyse these 3 samples of my writing and describe my voice, tone, and style in detail. Note my sentence structure, vocabulary preferences, level of formality, use of humour, and any quirks. Then rewrite this [email/paragraph] in my style: [paste draft]. Writing samples: [paste 3 genuine samples of your writing, at least 200 words each].&rdquo;</p>
+</blockquote>
+<p>Save the voice description AI generates. Paste it at the start of every email prompt as a style instruction. This one step transforms generic output into something that sounds like you.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Analytics &amp; Optimisation</h1>
+
+<p>You don&rsquo;t need to be a data analyst. You need to watch five numbers and understand what they&rsquo;re telling you.</p>
+<h3>Key Metrics</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Healthy Range</th>
+<th>What It Tells You</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Open rate</strong></td>
+<td>20-40%</td>
+<td>Subject line + sender reputation + send time</td>
+</tr>
+<tr>
+<td><strong>Click-through rate</strong></td>
+<td>2-5%</td>
+<td>Content relevance + CTA strength</td>
+</tr>
+<tr>
+<td><strong>Unsubscribe rate</strong></td>
+<td>&lt;0.5% per send</td>
+<td>Content-audience fit</td>
+</tr>
+<tr>
+<td><strong>Spam complaint rate</strong></td>
+<td>&lt;0.1%</td>
+<td>List quality + permission</td>
+</tr>
+<tr>
+<td><strong>Revenue per email</strong></td>
+<td>Varies</td>
+<td>Bottom-line effectiveness</td>
+</tr>
+</tbody>
+</table>
+<p>If open rates drop, fix your subject lines or clean your list. If click rates drop, your content isn&rsquo;t matching expectations. If unsubscribes spike, you&rsquo;re emailing too often or to the wrong segment.</p>
+<h3>AI Prompts for Analysis</h3>
+<blockquote>
+<p><strong>Prompt — Campaign Review:</strong>
+&ldquo;Here are the results from my last 5 email campaigns: [paste data — subject line, open rate, click rate, unsubscribes, revenue if applicable]. Identify patterns: what&rsquo;s working, what&rsquo;s not, and what I should test next. Be specific with recommendations, not generic advice.&rdquo;</p>
+<p><strong>Prompt — A/B Test Analysis:</strong>
+&ldquo;I ran an A/B test on [subject line / send time / CTA / layout]. Version A: [details + results]. Version B: [details + results]. List size: [X]. Is this result statistically meaningful? What should I learn from it? What should I test next?&rdquo;</p>
+</blockquote>
+<h3>The Continuous Improvement Loop</h3>
+<p>Every month, run this cycle:</p>
+<ol>
+<li><strong>Review</strong> — Pull your top 3 and bottom 3 performing emails</li>
+<li><strong>Analyse</strong> — What do the winners have in common? What do the losers share?</li>
+<li><strong>Hypothesise</strong> — Form one clear test for the next month</li>
+<li><strong>Test</strong> — Run the test across at least 3 sends</li>
+<li><strong>Document</strong> — Write down what you learned (even if the result was &ldquo;no difference&rdquo;)</li>
+</ol>
+<p>Small, consistent improvements compound. A 1% open rate improvement every month means 12% better by year end.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Tool Recommendations</h1>
+
+<h3>Free and Budget-Friendly</h3>
+<p><strong>Buttondown</strong> — Clean, minimal, great for writers. Generous free tier (100 subscribers). Markdown-native, no bloat. Best for: personal newsletters, solo creators.</p>
+<p><strong>MailerLite</strong> — Full-featured with a free tier up to 1,000 subscribers. Solid automation builder, landing pages included. Best for: small businesses wanting all-in-one.</p>
+<p><strong>Brevo (formerly Sendinblue)</strong> — Free tier based on sends (300/day), not subscribers. Good transactional email support. Best for: e-commerce with transactional needs.</p>
+<h3>Mid-Range</h3>
+<p><strong>Kit (formerly ConvertKit)</strong> — Built for creators. Excellent automation, tagging, and sequence builder. Free to 10,000 subscribers (limited features), paid plans from $25/month. Best for: course creators, coaches, digital product sellers.</p>
+<p><strong>Beehiiv</strong> — Newsletter-focused with built-in monetisation (ads, paid subscriptions, referral programme). Free tier up to 2,500 subscribers. Best for: newsletter businesses, media operators.</p>
+<h3>What to Look For</h3>
+<p>Choose based on your primary use case, not feature checklists. Prioritise: reliable deliverability, an automation builder you&rsquo;ll actually use, and solid analytics. Every platform on this list handles the basics well. The best tool is the one you&rsquo;ll consistently use.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>Quick Reference</h1>
+
+<h3>Best Send Times by Industry</h3>
+<table>
+<thead>
+<tr>
+<th>Industry</th>
+<th>Best Days</th>
+<th>Best Times (GMT)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>B2B / SaaS</strong></td>
+<td>Tue, Wed, Thu</td>
+<td>09:00 - 11:00</td>
+</tr>
+<tr>
+<td><strong>E-commerce</strong></td>
+<td>Tue, Thu, Sun</td>
+<td>10:00 - 12:00, 19:00 - 21:00</td>
+</tr>
+<tr>
+<td><strong>Newsletters / Media</strong></td>
+<td>Tue, Wed</td>
+<td>07:00 - 09:00</td>
+</tr>
+<tr>
+<td><strong>Health / Fitness</strong></td>
+<td>Mon, Wed</td>
+<td>06:00 - 08:00, 17:00 - 19:00</td>
+</tr>
+<tr>
+<td><strong>Food / Restaurant</strong></td>
+<td>Thu, Fri</td>
+<td>11:00 - 13:00, 16:00 - 18:00</td>
+</tr>
+<tr>
+<td><strong>Finance / Professional</strong></td>
+<td>Tue, Wed</td>
+<td>08:00 - 10:00</td>
+</tr>
+<tr>
+<td><strong>Creative / Design</strong></td>
+<td>Tue, Thu</td>
+<td>10:00 - 12:00</td>
+</tr>
+</tbody>
+</table>
+<p>These are starting points. Your audience is unique — test and adjust.</p>
+<h3>Subject Line Swipe File (20 Templates)</h3>
+<p>Replace the bracketed sections with your specifics.</p>
+<ol>
+<li>The [unexpected thing] I learned about [topic]</li>
+<li>{first_name}, quick question about [their goal]</li>
+<li>[Number] [audience type] can&rsquo;t be wrong</li>
+<li>Stop [common mistake] (do this instead)</li>
+<li>I almost [dramatic thing] — here&rsquo;s what saved me</li>
+<li>[Specific result] in [short timeframe]. Here&rsquo;s how.</li>
+<li>This [thing] changed how I think about [topic]</li>
+<li>What [respected person/brand] gets wrong about [topic]</li>
+<li>The [adjective] guide to [desired outcome]</li>
+<li>[Short statement]. (No, really.)</li>
+<li>Your [thing] is costing you [something valuable]</li>
+<li>Why I stopped [common practice]</li>
+<li>[Number] minutes to better [outcome]</li>
+<li>We need to talk about [pain point]</li>
+<li>{first_name}, you left something behind</li>
+<li>If you only read one email this week…</li>
+<li>The [topic] mistake everyone makes (except you, now)</li>
+<li>[Shocking stat] — and what to do about it</li>
+<li>I was wrong about [thing]. Here&rsquo;s the truth.</li>
+<li>[Simple question]?</li>
+</ol>
+<h3>CAN-SPAM and GDPR Compliance Checklist</h3>
+<p><strong>For every email you send:</strong></p>
+<ul>
+<li class="checkbox unchecked">☐ Clear, non-deceptive subject line</li>
+<li class="checkbox unchecked">☐ Valid &ldquo;From&rdquo; name and email address</li>
+<li class="checkbox unchecked">☐ Physical postal address included (footer is fine)</li>
+<li class="checkbox unchecked">☐ Working unsubscribe link, honoured within 10 days</li>
+<li class="checkbox unchecked">☐ Not sending to purchased, rented, or scraped lists</li>
+</ul>
+<p><strong>GDPR additions (if you have EU/UK subscribers — and you probably do):</strong></p>
+<ul>
+<li class="checkbox unchecked">☐ Consent obtained before sending marketing emails</li>
+<li class="checkbox unchecked">☐ Record of when and how consent was given</li>
+<li class="checkbox unchecked">☐ Easy unsubscribe/data deletion process</li>
+<li class="checkbox unchecked">☐ Privacy policy accessible and up to date</li>
+<li class="checkbox unchecked">☐ Data processing purposes clearly stated at sign-up</li>
+<li class="checkbox unchecked">☐ No pre-ticked consent boxes</li>
+<li class="checkbox unchecked">☐ Under-16s excluded unless parental consent obtained</li>
+</ul>
+<p><strong>Review quarterly:</strong></p>
+<ul>
+<li class="checkbox unchecked">☐ List cleaned of bounces and unengaged subscribers</li>
+<li class="checkbox unchecked">☐ Suppression list maintained and respected</li>
+<li class="checkbox unchecked">☐ Third-party integrations reviewed for data sharing compliance</li>
+<li class="checkbox unchecked">☐ Consent records backed up</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-9">
+<h1><span class="chapter-number">Chapter 09</span>One Final Note</h1>
+
+<p>Email marketing isn&rsquo;t about blasting your list with offers. It&rsquo;s about building a relationship through consistent value, then making relevant offers to people who trust you.</p>
+<p>AI makes the writing faster. These prompts make the writing better. But the strategy — the understanding of your audience, the genuine desire to help them — that&rsquo;s still on you.</p>
+<p>Start with your welcome sequence. Get it live this week. Everything else builds from there.</p>
+<hr />
+<p><em>© 2025. All rights reserved. For personal and business use. Not for resale or redistribution.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Email Marketing AI Playbook</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

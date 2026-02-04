@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Solopreneur Launch Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Startup Guide</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Solopreneur Launch Playbook</h1>
+    <p class="cover-subtitle">From idea to first paying customer in 30 days: a practical framework for solo founders</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">Introduction: Why Most Launches Fail (And Yours Won't)</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">Part 1: Pre-Launch — 4 Weeks Out</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">Part 2: Launch Week Strategy</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Part 3: Post-Launch — Weeks 2-8</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Part 4: Growth Toolkit</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Appendix A: Launch Day Checklist</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">Appendix B: Recommended Reading</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">Appendix C: Budget Planner</span></a></li>
+      <li><a href="#chapter-9"><span class="toc-chapter-title">One Last Thing</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Solopreneur&rsquo;s Launch Playbook</h1>
+<p><strong>A step-by-step guide to launching your first digital product, SaaS, or service — even if you&rsquo;ve never done it before.</strong></p>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>Introduction: Why Most Launches Fail (And Yours Won&rsquo;t)</h1>
+
+<p>Here&rsquo;s the uncomfortable truth: most solo founders don&rsquo;t fail because their product is bad. They fail because they never properly launch it. They build for months, share a link on Twitter, hear crickets, and conclude the market doesn&rsquo;t want what they&rsquo;ve made.</p>
+<p>The real problem? They skipped the launch.</p>
+<p>A launch isn&rsquo;t a single moment — it&rsquo;s an engineered sequence of events designed to concentrate attention on your product during a narrow window. This playbook gives you that sequence, step by step, whether you&rsquo;re launching a digital product, a SaaS tool, or a service business.</p>
+<p>No venture capital required. No technical co-founder needed. No audience necessary (yet).</p>
+<p>Let&rsquo;s build one.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>Part 1: Pre-Launch — 4 Weeks Out</h1>
+
+<h3>Validate Before You Build</h3>
+<p>The most expensive mistake in business is building something nobody wants. Before you write a line of code, design a single page, or record a single video, you need evidence that real people will pay for what you&rsquo;re making.</p>
+<p><strong>The Mom Test (3 days)</strong></p>
+<p>Rob Fitzpatrick&rsquo;s <em>The Mom Test</em> boils down to one rule: never ask people if your idea is good. Instead, ask about their lives, their problems, and their current solutions. Three questions that actually work:</p>
+<ol>
+<li>&ldquo;What&rsquo;s the hardest part about [problem area] for you right now?&rdquo;</li>
+<li>&ldquo;How are you currently solving that? What have you tried?&rdquo;</li>
+<li>&ldquo;If you had a magic wand, what would the ideal solution look like?&rdquo;</li>
+</ol>
+<p>Talk to 10-15 people in your target market. You&rsquo;re listening for patterns — if 7 out of 10 describe the same frustration with the same inadequate workaround, you&rsquo;ve found a real problem.</p>
+<p><strong>Where to find people to interview:</strong> Relevant subreddits, Facebook groups, LinkedIn groups, Twitter/X communities, and Slack or Discord servers in your niche. Don&rsquo;t pitch. Just ask genuine questions.</p>
+<p><strong>The Landing Page Test (1 week)</strong></p>
+<p>Once you&rsquo;ve confirmed a real problem exists, test whether people will take action. Build a simple landing page with:</p>
+<ul>
+<li>A clear headline describing the outcome your product delivers</li>
+<li>3-4 bullet points explaining what&rsquo;s included</li>
+<li>A call-to-action: either &ldquo;Join the waitlist&rdquo; (email capture) or &ldquo;Pre-order now&rdquo; (payment)</li>
+</ul>
+<p>Drive traffic to it. If fewer than 5% of visitors sign up, your positioning needs work. If more than 10% convert, you&rsquo;re onto something real.</p>
+<p><strong>Pieter Levels (Nomad List, Remote OK) famously validates ideas with nothing more than a landing page and a Stripe checkout button.</strong> He&rsquo;s launched over 70 projects this way. Most failed. The ones that converted became million-dollar businesses. The landing page test costs you a weekend, not six months.</p>
+<p><strong>Waitlist Strategy</strong></p>
+<p>A waitlist isn&rsquo;t just email collection — it&rsquo;s your launch fuel. Every person on that list becomes a potential day-one customer, early reviewer, and word-of-mouth amplifier.</p>
+<p>Use a simple double opt-in flow:
+1. Visitor enters email
+2. Confirmation email with a &ldquo;refer a friend&rdquo; mechanic (give them a unique link)
+3. Weekly update email keeping them warm until launch</p>
+<p><strong>Tool recommendation:</strong> Use Carrd (£19/year) for the landing page + Buttondown (free up to 100 subscribers) for email. Don&rsquo;t overthink this.</p>
+<hr />
+<h3>Building in Public: Your Unfair Advantage</h3>
+<p>Building in public means sharing your progress openly — what you&rsquo;re making, what&rsquo;s working, what&rsquo;s failing. This isn&rsquo;t vanity. It&rsquo;s a distribution strategy.</p>
+<p>When you build in public, you:
+- Attract potential customers before you have a product
+- Build trust through transparency
+- Get free feedback from your target market
+- Create content without a separate content strategy</p>
+<p><strong>How to do it without feeling like a fraud:</strong></p>
+<p>Post weekly updates on Twitter/X or LinkedIn. Follow this template:</p>
+<blockquote>
+<p><strong>This week on [Product Name]:</strong>
+✅ What I shipped
+❌ What didn&rsquo;t work
+🔢 One real number (signups, revenue, page views)
+🎯 Next week&rsquo;s focus</p>
+</blockquote>
+<p>That&rsquo;s it. No thought leadership. No motivational nonsense. Just honest updates. Jon Yongfook grew Bannerbear to $25k MRR almost entirely through build-in-public updates on Twitter. The transparency created trust that traditional marketing couldn&rsquo;t.</p>
+<hr />
+<h3>Setting Up Your Minimum Stack</h3>
+<p>You need exactly four things to launch. Not five. Four.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What It Does</th>
+<th>Recommended Tool</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Domain</strong></td>
+<td>Your address on the internet</td>
+<td>Namecheap</td>
+<td>£8-12/year</td>
+</tr>
+<tr>
+<td><strong>Landing page</strong></td>
+<td>Converts visitors to customers</td>
+<td>Carrd</td>
+<td>£19/year</td>
+</tr>
+<tr>
+<td><strong>Email capture</strong></td>
+<td>Builds your waitlist and customer list</td>
+<td>Buttondown</td>
+<td>Free (up to 100)</td>
+</tr>
+<tr>
+<td><strong>Payment</strong></td>
+<td>Takes money</td>
+<td>Stripe or Gumroad</td>
+<td>Transaction fees only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total cost: under £30 to launch.</strong></p>
+<p>If you&rsquo;re selling a digital product (ebook, course, template), use <strong>Gumroad</strong>. It handles hosting, delivery, and payment in one tool. If you&rsquo;re selling a SaaS or service, use <strong>Stripe</strong> with a Carrd checkout page.</p>
+<p>Do not build a custom website. Do not set up a blog. Do not create a logo. These are procrastination disguised as productivity. You need a page that explains what you&rsquo;re selling and a button that takes money. Everything else comes later.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>Part 2: Launch Week Strategy</h1>
+
+<h3>The Launch Sequence: T-7 to T+7</h3>
+<p>A successful launch is a 14-day campaign, not a single announcement. Here&rsquo;s the day-by-day:</p>
+<p><strong>T-7 (one week before):</strong>
+- Finalise your launch page copy
+- Prepare all platform-specific posts (see below)
+- Schedule your email sequence
+- Line up 5-10 people who&rsquo;ve agreed to support your launch (friends, fellow founders, waitlist superfans)</p>
+<p><strong>T-5:</strong>
+- Send &ldquo;teaser&rdquo; email to your waitlist (see email templates below)
+- Post a &ldquo;something&rsquo;s coming&rdquo; teaser on social media
+- Submit your Product Hunt listing as &ldquo;upcoming&rdquo; (this builds a pre-launch following)</p>
+<p><strong>T-3:</strong>
+- Reach out personally to your 5-10 launch supporters with specific asks: &ldquo;Could you upvote on Product Hunt at 9am on Tuesday?&rdquo; or &ldquo;Would you share this tweet when I post it?&rdquo;
+- Prepare your Hacker News &ldquo;Show HN&rdquo; post</p>
+<p><strong>T-1:</strong>
+- Final check: landing page works, payment works, email sequence is loaded
+- Go to bed early. Seriously.</p>
+<p><strong>Launch Day (T-0):</strong>
+- Product Hunt goes live at 00:01 PST (08:01 GMT). Post early.
+- Send &ldquo;launch&rdquo; email to waitlist
+- Post on Twitter/X, LinkedIn, and relevant subreddits
+- Post &ldquo;Show HN&rdquo; on Hacker News
+- Engage with every single comment across all platforms
+- Message your supporters: &ldquo;We&rsquo;re live!&rdquo;</p>
+<p><strong>T+1 to T+3:</strong>
+- Continue engaging with comments and questions
+- Share early traction publicly (&ldquo;50 signups in 24 hours!&rdquo;)
+- Post on additional subreddits and communities
+- Reach out to any journalists or newsletter writers covering your space</p>
+<p><strong>T+7:</strong>
+- Send &ldquo;follow-up&rdquo; email to anyone who hasn&rsquo;t converted
+- Write a &ldquo;launch retrospective&rdquo; post (great build-in-public content)
+- Take stock of what worked and what didn&rsquo;t</p>
+<hr />
+<h3>Platform-by-Platform Playbook</h3>
+<p><strong>Product Hunt</strong></p>
+<p>Product Hunt can deliver 1,000-5,000 visitors in a single day. To maximise your chances:</p>
+<ul>
+<li><strong>Launch on Tuesday, Wednesday, or Thursday.</strong> Avoid weekends and Mondays.</li>
+<li><strong>Post at 00:01 PST</strong> (08:01 GMT) to maximise your voting window.</li>
+<li><strong>Get a hunter.</strong> Having a well-known hunter launch your product gives you more visibility. Reach out to active hunters on Twitter 2-3 weeks before launch.</li>
+<li><strong>Prepare your assets:</strong> First image/GIF is everything. Make it a clear product demo, not a logo. Use 1270×760px.</li>
+<li><strong>Respond to every comment</strong> within the first hour. Product Hunt&rsquo;s algorithm rewards engagement.</li>
+</ul>
+<p>Marc Lou launched several products to #1 on Product Hunt by optimising exactly these mechanics. His key insight: the first 4 hours determine your ranking for the entire day.</p>
+<p><strong>Hacker News (Show HN)</strong></p>
+<p>Hacker News is unpredictable but can deliver extremely high-quality traffic — technical early adopters who become your most vocal advocates.</p>
+<ul>
+<li>Use the &ldquo;Show HN:&rdquo; prefix in your title</li>
+<li>Write a genuine, non-promotional comment explaining what you built and why</li>
+<li>Be honest about limitations. HN rewards authenticity and punishes marketing speak.</li>
+<li>Best posting times: 8-10am EST on weekdays</li>
+</ul>
+<p><strong>Reddit</strong></p>
+<p>Reddit hates self-promotion but loves genuine problem-solving. The trick: don&rsquo;t promote your product. Share the insight behind it.</p>
+<p>Instead of: <em>&ldquo;I built an app that tracks freelance invoices&rdquo;</em>
+Post: <em>&ldquo;I tracked every invoice I sent for 6 months — here&rsquo;s what I learned about getting paid faster&rdquo;</em></p>
+<p>Then mention your tool naturally in the comments when people ask.</p>
+<p>Find 3-5 subreddits where your target audience gathers. Lurk for at least a week before posting. Understand the culture.</p>
+<p><strong>Twitter/X</strong></p>
+<p>Your launch tweet should follow this structure:</p>
+<blockquote>
+<p>I just launched [Product Name] — [one-sentence value prop].</p>
+<p>[3-4 bullet points of features/benefits]</p>
+<p>[Screenshot or demo GIF]</p>
+<p>[Link]</p>
+<p>I&rsquo;d love your feedback 👇</p>
+</blockquote>
+<p>Post it between 8-9am GMT for UK/EU audiences or 9-10am EST for US audiences. Reply to every response. Quote-tweet anyone who shares it.</p>
+<p><strong>LinkedIn</strong></p>
+<p>LinkedIn is massively underrated for B2B launches. The algorithm currently favours long-form text posts with no external links.</p>
+<p>Post your launch story as a personal narrative: the problem you noticed, why you decided to solve it, what you built. Put the link in the first comment, not the post itself. This hack alone can 3-5x your reach.</p>
+<hr />
+<h3>The Email Launch Sequence</h3>
+<p>You need exactly three emails. Here they are:</p>
+<p><strong>Email 1 — The Teaser (T-5)</strong></p>
+<blockquote>
+<p><strong>Subject:</strong> Something I&rsquo;ve been working on&hellip;</p>
+<p>Hey [Name],</p>
+<p>For the past [X weeks], I&rsquo;ve been building something to solve [specific problem].</p>
+<p>On [launch date], I&rsquo;m opening it up. You&rsquo;re on this list because you signed up early, so you&rsquo;ll get first access + [incentive: discount, bonus, early-bird pricing].</p>
+<p>More details coming [launch date]. Just wanted you to know — it&rsquo;s nearly ready.</p>
+<p>[Your name]</p>
+</blockquote>
+<p><strong>Email 2 — The Launch (T-0)</strong></p>
+<blockquote>
+<p><strong>Subject:</strong> It&rsquo;s live. [Product Name] is here.</p>
+<p>[Name] — today&rsquo;s the day.</p>
+<p>[Product Name] is officially live. Here&rsquo;s what it does:</p>
+<p>• [Benefit 1]
+• [Benefit 2]
+• [Benefit 3]</p>
+<p>As an early supporter, you get [early-bird offer: 30% off / lifetime deal / bonus].</p>
+<p>👉 [CTA Button: Get it now — £X]</p>
+<p>This offer expires [date]. After that, it goes to full price.</p>
+<p>Thanks for believing in this before it existed.</p>
+<p>[Your name]</p>
+</blockquote>
+<p><strong>Email 3 — The Follow-Up (T+7)</strong></p>
+<blockquote>
+<p><strong>Subject:</strong> Did you see this?</p>
+<p>Hey [Name],</p>
+<p>Last week I launched [Product Name] and the response has been incredible:</p>
+<p>• [Social proof: X signups, testimonial quote, Product Hunt ranking]</p>
+<p>If you haven&rsquo;t grabbed it yet, the early-bird price ends [date].</p>
+<p>👉 [CTA Button]</p>
+<p>After that, it&rsquo;s full price. No exceptions.</p>
+<p>[Your name]</p>
+</blockquote>
+<hr />
+<h3>Getting Your First 10 Customers</h3>
+<p>Your first 10 customers won&rsquo;t come from marketing. They&rsquo;ll come from conversations.</p>
+<ol>
+<li><strong>Personal outreach (5 customers):</strong> Message 20 people individually who match your target market. Not a blast — a genuine, personalised message explaining what you built and asking if it might help them.</li>
+<li><strong>Your waitlist (3 customers):</strong> Your early-bird offer should convert 10-20% of a warm waitlist.</li>
+<li><strong>Community engagement (2 customers):</strong> Active participation in relevant communities will naturally drive curious visitors.</li>
+</ol>
+<p>Sahil Lavingia, founder of Gumroad, has said repeatedly: <em>&ldquo;The first 10 customers are the hardest because you can&rsquo;t scale personal effort. But personal effort is the only thing that works at this stage.&rdquo;</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>Part 3: Post-Launch — Weeks 2-8</h1>
+
+<h3>Collecting and Acting on Feedback</h3>
+<p>After launch, you&rsquo;ll get two types of feedback: what people say and what people do. Pay attention to both, but trust behaviour over words.</p>
+<p><strong>Set up these feedback loops immediately:</strong></p>
+<ul>
+<li>Add a one-question post-purchase survey: &ldquo;What almost stopped you from buying?&rdquo;</li>
+<li>Email every customer personally after 7 days: &ldquo;How&rsquo;s it going? What could be better?&rdquo;</li>
+<li>Track where people drop off in your funnel (Plausible Analytics — free and privacy-friendly)</li>
+</ul>
+<p><strong>Framework for processing feedback:</strong></p>
+<p>Sort every piece of feedback into one of four categories:
+1. <strong>Do now</strong> — Easy fix, multiple people mentioned it
+2. <strong>Do next</strong> — Good idea, needs more thought
+3. <strong>Probably never</strong> — Interesting but doesn&rsquo;t align with your vision
+4. <strong>Investigate</strong> — Surprising feedback that might reveal something you&rsquo;re missing</p>
+<p>Category 4 is where the gold is. When customers use your product in ways you didn&rsquo;t expect, that&rsquo;s a signal worth investigating deeply.</p>
+<h3>Iteration vs Pivot: The Decision Framework</h3>
+<p>After 4-6 weeks, you&rsquo;ll have enough data to decide: iterate or pivot?</p>
+<p><strong>Iterate if:</strong>
+- People are buying, but fewer than expected → your marketing needs work, not your product
+- People are using it, but requesting specific features → you&rsquo;ve found the right problem, refine the solution
+- Retention is decent (&gt;40% monthly for SaaS) → double down</p>
+<p><strong>Pivot if:</strong>
+- You can&rsquo;t give it away for free → the problem isn&rsquo;t painful enough
+- Everyone says &ldquo;cool idea&rdquo; but nobody buys → you&rsquo;ve built a vitamin, not a painkiller
+- Your best customers are completely different from your intended audience → follow the money</p>
+<h3>Content Marketing on Zero Budget</h3>
+<p>Content marketing is the only scalable strategy that gets cheaper over time. Here&rsquo;s how to start with nothing:</p>
+<p><strong>The one-post-per-week system:</strong></p>
+<ol>
+<li>List 10 questions your target customers ask before buying your type of product</li>
+<li>Write a genuinely helpful answer to one question each week</li>
+<li>Post it on your blog (add one via Carrd or use Hashnode — free)</li>
+<li>Repurpose into a Twitter thread + LinkedIn post + Reddit answer</li>
+</ol>
+<p>One piece of content, four distribution points. Daniel Vassallo, who left Amazon to become a solo creator, built a $500k/year business largely through answering questions publicly on Twitter. No ads. No SEO tricks. Just being genuinely helpful in public.</p>
+<h3>The SEO Long Game</h3>
+<p>SEO won&rsquo;t deliver results for 3-6 months, but the work you do now compounds forever.</p>
+<p><strong>The basics that matter:</strong></p>
+<ul>
+<li>Research 20-30 long-tail keywords related to your niche (use Ubersuggest — free tier)</li>
+<li>Create a page targeting each keyword cluster</li>
+<li>Write content that genuinely answers the searcher&rsquo;s question better than existing results</li>
+<li>Get 5-10 backlinks from relevant sites (guest posts, podcast appearances, tool directories)</li>
+</ul>
+<p><strong>Forget about:</strong> keyword stuffing, link schemes, or anything that feels manipulative. Google&rsquo;s getting better at rewarding genuine expertise. Write for humans first.</p>
+<h3>When to Start Charging (And How Much)</h3>
+<p>Charge from day one.</p>
+<p>I know the temptation to launch free &ldquo;to get traction.&rdquo; Don&rsquo;t. Free users behave completely differently from paying users. Free users will tell you your product is great while never actually using it. Paying customers will tell you it needs work — and that honesty is worth everything.</p>
+<p><strong>Pricing framework for your first product:</strong></p>
+<ul>
+<li><strong>Digital product (ebook, template, course):</strong> £9-29. Start at the lower end and raise prices as you add social proof.</li>
+<li><strong>SaaS tool:</strong> £9-29/month. Offer annual billing at a 20% discount.</li>
+<li><strong>Service:</strong> Price based on the value you deliver, not the hours you spend. If your service saves someone £1,000, charging £200 is a bargain.</li>
+</ul>
+<p>Use the &ldquo;wince test&rdquo;: raise your price until you feel slightly uncomfortable saying it out loud. That&rsquo;s roughly the right price.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Part 4: Growth Toolkit</h1>
+
+<h3>20 Free Distribution Channels — Ranked by Effort vs Impact</h3>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Channel</th>
+<th>Effort</th>
+<th>Impact</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Product Hunt</td>
+<td>Medium</td>
+<td>High</td>
+<td>SaaS, tools, apps</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Twitter/X threads</td>
+<td>Low</td>
+<td>High</td>
+<td>All products</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LinkedIn posts</td>
+<td>Low</td>
+<td>High</td>
+<td>B2B, services</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reddit (niche subs)</td>
+<td>Medium</td>
+<td>High</td>
+<td>All products</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Hacker News</td>
+<td>Low</td>
+<td>Medium-High</td>
+<td>Technical products</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Email to existing contacts</td>
+<td>Low</td>
+<td>Medium</td>
+<td>All products</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Indie Hackers</td>
+<td>Low</td>
+<td>Medium</td>
+<td>SaaS, digital products</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Facebook Groups</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Consumer, local</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Guest blog posts</td>
+<td>High</td>
+<td>Medium</td>
+<td>All products</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Podcast appearances</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Services, personal brand</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Newsletter sponsorships</td>
+<td>Low</td>
+<td>Medium</td>
+<td>All (if budget allows)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Tool directories (AlternativeTo, G2)</td>
+<td>Low</td>
+<td>Medium</td>
+<td>SaaS</td>
+</tr>
+<tr>
+<td>13</td>
+<td>YouTube tutorials</td>
+<td>High</td>
+<td>High (long-term)</td>
+<td>All products</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Quora answers</td>
+<td>Medium</td>
+<td>Low-Medium</td>
+<td>SEO, authority</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Slack/Discord communities</td>
+<td>Medium</td>
+<td>Low-Medium</td>
+<td>Niche products</td>
+</tr>
+<tr>
+<td>16</td>
+<td>DEV.to / Hashnode</td>
+<td>Low</td>
+<td>Low-Medium</td>
+<td>Technical products</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Cross-promotion swaps</td>
+<td>Low</td>
+<td>Low-Medium</td>
+<td>All products</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Free tools/calculators</td>
+<td>High</td>
+<td>High (long-term)</td>
+<td>SaaS, services</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Cold email outreach</td>
+<td>Medium</td>
+<td>Low-Medium</td>
+<td>B2B, services</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Pinterest</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Visual/consumer products</td>
+</tr>
+</tbody>
+</table>
+<p>Focus on 3-4 channels maximum. Spreading thin across 20 channels means you&rsquo;ll fail at all of them.</p>
+<h3>Cold Outreach Templates That Don&rsquo;t Suck</h3>
+<p><strong>Template 1: The Direct Value</strong></p>
+<blockquote>
+<p>Subject: Quick idea for [their specific situation]</p>
+<p>Hi [Name],</p>
+<p>I noticed [specific observation about their business — proves you did your homework].</p>
+<p>I built [Product Name] which helps [specific outcome]. Thought it might be useful given [their situation].</p>
+<p>Would you be up for a quick look? Happy to give you a free trial / extended access.</p>
+<p>Cheers,
+[Your name]</p>
+</blockquote>
+<p><strong>Template 2: The Peer Connection</strong></p>
+<blockquote>
+<p>Subject: Fellow [industry] founder 👋</p>
+<p>Hi [Name],</p>
+<p>I&rsquo;m building [Product Name] to help [target audience] with [problem]. We&rsquo;re early but getting good feedback from [social proof].</p>
+<p>I think [their product/audience] and what we&rsquo;re building could be complementary. Would you be open to a quick chat about potential cross-promotion?</p>
+<p>No pressure either way.</p>
+<p>[Your name]</p>
+</blockquote>
+<p><strong>Rules for cold outreach:</strong> personalise every message (no mail merge), keep it under 100 words, make the ask small and specific, and follow up exactly once after 5 days.</p>
+<h3>Building Social Proof From Scratch</h3>
+<p>When you have zero customers, social proof feels impossible. Here&rsquo;s how to bootstrap it:</p>
+<ol>
+<li><strong>Beta testers → testimonials.</strong> Give 10 people free access in exchange for honest feedback. Use their best quotes (with permission) on your landing page.</li>
+<li><strong>Screenshots of DMs and emails.</strong> When someone says something positive, screenshot it. Blur their name if needed. Real messages beat polished testimonials.</li>
+<li><strong>Metrics, even small ones.</strong> &ldquo;Used by 47 freelancers&rdquo; is more compelling than no number at all.</li>
+<li><strong>&ldquo;As seen on&rdquo; badges.</strong> If you appear on Product Hunt, Hacker News, or Indie Hackers, you can legitimately use their logos.</li>
+<li><strong>Your own story.</strong> &ldquo;I built this because I had this problem&rdquo; is a form of social proof — it proves you understand the customer&rsquo;s pain.</li>
+</ol>
+<h3>Partnership and Cross-Promotion Strategies</h3>
+<p>Find 3-5 products that serve the same audience but aren&rsquo;t competitors. Reach out with specific partnership ideas:</p>
+<ul>
+<li><strong>Newsletter swaps:</strong> You mention them to your list; they mention you to theirs</li>
+<li><strong>Bundle deals:</strong> Create a joint offering at a slight discount</li>
+<li><strong>Co-created content:</strong> Write a guide together, both promote it</li>
+<li><strong>Affiliate arrangements:</strong> Offer 20-30% commission for referrals</li>
+</ul>
+<p>The best partnerships are asymmetrically beneficial — you bring something they can&rsquo;t easily create themselves. Maybe it&rsquo;s a specific piece of content, access to a niche community, or a complementary feature their users keep requesting.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Appendix A: Launch Day Checklist</h1>
+
+<p>Print this. Tape it to your wall. Check every box.</p>
+<p><strong>Before Launch Day:</strong>
+- [ ] Landing page live and tested (desktop + mobile)
+- [ ] Payment system tested with a real transaction
+- [ ] Email sequence loaded and scheduled
+- [ ] Product Hunt listing prepared (images, description, maker comment)
+- [ ] Social media posts drafted for Twitter/X, LinkedIn, Reddit
+- [ ] 5-10 launch supporters briefed with specific asks
+- [ ] Analytics installed (Plausible or similar)
+- [ ] Support email set up and monitored</p>
+<p><strong>Launch Morning:</strong>
+- [ ] Product Hunt listing goes live (00:01 PST / 08:01 GMT)
+- [ ] Launch email sent to waitlist
+- [ ] Twitter/X launch post published
+- [ ] LinkedIn post published
+- [ ] First Reddit post submitted
+- [ ] Personal messages sent to supporters: &ldquo;We&rsquo;re live!&rdquo;
+- [ ] Maker comment posted on Product Hunt</p>
+<p><strong>Launch Day (ongoing):</strong>
+- [ ] Respond to every Product Hunt comment within 30 minutes
+- [ ] Engage with every social media reply
+- [ ] Monitor analytics in real time
+- [ ] Share early milestones publicly (&ldquo;First 10 signups!&rdquo;)
+- [ ] Thank everyone who shares or supports publicly</p>
+<p><strong>End of Launch Day:</strong>
+- [ ] Post a thank-you update on all platforms
+- [ ] Save screenshots of best comments and results
+- [ ] Note top 3 things that worked and top 3 that didn&rsquo;t</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Appendix B: Recommended Reading</h1>
+
+<ol>
+<li><strong>The Mom Test</strong> — Rob Fitzpatrick. The only book on customer research you need.</li>
+<li><strong>Obviously Awesome</strong> — April Dunford. How to position your product so the right people instantly understand it.</li>
+<li><strong>$100M Offers</strong> — Alex Hormozi. How to create offers so good people feel stupid saying no.</li>
+<li><strong>Make</strong> — Pieter Levels. The bible of bootstrapped product building.</li>
+<li><strong>Company of One</strong> — Paul Jarvis. Why staying small might be the smartest growth strategy.</li>
+<li><strong>Traction</strong> — Gabriel Weinberg &amp; Justin Mares. Systematic framework for finding your growth channel.</li>
+<li><strong>Building a StoryBrand</strong> — Donald Miller. How to clarify your message so customers engage.</li>
+<li><strong>The Embedded Entrepreneur</strong> — Arvid Kahl. Finding and serving your audience before building.</li>
+<li><strong>This Is Marketing</strong> — Seth Godin. Understanding that marketing is about serving people, not manipulating them.</li>
+<li><strong>Zero to Sold</strong> — Arvid Kahl. The complete lifecycle of a bootstrapped business.</li>
+</ol>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>Appendix C: Budget Planner</h1>
+
+<h3>Launching on £0</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Tool</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Landing page</td>
+<td>Carrd (free tier)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Buttondown (free tier)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Payment</td>
+<td>Gumroad</td>
+<td>10% per sale</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Plausible (community) or Umami</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>Use Carrd subdomain</td>
+<td>£0</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>£0 upfront</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Tradeoff: Carrd subdomain looks less professional. No custom email. Limited to 1 page.</em></p>
+<h3>Launching on £50</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Tool</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>Namecheap</td>
+<td>£10</td>
+</tr>
+<tr>
+<td>Landing page</td>
+<td>Carrd Pro</td>
+<td>£19/year</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Buttondown</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Payment</td>
+<td>Stripe</td>
+<td>1.4% + 20p per sale</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Plausible Cloud</td>
+<td>£0 (30-day trial)</td>
+</tr>
+<tr>
+<td>Logo</td>
+<td>Canva (free)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£29 upfront</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Spare budget: Use the remaining £21 for a professional email address (Zoho Mail free tier) or one month of a tool upgrade.</em></p>
+<h3>Launching on £500</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Tool</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>Namecheap</td>
+<td>£10</td>
+</tr>
+<tr>
+<td>Landing page</td>
+<td>Carrd Pro</td>
+<td>£19/year</td>
+</tr>
+<tr>
+<td>Email marketing</td>
+<td>ConvertKit (free up to 1,000)</td>
+<td>£0</td>
+</tr>
+<tr>
+<td>Payment</td>
+<td>Stripe</td>
+<td>Transaction fees</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Plausible Cloud</td>
+<td>£72/year</td>
+</tr>
+<tr>
+<td>Design</td>
+<td>Figma + Canva Pro</td>
+<td>£100/year</td>
+</tr>
+<tr>
+<td>Copywriting</td>
+<td>Hire a freelancer for landing page</td>
+<td>£150</td>
+</tr>
+<tr>
+<td>Newsletter sponsorship</td>
+<td>1-2 niche newsletters</td>
+<td>£100-150</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~£450-500</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>This budget gets you professional copy, proper analytics, and paid distribution for your launch. It&rsquo;s the sweet spot for most solo founders.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-9">
+<h1><span class="chapter-number">Chapter 09</span>One Last Thing</h1>
+
+<p>The biggest risk isn&rsquo;t launching badly. It&rsquo;s not launching at all.</p>
+<p>Every successful solopreneur I&rsquo;ve studied — from Pieter Levels to Daniel Vassallo to Marc Lou — has one thing in common: they ship constantly. Not perfectly. Not when everything is ready. They ship when it&rsquo;s good enough, learn from the response, and iterate.</p>
+<p>Your first launch won&rsquo;t be your best. It will, however, be the one that teaches you the most. And every launch after it gets easier, faster, and more effective.</p>
+<p>Set your launch date. Work backwards from this playbook. And ship the thing.</p>
+<p>The world needs what you&rsquo;re building. But only if you launch it.</p>
+<hr />
+<p><em>© 2026. All rights reserved.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Solopreneur Launch Playbook</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

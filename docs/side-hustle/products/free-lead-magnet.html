@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 AI Prompts That Actually Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Free Guide</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">10 AI Prompts That Actually Work</h1>
+    <p class="cover-subtitle">The prompts we use every day for content, code, and strategy. No fluff, just results.</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">The Strategic Positioning Audit</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">The Competitive Kill Map</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">The Pricing Strategy Stress Test</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">The Market Entry Briefing</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">The Financial Model Interrogator</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">The Customer Acquisition Playbook</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">The SWOT That Doesn't Waste Your Time</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">The Investor Pitch Sharpener</span></a></li>
+      <li><a href="#chapter-9"><span class="toc-chapter-title">The Operations Bottleneck Finder</span></a></li>
+      <li><a href="#chapter-10"><span class="toc-chapter-title">The "What Am I Missing?" Blind Spot Scan</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>10 AI Prompts That Replace a $5,000 Consultant</h1>
+<h3>The exact prompts top operators use to get boardroom-quality analysis in minutes — not months.</h3>
+<hr />
+<blockquote>
+<p><strong>You don&rsquo;t need a consultant. You need the right question.</strong></p>
+<p>Most people type &ldquo;give me a business plan&rdquo; into ChatGPT and wonder why the output is rubbish. The secret isn&rsquo;t the AI — it&rsquo;s the prompt. A great prompt does what a great consultant does: it structures the problem, demands specificity, and forces rigour.</p>
+<p>These 10 prompts took months of refinement. Each one replaces a deliverable that consulting firms charge thousands for. Copy them. Customise them. Use them today.</p>
+</blockquote>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>The Strategic Positioning Audit</h1>
+
+<p><strong>What it replaces:</strong> Brand strategy workshop (~£2,000–£5,000)</p>
+<pre><code>Act as a brand strategist with 20 years of experience in [your industry].
+Analyse my business: [describe your business, target customer, and current
+positioning]. Identify the 3 biggest gaps between how we position ourselves
+and what our ideal customer actually values. For each gap, provide a
+repositioning recommendation with specific messaging language I can use
+immediately. Be brutally honest.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Gap 2: You lead with &ldquo;affordable&rdquo; but your target customer (scaling SaaS founders) associates affordability with low quality. They want &ldquo;efficient&rdquo; and &ldquo;high-leverage.&rdquo; Recommended shift: Replace &ldquo;affordable consulting&rdquo; with &ldquo;high-ROI advisory — every pound works harder than the last.&rdquo;</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> The prompt forces the AI to think from the customer&rsquo;s perspective, not yours. Most founders describe what they <em>do</em>. This prompt surfaces what customers <em>want to hear</em>.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>The Competitive Kill Map</h1>
+
+<p><strong>What it replaces:</strong> Competitive analysis report (~£3,000–£8,000)</p>
+<pre><code>You are a competitive intelligence analyst. My business is [describe business].
+My top 5 competitors are [list them with URLs if possible]. For each competitor,
+identify: (1) their core value proposition in one sentence, (2) their biggest
+weakness based on public reviews and positioning, (3) the specific customer
+segment they're underserving, and (4) one concrete action I can take this
+week to exploit that gap. Present as a battle card I can hand to my sales team.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Competitor: FreshBooks — Weakness: Power users on Reddit consistently complain about limited project-level reporting. Underserved segment: Agencies billing 10+ clients monthly. Your move: Create a landing page titled &ldquo;FreshBooks Not Cutting It?&rdquo; targeting &ldquo;FreshBooks alternative for agencies&rdquo; — search volume is 1,200/mo with low competition.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> It doesn&rsquo;t just list competitors — it gives you <em>actions</em>. The battle-card format means the output is immediately usable by anyone on your team.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>The Pricing Strategy Stress Test</h1>
+
+<p><strong>What it replaces:</strong> Pricing consultant engagement (~£2,000–£4,000)</p>
+<pre><code>Act as a pricing strategist. My product is [describe product, current price,
+target customer]. Run a pricing stress test: (1) What pricing model best fits
+my product type and market? (2) What are 3 price points I should A/B test,
+with reasoning for each? (3) What psychological pricing tactics apply here?
+(4) Where am I likely leaving money on the table? Include a simple pricing
+tier structure I could implement this month.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>You&rsquo;re charging £29/mo flat. Your power users consume 10× the resources of casual users. Recommended test: Introduce a £49/mo &ldquo;Pro&rdquo; tier with priority support and advanced analytics. Based on typical SaaS upgrade rates (15–25%), this alone could increase ARPU by 30–40% without acquiring a single new customer.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> Most founders set prices once and forget them. This prompt forces a structured evaluation and gives you testable price points — not theory.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>The Market Entry Briefing</h1>
+
+<p><strong>What it replaces:</strong> Market research report (~£5,000–£15,000)</p>
+<pre><code>You are a market research analyst. I'm considering entering [describe market
+or launching a product]. Create a market entry briefing covering: (1) Market
+size estimate (TAM/SAM/SOM) with your reasoning, (2) The top 3 customer
+segments and what each values most, (3) Key barriers to entry and how to
+overcome each, (4) The single biggest risk and how to mitigate it,
+(5) A go/no-go recommendation with conditions. Be specific and cite your
+reasoning. No fluff.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>SOM estimate: £2.4M. Reasoning: UK meal-planning app market ~£80M. You&rsquo;re targeting health-conscious parents (12% of market) in a premium tier. Realistic capture at 25% penetration in Year 2 given your existing audience of 15,000 newsletter subscribers.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> The TAM/SAM/SOM framework is exactly what investors and advisors use. The go/no-go framing forces a decision-ready output, not an academic essay.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>The Financial Model Interrogator</h1>
+
+<p><strong>What it replaces:</strong> Financial modelling session (~£1,500–£3,000)</p>
+<pre><code>Act as a CFO reviewing a startup's financials. My monthly revenue is [X],
+monthly costs are [Y], and I have [Z] months of runway. Growth rate is [%]
+month-over-month. Identify: (1) My three most dangerous financial assumptions,
+(2) At current trajectory, when do I hit profitability — or run out of cash?
+(3) What are 2 levers I can pull this quarter to extend runway by 3+ months?
+(4) What metric should I obsess over above all others right now? Show your
+working.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Dangerous assumption #1: You&rsquo;re modelling 12% MoM growth indefinitely. SaaS companies typically see growth decelerate to 5–7% after £30K MRR. At 7% growth, you hit cash-zero in Month 14, not Month 22. Lever: Reduce your £4,200/mo AWS spend — at your scale, moving to reserved instances saves ~35% immediately.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> It forces the AI to challenge your assumptions, not validate them. The &ldquo;show your working&rdquo; instruction prevents hand-waving and produces analysis you can actually verify.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>The Customer Acquisition Playbook</h1>
+
+<p><strong>What it replaces:</strong> Growth strategy engagement (~£3,000–£6,000)</p>
+<pre><code>You are a growth strategist. My business is [describe business, current
+channels, and monthly budget]. My CAC is [X] and LTV is [Y]. Design a
+90-day customer acquisition playbook with 3 channels, prioritised by
+expected ROI. For each channel: specific tactics (not generic advice),
+estimated cost, expected results, and how to measure success. I need
+actions, not theory.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Channel 1 — LinkedIn organic (Week 1–12): Post 4×/week using the &ldquo;insight sandwich&rdquo; format: bold claim → data point → practical takeaway. Target 3 specific hashtags with &lt;50K followers for visibility. Expected result: 400–800 profile visits/week by Week 8, converting at ~2% to demo requests. Cost: £0. Measure: Track profile views → connection requests → DM conversations weekly.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> The LTV/CAC context forces channel recommendations that are actually profitable for <em>your</em> economics, not generic &ldquo;try TikTok&rdquo; advice.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>The SWOT That Doesn&rsquo;t Waste Your Time</h1>
+
+<p><strong>What it replaces:</strong> Strategy workshop facilitation (~£1,500–£3,000)</p>
+<pre><code>Conduct a SWOT analysis for [describe business and current situation].
+But here's the rule: for each item, include a specific, actionable
+&quot;so what&quot; — what I should DO about it in the next 30 days. No vague
+strengths like &quot;strong team.&quot; Every point must be specific, evidence-based,
+and tied to a decision I need to make. Maximum 3 items per quadrant.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Threat: Your primary acquisition channel (Google Ads) has seen CPCs rise 40% YoY in your category. So what: Allocate 20% of your ads budget to building an owned channel (email list via lead magnet) this month. Target: 500 subscribers in 30 days. This reduces platform dependency before Q4 when CPCs spike further.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> Traditional SWOTs are intellectual exercises. The &ldquo;so what&rdquo; rule transforms every observation into a decision. It&rsquo;s the difference between analysis and action.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>The Investor Pitch Sharpener</h1>
+
+<p><strong>What it replaces:</strong> Pitch deck review (~£1,000–£2,500)</p>
+<pre><code>You are a venture capital partner who has seen 10,000 pitches. I'm going to
+describe my startup: [elevator pitch, traction, ask]. Give me: (1) The 3
+questions you'd definitely ask — and what a strong answer looks like,
+(2) The single weakest part of my pitch, (3) How to restructure my
+narrative for maximum impact, and (4) The one sentence I should open with
+to guarantee attention in the first 10 seconds.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Your weakest point: You lead with the product. Investors fund markets, not products. Restructure: Open with the market pain (&ldquo;£4.2B is wasted annually on manual invoice reconciliation&rdquo;), then the insight (&ldquo;we discovered that 80% of errors come from just 3 data fields&rdquo;), then the product. Your opening line: &ldquo;Every finance team in Europe is burning money on a problem that&rsquo;s already been solved — they just don&rsquo;t know it yet.&rdquo;</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> It simulates the adversarial thinking of a real investor. The &ldquo;10,000 pitches&rdquo; framing triggers pattern-matched, experienced responses rather than generic feedback.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-9">
+<h1><span class="chapter-number">Chapter 09</span>The Operations Bottleneck Finder</h1>
+
+<p><strong>What it replaces:</strong> Process optimisation audit (~£2,000–£5,000)</p>
+<pre><code>Act as an operations consultant specialising in [your industry]. My business
+does [describe what you do] with a team of [size]. Our biggest pain points
+are [list 2-3]. Map my likely operational bottlenecks, rank them by impact
+on revenue, and for the top 3, give me a fix I can implement this week
+without hiring anyone or buying new software. Focus on systems and processes,
+not tools.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Bottleneck #1 (Revenue impact: High): Your founder is the approval bottleneck for every client deliverable. Fix: Create a &ldquo;good enough&rdquo; checklist — 5 criteria that, if met, allow any team member to ship without approval. Implement Monday. Expected result: 3–5 hours/week reclaimed, faster delivery, happier clients.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> The constraint &ldquo;without hiring or buying software&rdquo; forces practical, immediate solutions. Most bottlenecks are process problems, not people or tool problems.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-10">
+<h1><span class="chapter-number">Chapter 10</span>The &ldquo;What Am I Missing?&rdquo; Blind Spot Scan</h1>
+
+<p><strong>What it replaces:</strong> Advisory board session (~£1,000–£3,000)</p>
+<pre><code>I'm going to describe my business situation: [describe current state,
+recent decisions, upcoming plans]. Act as a seasoned business advisor.
+Your job is NOT to validate my thinking. Your job is to find what I'm
+missing. Identify 5 blind spots, risks, or overlooked opportunities that
+a founder in my position typically doesn't see. For each, explain why it's
+dangerous (or valuable) and what I should do about it this quarter. Be
+direct — I'm paying you to disagree with me.
+</code></pre>
+<p><strong>Example output snippet:</strong></p>
+<blockquote>
+<p><em>Blind spot #3: You&rsquo;re building features but not moats. Your product can be replicated in 6 months by a funded competitor. What you should be building instead: data network effects. Every customer interaction should make the product smarter for all customers. Start logging [specific data point] now — in 12 months, that dataset IS your moat, not your code.</em></p>
+</blockquote>
+<p><strong>Why it works:</strong> The instruction to &ldquo;disagree&rdquo; overrides the AI&rsquo;s tendency to validate. This prompt consistently surfaces insights that founders later say they wish they&rsquo;d considered earlier.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-11">
+<h1><span class="chapter-number">Chapter 11</span>How to Get Even More From These Prompts</h1>
+
+<p>These 10 prompts are your starting point. But the real power comes from knowing <em>how to think about prompts</em> — how to structure them for any business problem, how to chain them together, and how to turn AI outputs into actual decisions.</p>
+<p><strong>Three quick tips to level up:</strong></p>
+<ol>
+<li><strong>Always include context.</strong> Revenue, team size, industry, constraints. The more specific your input, the more specific (and useful) the output.</li>
+<li><strong>Demand formats.</strong> Say &ldquo;present as a table&rdquo; or &ldquo;give me a one-page brief.&rdquo; Structure makes outputs actionable.</li>
+<li><strong>Follow up ruthlessly.</strong> The first answer is a draft. Push back. Ask &ldquo;what&rsquo;s wrong with this analysis?&rdquo; and &ldquo;what would you change if you had to bet your own money?&rdquo;</li>
+</ol>
+<hr />
+<h3>Want the Full Toolkit?</h3>
+<p>This guide gives you 10 prompts. Our <strong>complete prompt library</strong> gives you 100+ — covering operations, hiring, legal, marketing, sales, product development, and more. Each one tested, refined, and built to replace expensive professional services.</p>
+<p><strong><a href="">→ Browse the Full Collection</a></strong></p>
+<hr />
+<div style="text-align: center; margin-top: 2em; padding: 1.5em; border-top: 1px solid #ddd;">
+
+*Built by practitioners, not theorists. Every prompt in this guide has been used in real businesses to make real decisions.*
+
+**© 2026 · All rights reserved**
+
+</div></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">10 AI Prompts That Actually Work</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

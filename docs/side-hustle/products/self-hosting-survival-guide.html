@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Self-Hosting Survival Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Self-Hosting</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Self-Hosting Survival Guide</h1>
+    <p class="cover-subtitle">Escape SaaS subscriptions: set up your own cloud with Nextcloud, Pi-hole, and more</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">Why Self-Host?</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">Hardware Options</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">The Foundation Stack</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Service-by-Service Replacement Guide</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Security Hardening</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Maintenance & Monitoring</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">Appendix</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Self-Hosting Survival Guide</h1>
+<p><strong>Stop renting your digital life. Own it.</strong></p>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>Why Self-Host?</h1>
+
+<h3>The Maths Don&rsquo;t Lie</h3>
+<p>Let&rsquo;s add up what a typical developer pays monthly for cloud services:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Monthly Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google One (200GB)</td>
+<td>£2.49</td>
+</tr>
+<tr>
+<td>Notion (Plus)</td>
+<td>£7.50</td>
+</tr>
+<tr>
+<td>Slack (Pro)</td>
+<td>£5.75</td>
+</tr>
+<tr>
+<td>LastPass Premium</td>
+<td>£2.50</td>
+</tr>
+<tr>
+<td>Spotify Premium</td>
+<td>£10.99</td>
+</tr>
+<tr>
+<td>Google Analytics 360</td>
+<td>Free tier, but your data is the product</td>
+</tr>
+<tr>
+<td>Email (Google Workspace)</td>
+<td>£4.14</td>
+</tr>
+<tr>
+<td>Photo storage (Google/iCloud)</td>
+<td>£2.49</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~£36/month → £432/year</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A decent mini PC costs £150. A domain costs £10/year. Electricity runs about £3/month. That&rsquo;s £196 for your first year — and under £50/year after that. You break even in six months, then you&rsquo;re saving roughly £380 every year thereafter.</p>
+<p>But it&rsquo;s not just about the money.</p>
+<h3>Data Ownership</h3>
+<p>Every photo you upload to Google Photos trains their AI models. Every note in Notion lives on someone else&rsquo;s server, subject to their terms of service, their outages, and their pricing whims. When you self-host, your data lives on hardware you control. No one can pull the rug.</p>
+<h3>The Learning Opportunity</h3>
+<p>Self-hosting will teach you more about networking, Linux, security, and infrastructure than any online course. It&rsquo;s hands-on, it&rsquo;s real, and it&rsquo;s the kind of knowledge that makes you genuinely better at your job.</p>
+<h3>When NOT to Self-Host</h3>
+<p>Let&rsquo;s be honest. Don&rsquo;t self-host if:</p>
+<ul>
+<li><strong>You need five-nines uptime for a business</strong> — pay for managed services.</li>
+<li><strong>Email is mission-critical</strong> — self-hosted email is a nightmare (more on that later).</li>
+<li><strong>You won&rsquo;t maintain it</strong> — an unpatched server is worse than no server.</li>
+<li><strong>You&rsquo;re doing it to avoid paying £3/month</strong> — your time has value.</li>
+</ul>
+<p>Self-hosting is brilliant when you treat it as a hobby that saves money. It&rsquo;s a disaster when you treat it as a chore you resent.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>Hardware Options</h1>
+
+<p>You don&rsquo;t need a rack server. You need something that runs Linux and doesn&rsquo;t cost much.</p>
+<h3>Repurpose an Old Laptop or Desktop</h3>
+<p>That ThinkPad gathering dust in your drawer? Perfect. Any machine from the last 8–10 years with 4GB+ RAM and an SSD can run a dozen Docker containers comfortably. Laptops have a bonus: a built-in UPS (the battery). Downsides: power consumption is higher than purpose-built options (typically 30–60W idle).</p>
+<h3>Raspberry Pi</h3>
+<p>The Pi 5 (8GB) costs around £75 and sips about 5W. It handles lightweight services beautifully — Vaultwarden, Uptime Kuma, Pi-hole, Home Assistant, and a reverse proxy will all run fine.</p>
+<p>Where it struggles: anything CPU-intensive. Nextcloud is usable but sluggish with multiple users. Immich&rsquo;s machine learning features will crawl. Photo and video transcoding is essentially a non-starter.</p>
+<p><strong>Verdict:</strong> Great for your first few services. You&rsquo;ll outgrow it.</p>
+<h3>Mini PCs (Best Bang for Buck)</h3>
+<p>This is the sweet spot. A second-hand or refurbished mini PC gives you proper x86 performance at low power draw. Look for:</p>
+<ul>
+<li><strong>Lenovo ThinkCentre M720q/M920q</strong> — Intel 8th/9th gen, widely available refurbished for £80–£130</li>
+<li><strong>Dell OptiPlex Micro 3060/5060</strong> — same era, same price bracket</li>
+<li><strong>Beelink/MinisForum</strong> — new, AMD Ryzen options from £150–£250</li>
+</ul>
+<p>Aim for: quad-core CPU, 16GB RAM (upgrade yourself — it&rsquo;s cheaper), 256GB+ SSD. This setup idles at 8–15W and handles everything in this guide without breaking a sweat.</p>
+<h3>VPS Providers (Ranked)</h3>
+<p>If you&rsquo;d rather not have hardware at home — or you want a publicly accessible server without fiddling with port forwarding — a VPS is the way.</p>
+<ol>
+<li><strong>Hetzner</strong> — The gold standard. €4.51/month gets you 2 vCPUs, 4GB RAM, 40GB SSD in Falkenstein or Helsinki. Unbeatable price-to-performance.</li>
+<li><strong>Oracle Cloud Free Tier</strong> — Genuinely free. 4 ARM Ampere cores, 24GB RAM. The catch: Oracle&rsquo;s UI is awful, provisioning sometimes fails, and there&rsquo;s always a nagging worry they&rsquo;ll pull the free tier.</li>
+<li><strong>Contabo</strong> — Cheap specs on paper (8GB RAM for €6/month), but storage is HDD-based and network performance is inconsistent. Fine for non-critical services.</li>
+<li><strong>Vultr/DigitalOcean</strong> — More expensive ($6–$12/month for comparable specs) but reliable with excellent documentation. Good if you value polish.</li>
+</ol>
+<p><strong>My recommendation:</strong> Hetzner for a VPS, or a refurbished mini PC at home if you have a stable internet connection. Choose one and start.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>The Foundation Stack</h1>
+
+<p>Before you install anything fun, you need a solid foundation. Every service in this guide builds on these five pillars.</p>
+<h3>Linux: Ubuntu Server 24.04 LTS</h3>
+<p>I&rsquo;m recommending Ubuntu Server because it has the largest community, the most tutorials, and the widest compatibility. Debian purists: you&rsquo;ll be fine with Debian 12, the commands are nearly identical.</p>
+<p>Flash the ISO to a USB drive with <a href="https://etcher.balena.io/">Balena Etcher</a> or Rufus, boot from it, and follow the installer. Choose &ldquo;minimised&rdquo; when asked — you don&rsquo;t need a desktop environment.</p>
+<p>After installation, SSH in and run:</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install -y curl git htop
+</code></pre>
+<p>That&rsquo;s your base. Everything else runs in containers.</p>
+<h3>Docker &amp; Docker Compose</h3>
+<p>Docker is the single most important tool in self-hosting. It lets you run isolated services without dependency conflicts, and tear them down cleanly when you&rsquo;re done.</p>
+<p>Install Docker (the official way — don&rsquo;t use Ubuntu&rsquo;s ancient snap package):</p>
+<pre><code class="language-bash">curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+</code></pre>
+<p>Log out and back in. Verify:</p>
+<pre><code class="language-bash">docker run hello-world
+docker compose version
+</code></pre>
+<p>Docker Compose (now built into Docker as <code>docker compose</code>) lets you define multi-container setups in a single YAML file. This is how you&rsquo;ll deploy every service in this guide.</p>
+<p>A basic <code>docker-compose.yml</code> structure:</p>
+<pre><code class="language-yaml">services:
+  myapp:
+    image: someimage:latest
+    container_name: myapp
+    restart: unless-stopped
+    ports:
+      - &quot;8080:80&quot;
+    volumes:
+      - ./data:/app/data
+    environment:
+      - TZ=Europe/London
+</code></pre>
+<p>Key concepts:
+- <strong><code>restart: unless-stopped</code></strong> — survives reboots, but stays down if you manually stop it
+- <strong>Volumes</strong> — persist data outside the container. Without them, your data vanishes when the container updates
+- <strong>Environment variables</strong> — configure the app without modifying files inside the container</p>
+<h3>Reverse Proxy: Caddy</h3>
+<p>You&rsquo;ll run multiple services, each on a different port. A reverse proxy maps <code>nextcloud.yourdomain.com</code> to <code>localhost:8080</code>, <code>photos.yourdomain.com</code> to <code>localhost:2283</code>, and so on.</p>
+<p><strong>Use Caddy.</strong> It&rsquo;s simpler than Nginx, and handles SSL certificates automatically via Let&rsquo;s Encrypt with zero configuration.</p>
+<pre><code class="language-yaml">services:
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - &quot;80:80&quot;
+      - &quot;443:443&quot;
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
+</code></pre>
+<p>Your <code>Caddyfile</code>:</p>
+<pre><code>nextcloud.yourdomain.com {
+    reverse_proxy nextcloud:80
+}
+
+photos.yourdomain.com {
+    reverse_proxy immich-server:2283
+}
+</code></pre>
+<p>That&rsquo;s it. Caddy fetches and renews SSL certificates automatically. No <code>certbot</code> cron jobs, no Nginx config nightmares.</p>
+<p><strong>Alternative:</strong> If you prefer a GUI, <a href="https://nginxproxymanager.com/">Nginx Proxy Manager</a> provides a web interface for the same job. It works, but I find the Caddyfile approach faster once you&rsquo;re comfortable with it.</p>
+<h3>SSL with Let&rsquo;s Encrypt</h3>
+<p>If you&rsquo;re using Caddy, you already have this. Point your domain&rsquo;s DNS A record at your server&rsquo;s IP address, and Caddy handles the rest.</p>
+<p>For home servers behind a router: you&rsquo;ll need to forward ports 80 and 443 to your server&rsquo;s local IP. If your ISP uses CGNAT (common with some providers), you&rsquo;ll need either a VPS with a tunnel (Cloudflare Tunnel works well and is free) or a VPN like Tailscale to access your services remotely.</p>
+<h3>Backups: The 3-2-1 Rule</h3>
+<p><strong>3 copies of your data, on 2 different media types, with 1 offsite.</strong> This isn&rsquo;t optional. Self-hosting without backups is just data loss waiting to happen.</p>
+<p><strong>Restic</strong> is my pick for most people. It&rsquo;s fast, supports encryption, deduplication, and can push to local drives, SFTP, S3, or Backblaze B2.</p>
+<pre><code class="language-bash"># Install
+sudo apt install -y restic
+
+# Initialise a repository (e.g., to Backblaze B2)
+export B2_ACCOUNT_ID=&quot;your-id&quot;
+export B2_ACCOUNT_KEY=&quot;your-key&quot;
+restic -r b2:your-bucket-name init
+
+# Back up your Docker volumes
+restic -r b2:your-bucket-name backup /home/user/docker/
+
+# Automate with cron
+# 0 3 * * * restic -r b2:your-bucket-name backup /home/user/docker/ --tag nightly
+</code></pre>
+<p><strong>BorgBackup</strong> is the alternative — slightly faster for large datasets, but less flexible with remote backends.</p>
+<p><strong>Backblaze B2</strong> charges $0.005/GB/month. For 100GB of backups, that&rsquo;s $0.50/month. There&rsquo;s no excuse.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>Service-by-Service Replacement Guide</h1>
+
+<p>Here&rsquo;s the meat of it. For each service: what it replaces, a working Docker Compose snippet, a difficulty rating, and the gotchas nobody tells you about.</p>
+<p>All snippets assume you&rsquo;re placing each service in its own directory with its own <code>docker-compose.yml</code>.</p>
+<h3>Google Drive → Nextcloud</h3>
+<p><strong>Difficulty:</strong> ⭐⭐ Moderate
+<strong>Replaces:</strong> Google Drive, Dropbox, OneDrive</p>
+<pre><code class="language-yaml">services:
+  nextcloud:
+    image: nextcloud:29
+    container_name: nextcloud
+    restart: unless-stopped
+    volumes:
+      - ./data:/var/www/html
+    environment:
+      - POSTGRES_HOST=nextcloud-db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=changeme_use_a_real_password
+    depends_on:
+      - nextcloud-db
+
+  nextcloud-db:
+    image: postgres:16-alpine
+    container_name: nextcloud-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=changeme_use_a_real_password
+</code></pre>
+<p><strong>Gotchas:</strong> Use PostgreSQL, not SQLite (the default) — SQLite will buckle under any real usage. Mobile and desktop sync clients are solid. The web UI feels dated compared to Google Drive but it&rsquo;s functional. Enable server-side encryption if you&rsquo;re storing sensitive files. Run <code>occ</code> maintenance commands periodically via cron.</p>
+<hr />
+<h3>Gmail → Stalwart Mail</h3>
+<p><strong>Difficulty:</strong> ⭐⭐⭐⭐⭐ Expert — Proceed with caution
+<strong>Replaces:</strong> Gmail, Outlook, any hosted email</p>
+<p>Let me be brutally honest: <strong>self-hosting email is the hardest thing in this guide.</strong> Your IP will probably be blacklisted by default. SPF, DKIM, and DMARC records must be perfect. Major providers (Gmail, Outlook) will silently drop your emails into spam for weeks until you build reputation. If email deliverability matters to you, use a paid service like Fastmail (£4/month) or Migadu.</p>
+<p>Still want to try? <strong>Stalwart Mail</strong> is the modern choice — it&rsquo;s a single Rust binary that handles SMTP, IMAP, and JMAP with built-in spam filtering.</p>
+<pre><code class="language-yaml">services:
+  stalwart:
+    image: stalwartlabs/mail-server:latest
+    container_name: stalwart
+    restart: unless-stopped
+    ports:
+      - &quot;25:25&quot;
+      - &quot;465:465&quot;
+      - &quot;993:993&quot;
+      - &quot;4190:4190&quot;
+    volumes:
+      - ./data:/opt/stalwart-mail
+</code></pre>
+<p><strong>Gotchas:</strong> You absolutely need a VPS with a clean IP and a proper rDNS (reverse DNS) record. Most home ISPs block port 25. Set up SPF, DKIM, and DMARC DNS records before sending a single email. Test with <a href="https://www.mail-tester.com">mail-tester.com</a>. Expect a month of babysitting before it works reliably.</p>
+<hr />
+<h3>Google Photos → Immich</h3>
+<p><strong>Difficulty:</strong> ⭐⭐ Moderate
+<strong>Replaces:</strong> Google Photos, iCloud Photos</p>
+<p>Immich is the standout self-hosted project of the past two years. It looks and feels like Google Photos — mobile auto-upload, facial recognition, maps, memories, the lot.</p>
+<pre><code class="language-yaml">services:
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:release
+    container_name: immich-server
+    restart: unless-stopped
+    volumes:
+      - ./upload:/usr/src/app/upload
+    environment:
+      - DB_HOSTNAME=immich-db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=changeme
+      - DB_DATABASE_NAME=immich
+      - REDIS_HOSTNAME=immich-redis
+    depends_on:
+      - immich-db
+      - immich-redis
+
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:release
+    container_name: immich-ml
+    restart: unless-stopped
+    volumes:
+      - ./model-cache:/cache
+
+  immich-redis:
+    image: redis:7-alpine
+    container_name: immich-redis
+    restart: unless-stopped
+
+  immich-db:
+    image: tensorchord/pgvecto-rs:pg16-v0.2.0
+    container_name: immich-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=immich
+</code></pre>
+<p><strong>Gotchas:</strong> The machine learning container wants 2–4GB of RAM for facial recognition. First-time indexing of a large photo library will peg your CPU for hours — let it run overnight. Mobile apps (iOS/Android) are excellent. The project is pre-1.0 and breaking changes happen, so read release notes before updating.</p>
+<hr />
+<h3>Notion → Outline</h3>
+<p><strong>Difficulty:</strong> ⭐⭐⭐ Moderate-Hard
+<strong>Replaces:</strong> Notion, Confluence, Google Docs (for wikis/notes)</p>
+<pre><code class="language-yaml">services:
+  outline:
+    image: docker.getoutline.com/outlinewiki/outline:latest
+    container_name: outline
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://outline:changeme@outline-db:5432/outline
+      - REDIS_URL=redis://outline-redis:6379
+      - URL=https://wiki.yourdomain.com
+      - SECRET_KEY=generate-a-64-char-hex-string
+      - UTILS_SECRET=generate-another-64-char-hex-string
+      - FILE_STORAGE=local
+    depends_on:
+      - outline-db
+      - outline-redis
+
+  outline-db:
+    image: postgres:16-alpine
+    container_name: outline-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=outline
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=outline
+
+  outline-redis:
+    image: redis:7-alpine
+    container_name: outline-redis
+    restart: unless-stopped
+</code></pre>
+<p><strong>Gotchas:</strong> Outline requires an authentication provider (OIDC). You&rsquo;ll need something like Authentik or Keycloak, which adds complexity. <strong>AppFlowy</strong> is a simpler alternative with a local-first approach if you don&rsquo;t need multi-user collaboration.</p>
+<hr />
+<h3>Slack → Matrix/Element</h3>
+<p><strong>Difficulty:</strong> ⭐⭐⭐ Moderate-Hard
+<strong>Replaces:</strong> Slack, Discord, Teams</p>
+<p>Matrix is the protocol; Element is the client; Synapse is the server. It&rsquo;s federated, meaning you can chat with anyone on any Matrix server.</p>
+<pre><code class="language-yaml">services:
+  synapse:
+    image: matrixdotorg/synapse:latest
+    container_name: synapse
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    environment:
+      - SYNAPSE_SERVER_NAME=yourdomain.com
+      - SYNAPSE_REPORT_STATS=no
+</code></pre>
+<p><strong>Gotchas:</strong> Generate the config first with <code>docker run --rm -v ./data:/data matrixdotorg/synapse:latest generate</code>. Synapse (Python) is resource-hungry — consider <strong>Conduit</strong> or <strong>Dendrite</strong> (both written in Rust/Go) for lighter-weight alternatives. Federation is brilliant but burns RAM. For a private family/team server, disable federation to save resources.</p>
+<hr />
+<h3>LastPass → Vaultwarden</h3>
+<p><strong>Difficulty:</strong> ⭐ Easy
+<strong>Replaces:</strong> LastPass, 1Password, Bitwarden</p>
+<p>The easiest win on this list. Vaultwarden is an unofficial Bitwarden-compatible server that uses a fraction of the resources.</p>
+<pre><code class="language-yaml">services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    environment:
+      - DOMAIN=https://vault.yourdomain.com
+      - SIGNUPS_ALLOWED=false
+</code></pre>
+<p><strong>Gotchas:</strong> Set <code>SIGNUPS_ALLOWED=true</code> initially to create your account, then switch to <code>false</code>. Use the official Bitwarden browser extensions and mobile apps — they work perfectly with Vaultwarden. <strong>Back this up religiously.</strong> If you lose your vault, you lose everything.</p>
+<hr />
+<h3>Google Analytics → Umami</h3>
+<p><strong>Difficulty:</strong> ⭐ Easy
+<strong>Replaces:</strong> Google Analytics, Fathom, Plausible</p>
+<pre><code class="language-yaml">services:
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: umami
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://umami:changeme@umami-db:5432/umami
+    depends_on:
+      - umami-db
+
+  umami-db:
+    image: postgres:16-alpine
+    container_name: umami-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=umami
+      - POSTGRES_USER=umami
+      - POSTGRES_PASSWORD=changeme
+</code></pre>
+<p><strong>Gotchas:</strong> Umami is privacy-focused and GDPR-compliant out of the box — no cookie banner needed. Default login is <code>admin</code>/<code>umami</code> — change it immediately. <strong>Plausible</strong> is the alternative; it&rsquo;s polished but its self-hosted version requires more resources.</p>
+<hr />
+<h3>Spotify → Navidrome</h3>
+<p><strong>Difficulty:</strong> ⭐ Easy
+<strong>Replaces:</strong> Spotify, Apple Music (for your own music library)</p>
+<pre><code class="language-yaml">services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    ports:
+      - &quot;4533:4533&quot;
+    volumes:
+      - ./data:/data
+      - /path/to/your/music:/music:ro
+    environment:
+      - ND_SCANSCHEDULE=1h
+      - ND_LOGLEVEL=info
+</code></pre>
+<p><strong>Gotchas:</strong> You need your own music files (FLAC, MP3, etc.). Navidrome supports the Subsonic API, so you can use apps like Symfonium (Android) or play:Sub (iOS). It won&rsquo;t replace Spotify&rsquo;s discovery features — it replaces Spotify&rsquo;s playback of music you already own.</p>
+<hr />
+<h3>YouTube Subscriptions → Invidious + FreeTube</h3>
+<p><strong>Difficulty:</strong> ⭐⭐ Moderate
+<strong>Replaces:</strong> YouTube (frontend)</p>
+<p>Invidious is a privacy-respecting YouTube frontend. FreeTube is the desktop client.</p>
+<pre><code class="language-yaml">services:
+  invidious:
+    image: quay.io/invidious/invidious:latest
+    container_name: invidious
+    restart: unless-stopped
+    environment:
+      - INVIDIOUS_CONFIG=channel_threads:1,feed_threads:1,db__dbname:invidious,db__user:kemal,db__password:changeme,db__host:invidious-db,db__port:5432
+    depends_on:
+      - invidious-db
+
+  invidious-db:
+    image: postgres:16-alpine
+    container_name: invidious-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=invidious
+      - POSTGRES_USER=kemal
+      - POSTGRES_PASSWORD=changeme
+</code></pre>
+<p><strong>Gotchas:</strong> YouTube actively breaks Invidious. Expect occasional downtime while maintainers patch around API changes. Import your YouTube subscriptions via OPML. For desktop viewing, <strong>FreeTube</strong> is excellent and doesn&rsquo;t need a server — it connects directly to YouTube or your Invidious instance.</p>
+<hr />
+<h3>Smart Home → Home Assistant</h3>
+<p><strong>Difficulty:</strong> ⭐⭐ Moderate
+<strong>Replaces:</strong> Google Home, Alexa, SmartThings</p>
+<pre><code class="language-yaml">services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config:/config
+    environment:
+      - TZ=Europe/London
+</code></pre>
+<p><strong>Gotchas:</strong> <code>network_mode: host</code> is needed for device discovery (mDNS, UPnP). Home Assistant has a steep initial learning curve but an incredibly active community. The companion mobile app provides location tracking and notifications. For Zigbee/Z-Wave devices, you&rsquo;ll need a USB coordinator (Sonoff Zigbee 3.0 dongle is about £12).</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Security Hardening</h1>
+
+<p>A server exposed to the internet without security hardening will be compromised. It&rsquo;s not a question of if — it&rsquo;s when. These steps are mandatory.</p>
+<h3>Firewall (UFW)</h3>
+<pre><code class="language-bash">sudo apt install -y ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp    # SSH
+sudo ufw allow 80/tcp    # HTTP
+sudo ufw allow 443/tcp   # HTTPS
+sudo ufw enable
+</code></pre>
+<p>That&rsquo;s it. Only open ports you actually need. If you add a service on port 8080 that&rsquo;s behind your reverse proxy, you don&rsquo;t need to open 8080 — traffic flows through Caddy on 443.</p>
+<h3>Fail2ban</h3>
+<p>Fail2ban watches log files and bans IPs that show malicious behaviour (brute-force SSH attempts, repeated failed logins).</p>
+<pre><code class="language-bash">sudo apt install -y fail2ban
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+</code></pre>
+<p>The default config protects SSH out of the box. For additional services, add custom jail configurations in <code>/etc/fail2ban/jail.local</code>.</p>
+<h3>SSH Key-Only Access</h3>
+<p>Password authentication over SSH is an open invitation. Disable it.</p>
+<pre><code class="language-bash"># On your local machine, generate a key (if you haven't)
+ssh-keygen -t ed25519
+
+# Copy it to your server
+ssh-copy-id user@your-server-ip
+
+# On the server, edit SSH config
+sudo nano /etc/ssh/sshd_config
+</code></pre>
+<p>Set these values:</p>
+<pre><code>PasswordAuthentication no
+PubkeyAuthentication yes
+PermitRootLogin no
+</code></pre>
+<p>Then restart SSH:</p>
+<pre><code class="language-bash">sudo systemctl restart sshd
+</code></pre>
+<p><strong>Test in a new terminal before closing your current session.</strong> If you lock yourself out, you&rsquo;ll need physical access or a VPS console.</p>
+<h3>Automatic Security Updates</h3>
+<pre><code class="language-bash">sudo apt install -y unattended-upgrades
+sudo dpkg-reconfigure -plow unattended-upgrades
+</code></pre>
+<p>This automatically installs security patches. For Docker containers, you&rsquo;ll manage updates separately (see Maintenance section).</p>
+<h3>VPN Access with WireGuard</h3>
+<p>Rather than exposing every service to the internet, put them behind WireGuard. Only your VPN-connected devices can reach them.</p>
+<pre><code class="language-bash">sudo apt install -y wireguard
+</code></pre>
+<p>Or use <strong>Tailscale</strong> — it&rsquo;s WireGuard under the hood but handles NAT traversal and key management automatically. Free for up to 100 devices. Genuinely brilliant for home servers.</p>
+<pre><code class="language-bash">curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+</code></pre>
+<p>Now your server is accessible via a Tailscale IP (e.g., <code>100.x.y.z</code>) from any device on your Tailnet. No port forwarding, no dynamic DNS, no exposed ports.</p>
+<h3>Monitoring with Uptime Kuma</h3>
+<p>Know when things break before your users do.</p>
+<pre><code class="language-yaml">services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    ports:
+      - &quot;3001:3001&quot;
+</code></pre>
+<p>Add monitors for each service. Set up notifications via Telegram, Discord, or email. Uptime Kuma is lightweight and gorgeous — it&rsquo;s the one monitoring tool everyone should run.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Maintenance &amp; Monitoring</h1>
+
+<p>Self-hosting isn&rsquo;t &ldquo;set it and forget it.&rdquo; Budget 30 minutes a week for maintenance. Here&rsquo;s how to keep things running.</p>
+<h3>Update Strategy</h3>
+<p><strong>OS updates:</strong> Handled by <code>unattended-upgrades</code> for security patches. Run <code>sudo apt update &amp;&amp; sudo apt upgrade</code> manually every couple of weeks for non-security updates.</p>
+<p><strong>Docker containers:</strong> Use <a href="https://containrrr.dev/watchtower/">Watchtower</a> for automatic updates, or update manually:</p>
+<pre><code class="language-bash">docker compose pull
+docker compose up -d
+</code></pre>
+<p><strong>My recommendation:</strong> Don&rsquo;t auto-update everything. Use Watchtower selectively for low-risk services (Uptime Kuma, Vaultwarden). For complex services like Nextcloud or Immich, read release notes and update manually. Breaking changes are real.</p>
+<h3>Monitoring</h3>
+<p>For most home setups, <strong>Uptime Kuma</strong> plus Docker&rsquo;s built-in tools is sufficient:</p>
+<pre><code class="language-bash"># Check running containers
+docker ps
+
+# View logs for a specific container
+docker logs nextcloud --tail 50
+
+# Resource usage
+docker stats
+</code></pre>
+<p>If you want proper metrics, <strong>Grafana + Prometheus</strong> is the industry standard, but it&rsquo;s overkill for a home server. Consider <strong>Dozzle</strong> for a simple real-time Docker log viewer:</p>
+<pre><code class="language-yaml">services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - &quot;9999:8080&quot;
+</code></pre>
+<h3>When Things Break</h3>
+<p>Docker containers are disposable. That&rsquo;s the beauty. Your debugging workflow:</p>
+<ol>
+<li><strong>Check logs:</strong> <code>docker logs &lt;container&gt; --tail 100</code></li>
+<li><strong>Check if it&rsquo;s running:</strong> <code>docker ps -a</code> (shows stopped containers too)</li>
+<li><strong>Restart it:</strong> <code>docker compose restart &lt;service&gt;</code></li>
+<li><strong>Nuclear option:</strong> <code>docker compose down &amp;&amp; docker compose up -d</code></li>
+<li><strong>Check disk space:</strong> <code>df -h</code> — full disks are the #1 silent killer</li>
+<li><strong>Check RAM:</strong> <code>free -h</code> — OOM kills are the #2 silent killer</li>
+</ol>
+<p>If a container won&rsquo;t start after an update, pin the previous version in your <code>docker-compose.yml</code> (e.g., <code>image: nextcloud:28</code> instead of <code>nextcloud:latest</code>) and wait for a fix.</p>
+<h3>Community Resources</h3>
+<p>You&rsquo;re not alone. These communities are active, helpful, and full of people solving the exact problems you&rsquo;ll encounter:</p>
+<ul>
+<li><strong>r/selfhosted</strong> — The main hub. Search before posting; your question has probably been answered.</li>
+<li><strong>r/homelab</strong> — More hardware-focused, great for build inspiration.</li>
+<li><a href="https://selfh.st/">selfh.st</a> — Weekly newsletter covering new self-hosted tools.</li>
+<li><a href="https://github.com/awesome-selfhosted/awesome-selfhosted">awesome-selfhosted</a> — The canonical list of self-hosted software.</li>
+<li>Matrix/Discord servers for specific projects (Immich, Home Assistant, etc.)</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Appendix</h1>
+
+<h3>Monthly Cost Comparison: SaaS vs Self-Hosted</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>SaaS Monthly</th>
+<th>Self-Hosted Monthly</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloud Storage (200GB)</td>
+<td>£2.49 (Google One)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>£4.14 (Google Workspace)</td>
+<td>£0*</td>
+</tr>
+<tr>
+<td>Photo Backup</td>
+<td>£2.49 (Google One / iCloud)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Notes/Wiki</td>
+<td>£7.50 (Notion Plus)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Team Chat</td>
+<td>£5.75 (Slack Pro)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Password Manager</td>
+<td>£2.50 (LastPass)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>&ldquo;Free&rdquo; (you&rsquo;re the product)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Music Streaming</td>
+<td>£10.99 (Spotify)</td>
+<td>£0 (BYO music)</td>
+</tr>
+<tr>
+<td>Smart Home Hub</td>
+<td>£0–£10 (subscriptions)</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>£0–£30</td>
+<td>£0 (included)</td>
+</tr>
+<tr>
+<td><strong>Subtotal (services)</strong></td>
+<td><strong>~£36–£46/month</strong></td>
+<td><strong>£0</strong></td>
+</tr>
+<tr>
+<td>Hardware (amortised)</td>
+<td>—</td>
+<td>~£6/month (£150 over 24 months)</td>
+</tr>
+<tr>
+<td>Electricity</td>
+<td>—</td>
+<td>~£3/month</td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>—</td>
+<td>~£0.80/month (£10/year)</td>
+</tr>
+<tr>
+<td>Offsite Backup (B2)</td>
+<td>—</td>
+<td>~£0.40/month</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~£36–£46/month</strong></td>
+<td><strong>~£10/month</strong></td>
+</tr>
+<tr>
+<td><strong>Annual</strong></td>
+<td><strong>£432–£552</strong></td>
+<td><strong>~£120 (year 1), ~£50 thereafter</strong></td>
+</tr>
+</tbody>
+</table>
+<p>*Email self-hosting is free in hosting costs but expensive in time and frustration. Honestly, just pay for Fastmail.</p>
+<h3>Docker Compose Cheat Sheet</h3>
+<pre><code class="language-bash"># Start services in background
+docker compose up -d
+
+# Stop services
+docker compose down
+
+# View logs (follow mode)
+docker compose logs -f
+
+# View logs for one service
+docker compose logs -f nextcloud
+
+# Restart a service
+docker compose restart nextcloud
+
+# Pull latest images
+docker compose pull
+
+# Pull and recreate
+docker compose pull &amp;&amp; docker compose up -d
+
+# List running containers
+docker ps
+
+# Enter a container's shell
+docker exec -it nextcloud bash
+
+# Check resource usage
+docker stats
+
+# Clean up unused images/volumes
+docker system prune -a
+docker volume prune
+
+# See all volumes
+docker volume ls
+
+# Back up a volume to tar
+docker run --rm -v myvolume:/data -v $(pwd):/backup alpine tar czf /backup/myvolume.tar.gz /data
+</code></pre>
+<h3>Recommended Communities</h3>
+<table>
+<thead>
+<tr>
+<th>Community</th>
+<th>Platform</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r/selfhosted</td>
+<td>Reddit</td>
+<td>General self-hosting</td>
+</tr>
+<tr>
+<td>r/homelab</td>
+<td>Reddit</td>
+<td>Hardware &amp; infrastructure</td>
+</tr>
+<tr>
+<td>r/homeassistant</td>
+<td>Reddit</td>
+<td>Smart home</td>
+</tr>
+<tr>
+<td>selfh.st</td>
+<td>Newsletter</td>
+<td>Weekly self-hosted news</td>
+</tr>
+<tr>
+<td>awesome-selfhosted</td>
+<td>GitHub</td>
+<td>Software directory</td>
+</tr>
+<tr>
+<td>LinuxServer.io</td>
+<td>Web</td>
+<td>Docker image maintainers</td>
+</tr>
+<tr>
+<td>Immich Discord</td>
+<td>Discord</td>
+<td>Photo management</td>
+</tr>
+<tr>
+<td>Home Assistant Community</td>
+<td>Forum</td>
+<td>Smart home support</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>Where to Start</h1>
+
+<p>Don&rsquo;t try to migrate everything at once. Here&rsquo;s the order I&rsquo;d recommend:</p>
+<ol>
+<li><strong>Vaultwarden</strong> — easiest win, immediate daily value</li>
+<li><strong>Uptime Kuma</strong> — because you need monitoring from day one</li>
+<li><strong>Immich</strong> — the &ldquo;wow&rdquo; moment that makes self-hosting feel worth it</li>
+<li><strong>Nextcloud</strong> — replaces cloud storage</li>
+<li><strong>Everything else</strong> — one service at a time, as you need them</li>
+</ol>
+<p>Buy a domain. Set up Caddy. Deploy Vaultwarden. Once you see how straightforward it is, you won&rsquo;t stop.</p>
+<p>Your data, your hardware, your rules.</p>
+<hr />
+<p><em>Written for developers who&rsquo;d rather own than rent. Last updated February 2026.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Self-Hosting Survival Guide</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

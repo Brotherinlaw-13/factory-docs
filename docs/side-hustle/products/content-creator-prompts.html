@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Content Creator's Prompt System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Content Creation</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Content Creator's Prompt System</h1>
+    <p class="cover-subtitle">A complete AI workflow for ideation, writing, repurposing, and publishing at scale</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">1 · Content Ideation</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">2 · Writing & Drafting</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">3 · SEO Optimisation</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">4 · Social Media</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">5 · Repurposing</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">6 · Audience Growth</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">7 · Analytics & Strategy</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">8 · Bonus: Platform Playbooks</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Content Creator&rsquo;s AI Prompt System</h1>
+<p><strong>56 prompts to ideate, write, optimise, and grow — without sounding like a robot.</strong></p>
+<hr />
+<blockquote>
+<p>You need a system, not another generic &ldquo;write me a blog post&rdquo; prompt. Every prompt below drops straight into ChatGPT, Claude, or any major AI tool. Replace the <code>[bracketed placeholders]</code> with your details and go.</p>
+</blockquote>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>1 · Content Ideation</h1>
+
+<h3>1.1 — Topic Research Engine</h3>
+<pre><code>You are a content strategist for a [niche] creator. I publish on [platforms].
+My audience is [audience description — age, interests, pain points].
+
+Generate 20 content topic ideas at the intersection of:
+- What my audience actively searches for
+- What's under-served by existing creators in this space
+- What I can credibly cover given my background in [your expertise]
+
+For each: the topic, a one-line hook, and whether it's top-of-funnel (awareness),
+middle (consideration), or bottom (conversion). Format as a table.
+</code></pre>
+<p><strong>Why It Works:</strong> The three-way intersection prevents generic topics every creator has already covered. Funnel labels help you plan a balanced content mix.</p>
+<blockquote>
+<p><em>Example row:</em> &ldquo;Meal prep for shift workers | Most meal prep content assumes a 9-5 — this doesn&rsquo;t | Top-of-funnel&rdquo;</p>
+</blockquote>
+<h3>1.2 — Trend Spotter</h3>
+<pre><code>Analyse the [niche] content space. Identify:
+1. Three emerging topics gaining momentum but not yet saturated
+2. Two evergreen angles due for a fresh take
+3. One contrarian opinion that would spark healthy debate
+
+For each, explain WHY it's trending or timely and suggest a content angle.
+My tone is [casual/professional/witty/etc.].
+</code></pre>
+<p><strong>Why It Works:</strong> Asking for &ldquo;not yet saturated&rdquo; plus contrarian takes gives you a mix of safe bets and attention-grabbers.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Emerging — &lsquo;AI-assisted meal planning for gut health.&rsquo; Angle: &lsquo;I let AI plan my meals for 30 days — here&rsquo;s what happened.&rsquo;&rdquo;</p>
+</blockquote>
+<h3>1.3 — Content Calendar Builder</h3>
+<pre><code>Create a 4-week content calendar for my [platform(s)].
+I publish [frequency]. My content pillars are: [pillar 1], [pillar 2], [pillar 3].
+
+Rules:
+- Alternate pillars (never back-to-back)
+- One &quot;engagement-first&quot; post per week (poll, question, hot take)
+- Flag one piece per week for cross-platform repurposing
+- Monday-start week
+
+Output as a table: Date | Platform | Pillar | Topic | Format | Repurpose?
+</code></pre>
+<p><strong>Why It Works:</strong> The constraints prevent a monotonous calendar. The repurpose flag saves planning time downstream.</p>
+<blockquote>
+<p><em>Example row:</em> &ldquo;Mon 3 Feb | Blog | Productivity | &lsquo;The 2-hour batching method&rsquo; | How-to | → Thread + newsletter&rdquo;</p>
+</blockquote>
+<h3>1.4 — Audience Gap Analysis</h3>
+<pre><code>I create [type of content] for [audience]. My top 5 performing pieces are:
+1. [Title] 2. [Title] 3. [Title] 4. [Title] 5. [Title]
+
+Identify:
+- Three audience questions my content hasn't answered yet
+- Two adjacent topics I've never covered
+- One content format I haven't tried that suits this audience
+Explain your reasoning for each.
+</code></pre>
+<p><strong>Why It Works:</strong> Grounding analysis in actual top performers extrapolates genuine interest patterns instead of guessing.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Your audience loves &lsquo;tools&rsquo; content but you&rsquo;ve never covered the decision process — try a &lsquo;How I choose my tech stack&rsquo; breakdown.&rdquo;</p>
+</blockquote>
+<h3>1.5 — Angle Generator</h3>
+<pre><code>I want to create content about [topic]. Give me 10 different angles from
+beginner-friendly to expert-level. For each: a working title, the unique
+perspective in one sentence, and competition level (low/medium/high).
+
+Avoid generic angles like &quot;beginner's guide&quot; or &quot;X tips and tricks.&quot;
+</code></pre>
+<p><strong>Why It Works:</strong> Banning generic framings forces the AI past its defaults. Competition ratings help you pick angles where you&rsquo;ll stand out.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;&lsquo;Why I stopped [common practice] and tripled my output&rsquo; — Contrarian personal experience — Competition: Low&rdquo;</p>
+</blockquote>
+<h3>1.6 — Pillar Content Planner</h3>
+<pre><code>Build a pillar content strategy around [core topic]. Map out:
+1. One pillar piece (comprehensive, 2,000+ words or 15+ min video)
+2. Five cluster pieces linking back to the pillar
+3. For each cluster, one micro-content piece (social post, short, reel)
+
+Show connections as a content tree. Each piece needs a working title
+and one-sentence summary.
+</code></pre>
+<p><strong>Why It Works:</strong> This mirrors professional topic-cluster planning for SEO and audience depth, with the tree structure making relationships immediately visible.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Pillar: &lsquo;Complete Guide to Email Marketing&rsquo; → Cluster: &lsquo;Subject Line Formulas&rsquo; → Micro: Instagram carousel of top 5 formulas&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>2 · Writing &amp; Drafting</h1>
+
+<h3>2.1 — Blog Post Outline</h3>
+<pre><code>Create a detailed outline for a blog post titled &quot;[working title].&quot;
+Audience: [audience]. Goal: [inform/persuade/convert]. Length: [word count].
+
+Include: H1 and meta description, H2/H3 subheadings with bullet points of
+what to cover, where to place a personal anecdote, and a suggested CTA.
+Write it so a writer could draft the full post without further briefing.
+</code></pre>
+<p><strong>Why It Works:</strong> Placing anecdotes and specific CTAs produces editorial briefs, not generic skeletons.</p>
+<blockquote>
+<p><em>Example H2:</em> &ldquo;Why Most Content Calendars Fail — cover: over-planning mistakes, the &lsquo;minimum viable calendar&rsquo; concept, personal burnout example&rdquo;</p>
+</blockquote>
+<h3>2.2 — First Draft Generator</h3>
+<pre><code>Write a first draft of a [blog post/article/script] on [topic].
+Voice: [describe — e.g., &quot;conversational, slightly irreverent, short paragraphs&quot;].
+Audience: [who they are]. Length: [word count].
+
+Rules:
+- Open with a hook, not a definition
+- Specific examples, not vague statements. First person where natural.
+- Subheadings every 200-300 words. Clear single CTA at the end.
+- BANNED phrases: &quot;In today's world&quot;, &quot;It's important to note&quot;,
+  &quot;In conclusion&quot;, &quot;Let's dive in&quot;, &quot;Game-changer&quot;, &quot;Leverage.&quot;
+</code></pre>
+<p><strong>Why It Works:</strong> The banned-phrases list strips the most common AI clichés. Combined with voice instructions and the &ldquo;no definitions&rdquo; rule, you get a draft that sounds written.</p>
+<blockquote>
+<p><em>Example opening:</em> &ldquo;I deleted 40 draft posts last Tuesday. Not because they were bad — because they sounded exactly like everyone else&rsquo;s.&rdquo;</p>
+</blockquote>
+<h3>2.3 — Hook &amp; Intro Writer</h3>
+<pre><code>Write 5 opening hooks for a piece about [topic]:
+1. Bold claim or statistic  2. Personal story  3. Provocative question
+4. &quot;Imagine this&quot; scenario  5. Contrarian statement
+
+Each hook: 2-3 sentences max. Tone: [your tone].
+Then write a full 100-word intro using the strongest one.
+</code></pre>
+<p><strong>Why It Works:</strong> Five distinct types let you compare rather than accepting the AI&rsquo;s first instinct. The 100-word expansion tests whether the hook leads somewhere.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;You&rsquo;ve published 200 posts and your mum is still your most loyal reader. That&rsquo;s not a content problem — it&rsquo;s a distribution problem.&rdquo;</p>
+</blockquote>
+<h3>2.4 — Conclusion &amp; CTA Writer</h3>
+<pre><code>I've written a piece about [topic]. Key takeaways:
+- [Point 1]  - [Point 2]  - [Point 3]
+
+Write a conclusion that summarises without repeating subheadings, reinforces
+the emotional core (reader should feel [emotion]), and ends with a specific CTA:
+[what you want them to do]. Under 150 words. Don't start with &quot;In conclusion.&quot;
+</code></pre>
+<p><strong>Why It Works:</strong> Specifying the target emotion prevents flat, robotic summaries.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Start with one prompt from this guide today. Just one. See what happens when your content process has a system behind it.&rdquo;</p>
+</blockquote>
+<h3>2.5 — Email Newsletter Draft</h3>
+<pre><code>Write a newsletter edition on [topic]. Structure:
+- Subject line (3 options: curiosity, benefit, personal)
+- Preview text (40 chars max)
+- Personal anecdote opener (3-4 sentences)
+- Main insight (the &quot;meat&quot;)
+- One actionable takeaway for today
+- Sign-off with personality
+
+Tone: [your tone]. Write like emailing a smart friend. 400-600 words.
+</code></pre>
+<p><strong>Why It Works:</strong> The &ldquo;smart friend&rdquo; framing prevents the AI from writing a blog post in email clothing.</p>
+<blockquote>
+<p><em>Example subject:</em> &ldquo;I broke my own content rule (and it worked)&rdquo;</p>
+</blockquote>
+<h3>2.6 — Storytelling Framework</h3>
+<pre><code>I want to tell a story about [experience/lesson]. Core message: [takeaway].
+
+Structure using: Scene (where/when) → Struggle (what went wrong) →
+Shift (the turning point) → Solution (what changed) → Stake (why it matters to the reader).
+
+Write each section as 2-3 sentences. Under 250 words total.
+Use sensory details and dialogue where possible.
+</code></pre>
+<p><strong>Why It Works:</strong> The five-part framework prevents flat narratives. Requesting sensory details fights AI&rsquo;s tendency toward tell-don&rsquo;t-show writing.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;It was 11pm on a Sunday. Three tabs open — analytics, a blank Doc, and a competitor&rsquo;s blog ranking above mine with half the effort.&rdquo;</p>
+</blockquote>
+<h3>2.7 — Editing Pass</h3>
+<pre><code>Edit the following text for [clarity/punch/conciseness]. Rules:
+- Cut filler words and redundant phrases
+- Replace passive voice with active
+- Shorten sentences over 25 words
+- Flag clichés with alternatives
+- Keep my voice — don't make it corporate
+- Highlight 3 strongest and 3 weakest lines
+
+Use ~~strikethrough~~ for cuts and **bold** for additions.
+[Paste your text]
+</code></pre>
+<p><strong>Why It Works:</strong> &ldquo;Keep my voice&rdquo; prevents AI from homogenising everything into bland prose. Highlighting strong/weak lines teaches you to self-edit.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;~~It is important to note that~~ <strong>Here&rsquo;s the thing:</strong> consistency beats perfection.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>3 · SEO Optimisation</h1>
+
+<h3>3.1 — Keyword Research Kickstart</h3>
+<pre><code>I'm writing about [topic] for [audience]. Generate:
+- 5 primary keywords (high intent, moderate competition)
+- 10 long-tail phrases (4+ words, specific intent)
+- 5 question-based keywords (People Also Ask style)
+- 3 &quot;hidden gem&quot; keywords competitors likely miss
+
+For each: search intent (informational/commercial/transactional) and
+best content format (guide, listicle, comparison, tool).
+</code></pre>
+<p><strong>Why It Works:</strong> Categorising by intent prevents writing informational posts for transactional keywords — the most common SEO mistake.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;&lsquo;best email tools for small newsletters&rsquo; — Commercial — Comparison post with personal recommendations&rdquo;</p>
+</blockquote>
+<h3>3.2 — Meta Description Generator</h3>
+<pre><code>Write 5 meta descriptions for &quot;[title]&quot; targeting &quot;[keyword].&quot;
+150-155 characters each (strict). Include keyword naturally.
+Each uses a different angle: benefit, curiosity, social proof, urgency, how-to.
+</code></pre>
+<p><strong>Why It Works:</strong> Five angles give genuine options. The character constraint forces precision — critical for meta descriptions that get clicks.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Struggling with content ideas? These 7 frameworks helped me publish consistently for 18 months. Steal them all.&rdquo; (142 chars)</p>
+</blockquote>
+<h3>3.3 — Internal Linking Mapper</h3>
+<pre><code>My existing pieces: 1. [Title] 2. [Title] 3. [Title] [add more]
+
+I'm publishing a new piece on [topic]. Suggest:
+- Which pieces should link TO this new piece (and where to add the link)
+- Which pieces this new piece should link OUT to (with anchor text)
+- Content gaps this reveals
+</code></pre>
+<p><strong>Why It Works:</strong> Most creators forget internal linking entirely. This builds the connections search engines reward while surfacing gaps.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Link from &lsquo;Email 101&rsquo; to new piece, anchor: &lsquo;subject lines that convert.&rsquo; Gap: no piece on email segmentation.&rdquo;</p>
+</blockquote>
+<h3>3.4 — Content Brief Generator</h3>
+<pre><code>Create an SEO content brief for &quot;[target keyword].&quot; Include:
+primary/secondary keywords, intent analysis, 3 title options, target word count,
+H2/H3 outline, People Also Ask questions, internal/external link suggestions,
+and a differentiation angle (what makes this better than what currently ranks).
+Format as a brief for a freelance writer.
+</code></pre>
+<p><strong>Why It Works:</strong> The differentiation angle separates this from generic briefs — it forces you to articulate why your piece deserves to rank.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Top 3 results are all listicles with no data. Angle: combine list with case study from your newsletter growth.&rdquo;</p>
+</blockquote>
+<h3>3.5 — Title Tag Variants</h3>
+<pre><code>Generate 10 title tags for &quot;[keyword].&quot; Mix: how-to, listicle, question,
+bold claim, current year, comparison. 50-60 characters each.
+Keyword in first 5 words where possible. No clickbait.
+</code></pre>
+<p><strong>Why It Works:</strong> Front-loading keywords with mixed formats gives SEO strength and click-through variety.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Content Calendar Template: The System I Use Weekly (2025)&rdquo; — 56 chars</p>
+</blockquote>
+<h3>3.6 — FAQ Schema Builder</h3>
+<pre><code>Write 6 FAQ entries for a page on [topic] targeting [keyword].
+Natural questions, concise answers (40-60 words each), self-contained.
+Also output the JSON-LD structured data markup ready to paste.
+</code></pre>
+<p><strong>Why It Works:</strong> FAQ schema wins rich snippets. Generating both content and markup saves a tedious manual step.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Q: How often should I blog? A: Quality beats frequency. 1-2 well-researched posts per week outperforms daily thin content.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>4 · Social Media</h1>
+
+<h3>4.1 — Twitter/X Thread</h3>
+<pre><code>Turn this into a Twitter/X thread: [paste content or describe topic].
+8-12 tweets. Tweet 1 is a standalone hook (no &quot;Thread 🧵&quot;).
+Each tweet delivers one idea independently. Specific examples in at least 3 tweets.
+Final tweet: clear CTA. No hashtags. Maximum 2 emojis total.
+</code></pre>
+<p><strong>Why It Works:</strong> Banning &ldquo;Thread 🧵&rdquo; and limiting emojis immediately elevates above typical AI threads.</p>
+<blockquote>
+<p><em>Example Tweet 1:</em> &ldquo;Most content calendars fail within 3 weeks. Not because they&rsquo;re bad — because they&rsquo;re built for someone with twice your actual time.&rdquo;</p>
+</blockquote>
+<h3>4.2 — LinkedIn Post</h3>
+<pre><code>Write a LinkedIn post about [topic/experience]. Structure: hook line (bold/surprising),
+2-3 short paragraphs, clear takeaway, closing question for comments.
+Short sentences. No jargon. Under 1,300 characters. Write like a human, not a &quot;thought leader.&quot;
+</code></pre>
+<p><strong>Why It Works:</strong> LinkedIn rewards comments and dwell time. Pattern-interrupt hooks plus closing questions deliver both.</p>
+<blockquote>
+<p><em>Example hook:</em> &ldquo;I got fired from my first marketing job. Best thing that ever happened to my content career.&rdquo;</p>
+</blockquote>
+<h3>4.3 — Instagram Caption</h3>
+<pre><code>Write an Instagram caption for a post about [topic].
+Image shows: [describe visual]. First line: hook (all people see before &quot;...more&quot;).
+Body: 2-3 short paragraphs. CTA: specific action (save/share/comment with [thing]).
+5 hashtags on a separate line. Max 300 words.
+</code></pre>
+<p><strong>Why It Works:</strong> Leading with the hook acknowledges Instagram&rsquo;s truncation. Specific CTAs drive higher engagement than &ldquo;let me know your thoughts.&rdquo;</p>
+<blockquote>
+<p><em>Example first line:</em> &ldquo;The content advice I&rsquo;d give myself 3 years ago (save this).&rdquo;</p>
+</blockquote>
+<h3>4.4 — YouTube Description</h3>
+<pre><code>Write a description for a video titled &quot;[title]&quot; covering [summary].
+First 2 lines: compelling summary with primary keyword. Suggest timestamps,
+3 relevant links, brief about section, and 5 search tags. Under 300 words.
+</code></pre>
+<p><strong>Why It Works:</strong> The first two lines appear in search results — they do the heavy SEO lifting.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;The exact content batching system I use to create a week&rsquo;s content in 3 hours — without burning out.&rdquo;</p>
+</blockquote>
+<h3>4.5 — TikTok/Reels Script</h3>
+<pre><code>Write a [15/30/60]-second video script about [topic].
+Hook (first 2 seconds) → Setup (problem) → Payoff (insight/tip) → CTA (if natural).
+Include visual cues in [brackets]. Write as natural speech — contractions, fragments.
+</code></pre>
+<p><strong>Why It Works:</strong> The 2-second hook deadline mirrors how the platform works. Action cues make the script shootable.</p>
+<blockquote>
+<p><em>Example hook:</em> &ldquo;[Deadpan to camera] Three types of content wasting your time. Number two is going to sting.&rdquo;</p>
+</blockquote>
+<h3>4.6 — Pinterest Pin Copy</h3>
+<pre><code>Pin about [topic]. Include: title (keyword-rich, 40-60 chars), description
+(150-200 chars with keyword, soft CTA), board name suggestion, 3 text overlay
+suggestions for the image.
+</code></pre>
+<p><strong>Why It Works:</strong> Pinterest is a search engine, not a social feed. Keyword-first copy matches how it surfaces content.</p>
+<blockquote>
+<p><em>Example title:</em> &ldquo;Weekly Content Calendar Template for Creators&rdquo;</p>
+</blockquote>
+<h3>4.7 — Cross-Platform Adapter</h3>
+<pre><code>Adapt this content for two new platforms: [paste or describe original].
+Original platform: [platform]. Adapt for: 1. [Platform 2] 2. [Platform 3]
+For each: what to keep, what to change (and why), and the adapted content ready to post.
+</code></pre>
+<p><strong>Why It Works:</strong> Noting what to keep and change (with reasoning) prevents lazy shortening of identical text.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;For LinkedIn: keep the insight, drop the slang, add professional framing. For Twitter: compress to the single strongest point.&rdquo;</p>
+</blockquote>
+<h3>4.8 — Engagement Hook Generator</h3>
+<pre><code>Generate 10 engagement hooks for [platform] in [niche]. Mix:
+controversial opinion, &quot;Am I the only one who...&quot; relatability, specific result/number,
+myth-busting, behind-the-scenes honesty. One sentence each, under 20 words.
+No bait-and-switch — each must lead to real content.
+</code></pre>
+<p><strong>Why It Works:</strong> Five specific hook types with a variety mandate produces genuinely diverse, usable lists.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;I spent £2,000 on a content course and learnt less than I did from one free YouTube video.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>5 · Repurposing</h1>
+
+<h3>5.1 — Blog to Newsletter</h3>
+<pre><code>Convert this blog post into a newsletter: [paste]. Strip SEO formatting,
+add a personal intro (1-2 sentences), distil to the single best insight,
+add &quot;one thing to try this week.&quot; Write a subject line and preview text (under 40 chars).
+400-500 words.
+</code></pre>
+<p><strong>Why It Works:</strong> Blogs and newsletters serve different contexts. This forces genuine adaptation, not copy-paste with &ldquo;Hey!&rdquo; at the top.</p>
+<blockquote>
+<p><em>Example subject:</em> &ldquo;The one thing I&rsquo;d cut from your content workflow&rdquo;</p>
+</blockquote>
+<h3>5.2 — Video to Blog Post</h3>
+<pre><code>Turn this transcript into a blog post: [paste]. Remove verbal tics,
+add subheadings every 200-300 words, expand glossed-over points, add intro
+and conclusion. Target: [word count]. Maintain my speaking voice — don't formalise.
+</code></pre>
+<p><strong>Why It Works:</strong> Transcripts aren&rsquo;t blog posts. This handles the specific translations: removing filler, adding structure, expanding thin points.</p>
+<blockquote>
+<p><em>Example:</em> A 10-minute transcript becomes a 1,500-word post with sections, keeping the creator&rsquo;s casual tone.</p>
+</blockquote>
+<h3>5.3 — Podcast to Show Notes</h3>
+<pre><code>Create show notes from this transcript: [paste]. Include: episode title,
+3-sentence description, timestamps with labels, top 3 takeaways, resources mentioned,
+and one pull-quote capturing the episode's best moment.
+</code></pre>
+<p><strong>Why It Works:</strong> The pull-quote doubles as a shareable social snippet.</p>
+<blockquote>
+<p><em>Example quote:</em> &ldquo;The best content strategy is the one you&rsquo;ll still be running in six months.&rdquo;</p>
+</blockquote>
+<h3>5.4 — Long-Form to Short-Form</h3>
+<pre><code>Extract 5 short-form pieces from this: [paste or summarise].
+1. Tweet (under 280 chars) 2. Instagram carousel (5-7 slides) 3. Quote graphic (one sentence)
+4. Short video hook + outline (30 seconds) 5. Community poll question.
+Each must work standalone.
+</code></pre>
+<p><strong>Why It Works:</strong> Five formats from one piece is genuine leverage. The standalone rule prevents lazy excerpting.</p>
+<blockquote>
+<p><em>Example tweet:</em> &ldquo;Your content isn&rsquo;t underperforming because of the algorithm. It&rsquo;s underperforming because it looks like everyone else&rsquo;s.&rdquo;</p>
+</blockquote>
+<h3>5.5 — Thread to Article</h3>
+<pre><code>Turn this thread into a full article: [paste]. Expand each tweet into a paragraph,
+add transitions, write a proper intro and conclusion, include subheadings.
+Target: [word count].
+</code></pre>
+<p><strong>Why It Works:</strong> Threads are compressed and punchy; articles need connective tissue. This handles the expansion without losing energy.</p>
+<blockquote>
+<p><em>Example:</em> A 10-tweet thread becomes a 1,200-word article with narrative flow.</p>
+</blockquote>
+<h3>5.6 — Transcript to Highlights</h3>
+<pre><code>Extract from this transcript: [paste]. 5 best quotes (exact wording),
+3 key insights (one sentence each), 1 surprising claim (for social),
+50-word summary, and 3 ready-to-post social snippets (Twitter, LinkedIn, Instagram).
+</code></pre>
+<p><strong>Why It Works:</strong> Long transcripts bury their gold. This mines the best moments and drafts the social posts for you.</p>
+<blockquote>
+<p><em>Example insight:</em> &ldquo;Guest argued email subscribers are 10x more valuable than social followers — because you own the relationship.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>6 · Audience Growth</h1>
+
+<h3>6.1 — Collaboration Outreach</h3>
+<pre><code>Write an outreach message to [creator type] in [niche]. I run [your platform] about [your niche].
+Open with a specific compliment about their work. State the idea. Explain what's in it for them.
+Under 150 words. End with a low-commitment next step. Write 2 versions: email and DM.
+</code></pre>
+<p><strong>Why It Works:</strong> &ldquo;Specific compliment&rdquo; and &ldquo;what&rsquo;s in it for them&rdquo; prevent the generic templates creators immediately delete.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Your newsletter monetisation breakdown genuinely changed how I think about my free tier.&rdquo;</p>
+</blockquote>
+<h3>6.2 — Guest Post Pitch</h3>
+<pre><code>Pitch a guest post to [publication]. Topic: [topic]. My credentials: [background].
+Subject line, 2-sentence intro, proposed title with 3-bullet outline, brief social proof,
+polite close. Under 200 words. Don't grovel.
+</code></pre>
+<p><strong>Why It Works:</strong> The bullet outline shows you&rsquo;ve thought it through. &ldquo;Don&rsquo;t grovel&rdquo; prevents AI&rsquo;s default over-apologetic tone.</p>
+<blockquote>
+<p><em>Example subject:</em> &ldquo;Guest post pitch: Why content batching is overrated (and what to do instead)&rdquo;</p>
+</blockquote>
+<h3>6.3 — Community Engagement Playbook</h3>
+<pre><code>Create a 4-week plan for growing through [community type] in [niche].
+Week 1: Value-adding comments. Week 2: Answering questions with depth.
+Week 3: Sharing content (mine + others, suggest ratio). Week 4: Starting discussions.
+Include 5 example comments. No self-promotion in weeks 1-2.
+</code></pre>
+<p><strong>Why It Works:</strong> The phased approach prevents the classic mistake — dropping a link and vanishing.</p>
+<blockquote>
+<p><em>Example comment:</em> &ldquo;I ran into this exact problem. What worked for me was [tactic]. Happy to share my workflow if useful.&rdquo;</p>
+</blockquote>
+<h3>6.4 — Comment Strategy</h3>
+<pre><code>Generate 10 comment templates for [niche] on [platforms]. 2-4 sentences each.
+Showcase expertise without being salesy. No self-links.
+Mix: 3 agreement-plus-addition, 3 experience-sharing, 2 questions, 2 alternative-takes.
+</code></pre>
+<p><strong>Why It Works:</strong> Strategic commenting is underrated for growth. These avoid both empty praise and shameless promotion.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;This mirrors what I&rsquo;ve seen — though timing matters more than people think. I tested [time] vs [time] and the difference was striking.&rdquo;</p>
+</blockquote>
+<h3>6.5 — Cross-Promotion Message</h3>
+<pre><code>Draft a cross-promotion proposal. My audience: [size + description].
+Their audience: [size + description]. Include: what I'm offering, what I'm asking (specific, proportional),
+timeline, and how we'd measure success. Under 200 words. Collaborative, not transactional.
+</code></pre>
+<p><strong>Why It Works:</strong> Specificity and proportionality are what get proposals accepted.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;I&rsquo;d feature you in my newsletter (3,200 subs) with a personal recommendation. In return, a mention in your next community post would be brilliant.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>7 · Analytics &amp; Strategy</h1>
+
+<h3>7.1 — Content Audit</h3>
+<pre><code>Here's my content with performance data: [Title | Date | Views | Engagement | Conversions]
+Categorise each: 🟢 Winners (keep/promote), 🟡 Potential (refresh/redistribute),
+🔴 Underperformers (archive/overhaul). Explain why and recommend next actions.
+Identify patterns: what do winners have in common?
+</code></pre>
+<p><strong>Why It Works:</strong> Colour-coding with actions turns data into decisions. Pattern identification helps replicate success.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;🟢 Winners share a pattern: personal case studies with numbers in the title. Double down.&rdquo;</p>
+</blockquote>
+<h3>7.2 — Competitor Analysis</h3>
+<pre><code>Analyse 3 competitors: 1. [Name] 2. [Name] 3. [Name]
+For each: content pillars, most successful format, posting frequency,
+one thing they do better than me, one gap I could fill.
+End with: &quot;3 opportunities for [my brand].&quot;
+</code></pre>
+<p><strong>Why It Works:</strong> Framing gaps as opportunities turns competitive analysis from intimidation to strategy.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Competitor 2 never shares data. Opportunity: publish with real numbers.&rdquo;</p>
+</blockquote>
+<h3>7.3 — Content Gap Finder</h3>
+<pre><code>My topics: [list]. Audience goals: [list]. Competitors cover: [list].
+Identify: 5 topics nobody covers well, 3 competitor topics I need my own take on,
+2 &quot;bridge&quot; topics connecting my content to a new audience.
+</code></pre>
+<p><strong>Why It Works:</strong> &ldquo;Bridge&rdquo; topics are strategic gold — they attract new readers who then discover your core content.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;You write about productivity. Your audience also cares about freelance finances. &lsquo;How I budget my content business&rsquo; bridges both.&rdquo;</p>
+</blockquote>
+<h3>7.4 — Performance Review</h3>
+<pre><code>Here are my metrics for [month/quarter]: [paste data].
+Give me: top 3 performers (why they worked), bottom 3 (what went wrong),
+trend direction, one thing to do more of, one to stop, three experiments for next period.
+Be direct — I don't need encouragement, I need actionable insight.
+</code></pre>
+<p><strong>Why It Works:</strong> &ldquo;I don&rsquo;t need encouragement&rdquo; overrides AI&rsquo;s tendency to praise everything.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Stop: Friday opinion pieces — your audience doesn&rsquo;t engage weekends. Start: data posts on Tuesday mornings.&rdquo;</p>
+</blockquote>
+<h3>7.5 — Quarterly Content Plan</h3>
+<pre><code>Context: Niche [niche], platforms [platforms], audience [sizes], growth goal [target],
+top 3 content types last quarter [list], what didn't work [list], upcoming dates [any].
+Deliver: 3 strategic priorities, monthly themes, key pieces with target dates,
+one experiment, KPIs and review dates.
+</code></pre>
+<p><strong>Why It Works:</strong> Grounding strategy in real data prevents generic plans.</p>
+<blockquote>
+<p><em>Example:</em> &ldquo;Priority 1: Double newsletter subs from 1,200 to 2,400 via weekly &lsquo;best of&rsquo; social posts driving to sign-up.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>8 · Bonus: Platform Playbooks</h1>
+
+<p><em>Chained workflows — use in sequence to go from zero to published.</em></p>
+<h3>🎬 YouTube Workflow</h3>
+<p><strong>Step 1 — Validate:</strong> <code>I'm considering a video about [topic]. Analyse: search demand, unique spin potential, 6-month relevance, channel fit. Go / Refine / Skip with reasoning.</code></p>
+<p><strong>Step 2 — Script Outline:</strong> <code>Create a script outline for [topic]. [X] minutes. Include: hook (first 15 seconds), intro promise, 3-5 sections with talking points, pattern interrupts every 2-3 min (B-roll, graphics, viewer questions), and close with CTA.</code></p>
+<p><strong>Step 3 — Thumbnail + Title:</strong> <code>5 thumbnail concepts with matching titles. Each thumbnail: text overlay (max 4 words), imagery, colour, emotion. Titles under 60 characters.</code></p>
+<p><strong>Step 4 — Description &amp; Tags:</strong> <code>Full YouTube description and 15 tags. First 2 lines: keyword summary. Include timestamps, links, about blurb, 3 related video suggestions.</code></p>
+<p><strong>Step 5 — Community Teaser:</strong> <code>YouTube Community post teasing this video. Hook question or poll on the topic. Under 200 characters.</code></p>
+<h3>📧 Newsletter Workflow</h3>
+<p><strong>Step 1 — Plan:</strong> <code>My newsletter covers [topic area], readers value [what]. Suggest 3 edition concepts: theme, subject line, core insight, bonus element.</code></p>
+<p><strong>Step 2 — Draft:</strong> <code>Using concept [#], write the full edition. Personal opener, main insight, one actionable takeaway, P.S. with secondary CTA. [Your tone]. 500 words max.</code></p>
+<p><strong>Step 3 — Subject Line Testing:</strong> <code>6 subject line variants: curiosity, benefit, controversy, personal, number, question. Preview text for each (under 40 chars).</code></p>
+<p><strong>Step 4 — Launch Post:</strong> <code>Social post announcing this edition on [platform]. Hook with the insight (not "new newsletter out!"). Make non-subscribers want to join.</code></p>
+<h3>✍️ Blog Workflow</h3>
+<p><strong>Step 1 — Validate:</strong> <code>I want to blog about [topic]. Primary keyword? What's ranking and how to beat it? My unique angle? Effort vs. traffic potential? Go / Refine / Skip.</code></p>
+<p><strong>Step 2 — Full Brief:</strong> <code>SEO content brief: keywords, word count, H2/H3 structure, 3 titles, meta description, internal links from [list existing posts].</code></p>
+<p><strong>Step 3 — First Draft:</strong> <code>Draft from the brief. Follow the headings. My voice: [describe]. Include one personal example, one data point, clear CTA. Readers first, keywords second.</code></p>
+<p><strong>Step 4 — Pre-Publish Polish:</strong> <code>Review for readiness: keyword inclusion, heading hierarchy, intro/conclusion strength, AI-sounding phrases to rewrite, image suggestion with alt text. Return polished draft.</code></p>
+<hr />
+<p><em>Built for creators who&rsquo;d rather spend time creating than wrestling with blank pages. Tweak these, chain them, make them yours.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Content Creator's Prompt System</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

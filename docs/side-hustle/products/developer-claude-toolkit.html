@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Developer's Claude Toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Developer Tools</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Developer's Claude Toolkit</h1>
+    <p class="cover-subtitle">40+ battle-tested prompts for code review, debugging, architecture, and shipping faster with AI</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">50+ Expert Prompts for Shipping Better Code</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">How to Use This Toolkit</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">Prompt 1: The Root Cause Analyst</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Prompt 2: The Silent Failure Detective</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Prompt 3: The Stack Trace Decoder</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Prompt 4: The Reproduction Builder</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">Prompt 5: The Environment Diff Debugger</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">Prompt 6: The Race Condition Hunter</span></a></li>
+      <li><a href="#chapter-9"><span class="toc-chapter-title">Prompt 7: The Dependency Hell Navigator</span></a></li>
+      <li><a href="#chapter-10"><span class="toc-chapter-title">Prompt 8: The Memory Leak Tracker</span></a></li>
+      <li><a href="#chapter-11"><span class="toc-chapter-title">Prompt 9: The Senior Engineer Review</span></a></li>
+      <li><a href="#chapter-12"><span class="toc-chapter-title">Prompt 10: The Security Audit</span></a></li>
+      <li><a href="#chapter-13"><span class="toc-chapter-title">Prompt 11: The Performance Review</span></a></li>
+      <li><a href="#chapter-14"><span class="toc-chapter-title">Prompt 12: The API Contract Review</span></a></li>
+      <li><a href="#chapter-15"><span class="toc-chapter-title">Prompt 13: The Error Handling Audit</span></a></li>
+      <li><a href="#chapter-16"><span class="toc-chapter-title">Prompt 14: The Test Gap Finder</span></a></li>
+      <li><a href="#chapter-17"><span class="toc-chapter-title">Prompt 15: The "Explain This to a New Hire" Review</span></a></li>
+      <li><a href="#chapter-18"><span class="toc-chapter-title">Prompt 16: The Naming Audit</span></a></li>
+      <li><a href="#chapter-19"><span class="toc-chapter-title">Prompt 17: The Architecture Decision Record</span></a></li>
+      <li><a href="#chapter-20"><span class="toc-chapter-title">Prompt 18: The System Design Collaborator</span></a></li>
+      <li><a href="#chapter-21"><span class="toc-chapter-title">Prompt 19: The Database Schema Designer</span></a></li>
+      <li><a href="#chapter-22"><span class="toc-chapter-title">Prompt 20: The API Design Workshop</span></a></li>
+      <li><a href="#chapter-23"><span class="toc-chapter-title">Prompt 21: The Refactoring Strategy</span></a></li>
+      <li><a href="#chapter-24"><span class="toc-chapter-title">Prompt 22: The Monolith Decomposition Planner</span></a></li>
+      <li><a href="#chapter-25"><span class="toc-chapter-title">Prompt 23: The Design Pattern Advisor</span></a></li>
+      <li><a href="#chapter-26"><span class="toc-chapter-title">Prompt 24: The Migration Planner</span></a></li>
+      <li><a href="#chapter-27"><span class="toc-chapter-title">Prompt 25: The README Generator</span></a></li>
+      <li><a href="#chapter-28"><span class="toc-chapter-title">Prompt 26: The Code Documentation Writer</span></a></li>
+      <li><a href="#chapter-29"><span class="toc-chapter-title">Prompt 27: The Changelog Writer</span></a></li>
+      <li><a href="#chapter-30"><span class="toc-chapter-title">Prompt 28: The Runbook Writer</span></a></li>
+      <li><a href="#chapter-31"><span class="toc-chapter-title">Prompt 29: The ADR From Existing Code</span></a></li>
+      <li><a href="#chapter-32"><span class="toc-chapter-title">Prompt 30: The Architecture Diagram Describer</span></a></li>
+      <li><a href="#chapter-33"><span class="toc-chapter-title">Prompt 31: The Technical RFC Writer</span></a></li>
+      <li><a href="#chapter-34"><span class="toc-chapter-title">Prompt 32: The Unit Test Writer</span></a></li>
+      <li><a href="#chapter-35"><span class="toc-chapter-title">Prompt 33: The Integration Test Designer</span></a></li>
+      <li><a href="#chapter-36"><span class="toc-chapter-title">Prompt 34: The Property-Based Test Generator</span></a></li>
+      <li><a href="#chapter-37"><span class="toc-chapter-title">Prompt 35: The Test Data Factory</span></a></li>
+      <li><a href="#chapter-38"><span class="toc-chapter-title">Prompt 36: The Mutation Testing Analyst</span></a></li>
+      <li><a href="#chapter-39"><span class="toc-chapter-title">Prompt 37: The Contract Test Writer</span></a></li>
+      <li><a href="#chapter-40"><span class="toc-chapter-title">Prompt 38: The End-to-End Test Scenario Writer</span></a></li>
+      <li><a href="#chapter-41"><span class="toc-chapter-title">Prompt 39: The Test Refactoring Guide</span></a></li>
+      <li><a href="#chapter-42"><span class="toc-chapter-title">Prompt 40: The Code Smell Identifier</span></a></li>
+      <li><a href="#chapter-43"><span class="toc-chapter-title">Prompt 41: The Extract and Inject Refactorer</span></a></li>
+      <li><a href="#chapter-44"><span class="toc-chapter-title">Prompt 42: The Performance Refactorer</span></a></li>
+      <li><a href="#chapter-45"><span class="toc-chapter-title">Prompt 43: The Legacy Code Moderniser</span></a></li>
+      <li><a href="#chapter-46"><span class="toc-chapter-title">Prompt 44: The Dead Code Eliminator</span></a></li>
+      <li><a href="#chapter-47"><span class="toc-chapter-title">Prompt 45: The Error Handling Moderniser</span></a></li>
+      <li><a href="#chapter-48"><span class="toc-chapter-title">Prompt 46: The Query Optimiser</span></a></li>
+      <li><a href="#chapter-49"><span class="toc-chapter-title">Prompt 47: The Caching Strategy Designer</span></a></li>
+      <li><a href="#chapter-50"><span class="toc-chapter-title">Prompt 48: The N+1 Query Detector</span></a></li>
+      <li><a href="#chapter-51"><span class="toc-chapter-title">Prompt 49: The Bundle Size Reducer</span></a></li>
+      <li><a href="#chapter-52"><span class="toc-chapter-title">Prompt 50: The CI Pipeline Designer</span></a></li>
+      <li><a href="#chapter-53"><span class="toc-chapter-title">Prompt 51: The Dockerfile Optimiser</span></a></li>
+      <li><a href="#chapter-54"><span class="toc-chapter-title">Prompt 52: The Infrastructure as Code Reviewer</span></a></li>
+      <li><a href="#chapter-55"><span class="toc-chapter-title">Prompt 53: The Incident Post-Mortem Writer</span></a></li>
+      <li><a href="#chapter-56"><span class="toc-chapter-title">Prompt 54: The Chain-of-Thought Debugger</span></a></li>
+      <li><a href="#chapter-57"><span class="toc-chapter-title">Prompt 55: The Rubber Duck Pro</span></a></li>
+      <li><a href="#chapter-58"><span class="toc-chapter-title">Prompt 56: The Code Review Reviewer</span></a></li>
+      <li><a href="#chapter-59"><span class="toc-chapter-title">Prompt 57: The Specification to Implementation</span></a></li>
+      <li><a href="#chapter-60"><span class="toc-chapter-title">Prompt 58: The Git History Archaeologist</span></a></li>
+      <li><a href="#chapter-61"><span class="toc-chapter-title">Recipe 1: The Full Code Review Pipeline</span></a></li>
+      <li><a href="#chapter-62"><span class="toc-chapter-title">Recipe 2: The Bug Investigation Flow</span></a></li>
+      <li><a href="#chapter-63"><span class="toc-chapter-title">Recipe 3: The System Design Pipeline</span></a></li>
+      <li><a href="#chapter-64"><span class="toc-chapter-title">Recipe 4: The Legacy Code Rescue</span></a></li>
+      <li><a href="#chapter-65"><span class="toc-chapter-title">Recipe 5: The Performance Rescue</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Developer&rsquo;s Claude Toolkit</h1>
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>50+ Expert Prompts for Shipping Better Code</h1>
+
+<hr />
+<p><strong>A practical prompt library for professional developers who use AI to build, debug, review, test, and document real software.</strong></p>
+<p><em>No fluff. No &ldquo;write me a to-do app.&rdquo; Every prompt here was forged in production codebases and refined through hundreds of iterations.</em></p>
+<hr />
+<blockquote>
+<p>&ldquo;The difference between a junior and senior developer using AI isn&rsquo;t the model — it&rsquo;s the prompt.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>How to Use This Toolkit</h1>
+
+<h3>The Anatomy of a Great Prompt</h3>
+<p>Every prompt in this toolkit follows a proven structure:</p>
+<ol>
+<li><strong>Role &amp; Context</strong> — Tell Claude <em>who</em> it is and <em>what</em> it&rsquo;s looking at</li>
+<li><strong>Constraint</strong> — Narrow the scope so the output is actionable</li>
+<li><strong>Format</strong> — Specify exactly what you want back</li>
+<li><strong>Anti-patterns</strong> — Tell it what to <em>avoid</em> (this is where most people fail)</li>
+</ol>
+<h3>Customisation Keys</h3>
+<p>Throughout this document, you&rsquo;ll see placeholders in <code>{curly braces}</code>. Replace these with your specifics:</p>
+<ul>
+<li><code>{language}</code> — Your programming language (Python, TypeScript, Rust, etc.)</li>
+<li><code>{framework}</code> — Your framework (Django, Next.js, Rails, etc.)</li>
+<li><code>{codebase_context}</code> — Brief description of your project</li>
+<li><code>{paste_code_here}</code> — Where your actual code goes</li>
+<li><code>{error_message}</code> — The error you&rsquo;re seeing</li>
+</ul>
+<h3>Pro Tips Before You Start</h3>
+<ul>
+<li><strong>Paste real code.</strong> Claude works best with actual code, not descriptions of code.</li>
+<li><strong>Include error messages verbatim.</strong> Don&rsquo;t paraphrase — paste the full stack trace.</li>
+<li><strong>Chain prompts.</strong> Use the output of one prompt as input to the next. The prompts in each section are designed to work in sequence.</li>
+<li><strong>Push back.</strong> If Claude&rsquo;s first answer is generic, say &ldquo;That&rsquo;s too surface-level. Go deeper.&rdquo; It will.</li>
+</ul>
+<hr />
+<h1>Part 1: Debugging</h1>
+<p><em>From cryptic stack traces to &ldquo;it works on my machine&rdquo; — prompts that actually find the bug.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>Prompt 1: The Root Cause Analyst</h1>
+
+<p><strong>When to use:</strong> You have an error and you&rsquo;ve already spent 20 minutes staring at it.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm debugging an issue in a {language} {framework} application.
+
+Here's the error:
+{error_message}
+
+Here's the relevant code:
+{paste_code_here}
+
+Don't just tell me what the error means. I need:
+1. The root cause (not the symptom)
+2. Why this specific code triggers it (trace the execution path)
+3. The fix, with code
+4. What else in the codebase might have the same underlying issue
+
+If you need more context (e.g., config files, related modules), tell me exactly what to paste.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Most developers prompt with &ldquo;fix this error&rdquo; and get a surface-level response. This prompt forces Claude to distinguish between <em>symptoms</em> and <em>root causes</em>. Point 4 is the real power — it turns a single bug fix into a codebase-wide audit.</p>
+<h3>Example Output (abbreviated)</h3>
+<blockquote>
+<p><strong>Root cause:</strong> The <code>user_id</code> field is being passed as a string from the request body, but your SQLAlchemy model defines it as <code>Integer</code>. The ORM doesn&rsquo;t auto-cast in this context because you&rsquo;re using <code>filter_by()</code> which passes the value through without type coercion, unlike <code>filter()</code> with explicit column comparison.</p>
+<p><strong>Why this code triggers it:</strong> Line 34 calls <code>request.json.get("user_id")</code> — Flask&rsquo;s <code>request.json</code> preserves JSON types, and your frontend is sending <code>"42"</code> (string) not <code>42</code> (integer)&hellip;</p>
+<p><strong>Other locations at risk:</strong> Any endpoint using <code>filter_by()</code> with values from <code>request.json</code> without casting. Check <code>routes/orders.py:67</code> and <code>routes/payments.py:23</code> — they follow the same pattern.</p>
+</blockquote>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Add your ORM, database, and deployment environment for more precise answers</li>
+<li>If the error is intermittent, say so — it changes the debugging approach entirely</li>
+<li>Include the test that&rsquo;s failing, if you have one</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>Prompt 2: The Silent Failure Detective</h1>
+
+<p><strong>When to use:</strong> No error. No crash. It just&hellip; doesn&rsquo;t work right.</p>
+<h3>The Prompt</h3>
+<pre><code>Something is wrong but there's no error. Here's what I expect vs what happens:
+
+Expected behaviour: {what_should_happen}
+Actual behaviour: {what_actually_happens}
+
+Here's the code path I think is involved:
+{paste_code_here}
+
+Walk through this code line by line as if you're a debugger. At each decision point (conditionals, function calls, data transformations), tell me:
+- What the value actually is at this point (based on the code logic)
+- What I probably assumed it would be
+- Where the assumption breaks
+
+Be specific. Reference line numbers.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Silent failures are the hardest bugs because there&rsquo;s no error message to google. This prompt turns Claude into a mental debugger — it forces a line-by-line trace that surfaces the <em>assumption gap</em> between what you think the code does and what it actually does.</p>
+<h3>Example Output (abbreviated)</h3>
+<blockquote>
+<p><strong>Line 12:</strong> <code>const filtered = items.filter(item =&gt; item.status == "active")</code>
+You&rsquo;re using loose equality (<code>==</code>). If <code>item.status</code> is the boolean <code>true</code> (which your API returns for active items), <code>true == "active"</code> is <code>false</code> in JavaScript. This silently filters out every active item.</p>
+<p><strong>Your assumption:</strong> <code>status</code> is a string like <code>"active"</code> or <code>"inactive"</code>.
+<strong>Reality:</strong> Your API returns <code>{ status: true }</code> for active items.</p>
+</blockquote>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Add recent changes: &ldquo;I changed X yesterday and it broke&rdquo; narrows the search massively</li>
+<li>Include sample data if you have it — paste a JSON response, a database row, etc.</li>
+<li>For async issues, mention the timing: &ldquo;It works when I step through slowly but fails at full speed&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Prompt 3: The Stack Trace Decoder</h1>
+
+<p><strong>When to use:</strong> You have a wall of stack trace and no idea where to start.</p>
+<h3>The Prompt</h3>
+<pre><code>Here's a stack trace from my {language} application. I need you to:
+
+1. Identify which frames are MY code vs library/framework code
+2. Point me to the exact line in MY code where the issue originates
+3. Explain what the library was trying to do when it failed
+4. Give me the fix
+
+Stack trace:
+{paste_full_stack_trace}
+
+My project structure looks like:
+{brief_structure}
+
+Don't explain what a stack trace is. I know. Just decode this one.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The final line — &ldquo;Don&rsquo;t explain what a stack trace is&rdquo; — is crucial. Without it, you&rsquo;ll get 3 paragraphs of intro before the actual answer. Asking Claude to separate <em>your</em> frames from <em>library</em> frames cuts through the noise immediately.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Paste the FULL stack trace, not a trimmed version — the context frames matter</li>
+<li>Include your <code>requirements.txt</code> or <code>package.json</code> versions if the error might be version-related</li>
+<li>If you have multiple stack traces (e.g., the error happens in different places), paste all of them</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Prompt 4: The Reproduction Builder</h1>
+
+<p><strong>When to use:</strong> You need to reproduce a bug in isolation to understand it.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm seeing a bug in my {language} application. I want to build a minimal reproduction case.
+
+Here's the bug: {describe_the_bug}
+Here's the code where it manifests: {paste_code_here}
+Here's the environment: {runtime_version_os_etc}
+
+Create a single-file reproduction script that:
+1. Has zero external dependencies (or absolute minimum)
+2. Demonstrates the exact bug
+3. Includes comments explaining what should happen vs what does happen
+4. Can be run with a single command you provide
+
+Don't simplify the bug away — the repro must trigger the same root cause.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Minimal reproductions are the gold standard of bug reports, but developers rarely create them because it&rsquo;s tedious. This prompt automates the tedious part. The key constraint — &ldquo;Don&rsquo;t simplify the bug away&rdquo; — prevents Claude from creating a repro that technically runs but doesn&rsquo;t actually exhibit the issue.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your OS and runtime version — reproduction cases are often platform-sensitive</li>
+<li>If the bug involves concurrency, say so explicitly: &ldquo;This is a race condition&rdquo; changes the repro strategy</li>
+<li>Add &ldquo;Make it a pytest/jest test&rdquo; if you want it in test form</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Prompt 5: The Environment Diff Debugger</h1>
+
+<p><strong>When to use:</strong> &ldquo;Works on my machine&rdquo; / &ldquo;Only fails in production.&rdquo;</p>
+<h3>The Prompt</h3>
+<pre><code>I have a bug that only appears in {environment_a} but not in {environment_b}.
+
+The code is identical. Here are the differences I know about:
+- {env_diff_1} (e.g., Python 3.11 vs 3.12)
+- {env_diff_2} (e.g., PostgreSQL 14 vs 16)
+- {env_diff_3} (e.g., Linux vs macOS)
+
+The bug: {describe_bug}
+The code: {paste_relevant_code}
+
+Give me a ranked list of the most likely causes, starting with the environment difference most likely to cause this specific bug. For each, explain the mechanism and how to verify it.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Environment bugs are about narrowing the diff. This prompt structures the investigation as a ranked hypothesis list rather than a single guess, which matches how experienced developers actually debug these issues — you test hypotheses in order of likelihood.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include Docker vs bare metal, managed vs self-hosted database, etc.</li>
+<li>If you have access to both environments, ask for verification commands for each hypothesis</li>
+<li>Add deployment method (systemd, Docker Compose, Kubernetes) — it often matters</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>Prompt 6: The Race Condition Hunter</h1>
+
+<p><strong>When to use:</strong> Intermittent failures, flaky tests, &ldquo;it only happens under load.&rdquo;</p>
+<h3>The Prompt</h3>
+<pre><code>I suspect a race condition in this {language} code. It fails intermittently, roughly {frequency} (e.g., 1 in 20 runs).
+
+Here's the code:
+{paste_code_here}
+
+Analyse this for concurrency issues:
+1. Identify every shared mutable state
+2. Map out all possible interleavings that could cause incorrect behaviour
+3. Show me the specific interleaving (as a timeline) that causes the bug
+4. Propose a fix that doesn't just &quot;add a lock everywhere&quot; — I want the minimal correct synchronisation
+
+Assume I understand concurrency. Skip the basics.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Race conditions require <em>thinking in timelines</em>, which is exactly what this prompt demands. Asking Claude to map interleavings and show a specific failing timeline produces concrete, verifiable analysis rather than hand-wavy &ldquo;you might have a race condition&rdquo; responses.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify your concurrency model: threads, async/await, goroutines, actors, etc.</li>
+<li>Include the test that flakes, if you have one</li>
+<li>Add your load characteristics: &ldquo;We see this under 500 concurrent requests&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-9">
+<h1><span class="chapter-number">Chapter 09</span>Prompt 7: The Dependency Hell Navigator</h1>
+
+<p><strong>When to use:</strong> Version conflicts, import errors, &ldquo;No matching distribution found.&rdquo;</p>
+<h3>The Prompt</h3>
+<pre><code>I'm getting a dependency conflict in my {language} project.
+
+Error: {paste_error}
+
+Here's my dependency file:
+{paste_requirements_or_package_json}
+
+Here's my lock file (if relevant):
+{paste_lock_file_relevant_section}
+
+I need:
+1. Which packages are conflicting and why
+2. The version combination that satisfies all constraints
+3. If no combination exists, the least painful workaround
+4. Any dependencies I should pin more tightly to prevent this recurring
+
+Don't suggest &quot;just upgrade everything&quot; — I need to understand the constraint graph.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Dependency resolution is essentially constraint satisfaction. The final line prevents the lazy answer and forces Claude to actually trace the version constraints. Including the lock file is crucial because it shows what <em>was</em> working before.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your Python/Node/Rust version — it constrains the solution space</li>
+<li>If you&rsquo;re in a monorepo, mention which packages share dependencies</li>
+<li>Add your deployment target (e.g., AWS Lambda) — some environments have package restrictions</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-10">
+<h1><span class="chapter-number">Chapter 10</span>Prompt 8: The Memory Leak Tracker</h1>
+
+<p><strong>When to use:</strong> Your application&rsquo;s memory usage grows over time.</p>
+<h3>The Prompt</h3>
+<pre><code>I suspect a memory leak in my {language} application. Memory grows by approximately {amount} over {time_period}.
+
+Here's the code I think is involved:
+{paste_code_here}
+
+Analyse this for memory leaks:
+1. Identify objects that are created but never freed/dereferenced
+2. Look for growing collections (lists, maps, caches) that are never pruned
+3. Check for closure captures that hold references longer than intended
+4. Check for event listener/callback registration without cleanup
+
+For each issue found, show the exact fix and explain why it leaks.
+
+Also suggest how I can verify the leak is fixed (profiling commands, metrics to watch).
+</code></pre>
+<h3>Why It Works</h3>
+<p>Memory leaks have specific patterns — unclosed resources, growing collections, captured references. This prompt enumerates them explicitly, ensuring Claude checks for each category rather than guessing at the most common one.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your profiling data if you have it (heap snapshots, memory graphs)</li>
+<li>Mention your deployment context: &ldquo;This runs as a long-lived server&rdquo; vs &ldquo;This is a batch job&rdquo;</li>
+<li>For Python, mention if you&rsquo;re using <code>__del__</code>, weak references, or <code>gc.collect()</code> — they change the analysis</li>
+</ul>
+<hr />
+<h1>Part 2: Code Review</h1>
+<p><em>Prompts that catch what linters miss — logic errors, design smells, security holes, and performance traps.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-11">
+<h1><span class="chapter-number">Chapter 11</span>Prompt 9: The Senior Engineer Review</h1>
+
+<p><strong>When to use:</strong> You want a thorough code review before merging.</p>
+<h3>The Prompt</h3>
+<pre><code>Review this {language} code as a senior engineer with 15 years of experience. Be direct and specific.
+
+{paste_code_here}
+
+For each issue, categorise it:
+- 🔴 BLOCKER: Must fix before merging (bugs, security issues, data loss risks)
+- 🟡 SHOULD FIX: Will cause problems later (poor patterns, maintainability issues)
+- 🟢 NIT: Style/preference (take it or leave it)
+
+For each issue:
+1. The exact line(s)
+2. What's wrong and why it matters
+3. The fix (show code, not just description)
+
+Skip praise. Skip the &quot;overall this looks good&quot; fluff. Just the issues.
+
+Things I especially care about: {your_concerns — e.g., &quot;SQL injection&quot;, &quot;error handling&quot;, &quot;thread safety&quot;}
+</code></pre>
+<h3>Why It Works</h3>
+<p>The severity categorisation is the key innovation. Without it, Claude treats a missing docstring the same as a SQL injection vulnerability. The &ldquo;skip praise&rdquo; instruction eliminates the padding that wastes your reading time.</p>
+<h3>Example Output (abbreviated)</h3>
+<blockquote>
+<p><strong>🔴 BLOCKER — Line 45: SQL Injection</strong>
+```python</p>
+<h1>Current</h1>
+<p>cursor.execute(f&rdquo;SELECT * FROM users WHERE email = &lsquo;{email}&rsquo;&rdquo;)</p>
+<h1>Fix</h1>
+<p>cursor.execute(&ldquo;SELECT * FROM users WHERE email = %s&rdquo;, (email,))
+```
+Direct string interpolation into SQL. Any user can drop your database.</p>
+<p><strong>🟡 SHOULD FIX — Lines 23-31: Unbounded Query</strong>
+```python</p>
+<h1>Current</h1>
+<p>users = User.query.all()  # Loads entire table into memory</p>
+<h1>Fix</h1>
+<p>users = User.query.paginate(page=page, per_page=50)
+<code>``</code>.all()` on a growing table will eventually OOM your server.</p>
+</blockquote>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Add your team&rsquo;s style guide or conventions: &ldquo;We use dependency injection, not globals&rdquo;</li>
+<li>Specify your threat model: &ldquo;This handles financial data&rdquo; changes the security review entirely</li>
+<li>For PRs, paste the diff rather than the full file — Claude will focus on what changed</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-12">
+<h1><span class="chapter-number">Chapter 12</span>Prompt 10: The Security Audit</h1>
+
+<p><strong>When to use:</strong> Before deploying user-facing code, authentication flows, or data handling.</p>
+<h3>The Prompt</h3>
+<pre><code>Perform a security audit on this {language} code. Assume an attacker who:
+- Controls all user input (forms, headers, query params, file uploads)
+- Can observe network traffic
+- Has a valid user account (for privilege escalation checks)
+
+{paste_code_here}
+
+Check for:
+1. Injection attacks (SQL, NoSQL, command, LDAP, template)
+2. Authentication/authorisation flaws (broken access control, IDOR)
+3. Data exposure (logging secrets, verbose errors, missing encryption)
+4. Input validation gaps (missing sanitisation, type confusion)
+5. Business logic flaws (race conditions in payments, negative quantities)
+
+For each vulnerability:
+- Severity (Critical/High/Medium/Low)
+- Attack scenario (how would someone exploit this, step by step?)
+- Fix (show the secure version)
+- How to test the fix
+
+Don't list theoretical issues that don't apply to this code. Only flag what's actually exploitable here.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The attacker persona and the &ldquo;step by step exploit&rdquo; requirement turn this from a checklist exercise into a genuine threat analysis. The &ldquo;don&rsquo;t list theoretical issues&rdquo; constraint prevents the common problem of getting 20 generic OWASP warnings that don&rsquo;t apply.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Add your authentication method (JWT, session cookies, OAuth) for targeted analysis</li>
+<li>Include your middleware stack — it often handles security concerns you&rsquo;ve forgotten about</li>
+<li>For APIs, paste your route definitions alongside the handler code</li>
+<li>Specify compliance requirements if relevant: &ldquo;This must be PCI-DSS compliant&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-13">
+<h1><span class="chapter-number">Chapter 13</span>Prompt 11: The Performance Review</h1>
+
+<p><strong>When to use:</strong> Code works correctly but you suspect it&rsquo;s slow or will be at scale.</p>
+<h3>The Prompt</h3>
+<pre><code>Analyse this {language} code for performance issues. The current data scale is {current_scale} but we expect to reach {expected_scale}.
+
+{paste_code_here}
+
+For each issue:
+1. What's the current time/space complexity?
+2. At what data scale does it become a problem? (Be specific — 1K rows? 100K? 1M?)
+3. What's the optimised version and its new complexity?
+4. What's the tradeoff? (Memory vs speed, readability vs performance, etc.)
+
+Don't micro-optimise. Only flag issues that will actually matter at our expected scale.
+
+Database context (if relevant): {database_type_and_indices}
+</code></pre>
+<h3>Why It Works</h3>
+<p>The scale parameters make this concrete rather than theoretical. &ldquo;This is O(n²)&rdquo; is academic; &ldquo;This will take 45 seconds when your user table hits 50K rows&rdquo; is actionable. The tradeoff requirement prevents premature optimisation.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your database schema and existing indices for query optimisation</li>
+<li>Mention caching infrastructure you already have (Redis, CDN, etc.)</li>
+<li>Specify latency requirements: &ldquo;API responses must be under 200ms at p95&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-14">
+<h1><span class="chapter-number">Chapter 14</span>Prompt 12: The API Contract Review</h1>
+
+<p><strong>When to use:</strong> Reviewing API endpoints before they go public.</p>
+<h3>The Prompt</h3>
+<pre><code>Review this API endpoint for production readiness.
+
+Route: {method} {path}
+Handler code:
+{paste_code_here}
+
+Request/response schemas (if defined):
+{paste_schemas}
+
+Check against these criteria:
+1. Is the contract clear? (Could a frontend dev use this without asking you questions?)
+2. Error handling: Does every failure path return a proper error response with status code?
+3. Validation: Is every input validated before use?
+4. Idempotency: Is this safe to retry? If not, should it be?
+5. Pagination: If this returns a list, is it bounded?
+6. Versioning: Will this be painful to change later?
+
+Show me the improved version with all issues fixed.
+</code></pre>
+<h3>Why It Works</h3>
+<p>API design mistakes are expensive to fix after launch because clients depend on the contract. This prompt covers the six most common API review failures that experienced backend developers check for. The &ldquo;could a frontend dev use this&rdquo; framing catches unclear contracts.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Add your API conventions: REST, GraphQL, RPC, etc.</li>
+<li>Include authentication middleware if it affects the endpoint</li>
+<li>Specify your error response format if you have a standard</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-15">
+<h1><span class="chapter-number">Chapter 15</span>Prompt 13: The Error Handling Audit</h1>
+
+<p><strong>When to use:</strong> You suspect your error handling is inconsistent or incomplete.</p>
+<h3>The Prompt</h3>
+<pre><code>Audit the error handling in this {language} code.
+
+{paste_code_here}
+
+For every operation that can fail (I/O, network, parsing, external services), answer:
+1. Is the failure caught?
+2. Is the error message useful for debugging? (Not &quot;Something went wrong&quot;)
+3. Is the error logged with enough context to diagnose the issue from logs alone?
+4. Is cleanup performed? (Connections closed, temp files removed, transactions rolled back)
+5. Is the error propagated correctly? (Not silently swallowed, not leaking internals to users)
+
+Show me a rewritten version with proper error handling throughout. Use {error_pattern} (e.g., &quot;Result types&quot;, &quot;try/except with custom exceptions&quot;, &quot;error middleware&quot;).
+</code></pre>
+<h3>Why It Works</h3>
+<p>Most code reviews check <em>if</em> errors are handled. This prompt checks <em>how well</em> they&rsquo;re handled by testing five specific qualities of good error handling. The &ldquo;diagnose from logs alone&rdquo; criterion is particularly valuable — it ensures errors are logged with sufficient context.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify your logging framework and format (structured JSON logs, etc.)</li>
+<li>Add your monitoring setup: &ldquo;We use Sentry&rdquo; / &ldquo;We use Datadog&rdquo; — it affects error reporting</li>
+<li>Include your user-facing error format if you have one</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-16">
+<h1><span class="chapter-number">Chapter 16</span>Prompt 14: The Test Gap Finder</h1>
+
+<p><strong>When to use:</strong> You have tests, but you&rsquo;re not sure they cover enough.</p>
+<h3>The Prompt</h3>
+<pre><code>Here's my {language} code and its existing tests:
+
+Source code:
+{paste_source_code}
+
+Existing tests:
+{paste_test_code}
+
+Identify every gap:
+1. Code paths with no test coverage (be specific — which branches, which conditions)
+2. Edge cases not tested (boundary values, empty inputs, nulls, very large inputs)
+3. Error paths not tested (what happens when dependencies fail?)
+4. Integration points not tested (database calls, API calls, file I/O)
+
+For each gap, write the missing test. Use {test_framework}.
+
+Priority order: Start with the gaps most likely to hide bugs.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Developers tend to test the happy path. This prompt systematically identifies what&rsquo;s <em>not</em> tested by checking four categories of coverage gaps. The priority ordering ensures you write the most valuable tests first.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your test fixtures/factories if you have them</li>
+<li>Mention your mocking strategy: &ldquo;We use dependency injection&rdquo; vs &ldquo;We mock at the module level&rdquo;</li>
+<li>Specify if you need unit tests, integration tests, or both</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-17">
+<h1><span class="chapter-number">Chapter 17</span>Prompt 15: The &ldquo;Explain This to a New Hire&rdquo; Review</h1>
+
+<p><strong>When to use:</strong> Complex code that needs to be understandable by the team.</p>
+<h3>The Prompt</h3>
+<pre><code>A new developer is joining our team next week. They'll need to understand this code.
+
+{paste_code_here}
+
+1. Rate the readability from 1-10. Be honest.
+2. Identify every &quot;WTF moment&quot; — places where a competent developer would stop and say &quot;why?&quot;
+3. For each WTF moment:
+   - Is it necessary complexity (inherent to the problem)?
+   - Or accidental complexity (could be simplified)?
+4. Rewrite the accidental complexity parts to be self-documenting.
+5. For the necessary complexity parts, add comments that explain the *why* (not the *what*).
+
+Don't dumb down the code. Make it clear without making it verbose.
+</code></pre>
+<h3>Why It Works</h3>
+<p>&ldquo;Is this readable?&rdquo; is subjective. &ldquo;Would a new hire understand this?&rdquo; is concrete and testable. The distinction between <em>necessary</em> and <em>accidental</em> complexity prevents the common mistake of over-simplifying code that&rsquo;s complex because the problem is complex.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify the new hire&rsquo;s expected level: &ldquo;Senior with no domain knowledge&rdquo; vs &ldquo;Junior developer&rdquo;</li>
+<li>Add domain-specific jargon that should be explained: &ldquo;They won&rsquo;t know what a &lsquo;settlement window&rsquo; is&rdquo;</li>
+<li>Include your team&rsquo;s naming conventions</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-18">
+<h1><span class="chapter-number">Chapter 18</span>Prompt 16: The Naming Audit</h1>
+
+<p><strong>When to use:</strong> Variables, functions, and classes that no longer describe what they do.</p>
+<h3>The Prompt</h3>
+<pre><code>Audit every name in this code — variables, functions, classes, parameters.
+
+{paste_code_here}
+
+For each name, evaluate:
+1. Does it describe what the thing IS or DOES? (not how it's implemented)
+2. Is it the right level of specificity? (not too vague like `data`, not too verbose)
+3. Is it consistent with other names in the codebase?
+4. Would someone searching the codebase find this using obvious search terms?
+
+Show me a renamed version. For every rename, explain why the new name is better.
+
+Don't rename things that are already good. Only flag genuine improvements.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Naming is the most impactful readability improvement and the easiest to fix. The search criterion (point 4) is often overlooked — great names are also great search terms.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your naming conventions: camelCase, snake_case, Hungarian notation, etc.</li>
+<li>Paste related files so Claude can check consistency across modules</li>
+<li>Add domain glossary terms if your project uses specific terminology</li>
+</ul>
+<hr />
+<h1>Part 3: Architecture &amp; Design</h1>
+<p><em>Prompts for when you need to think before you code — system design, patterns, trade-offs, and decisions.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-19">
+<h1><span class="chapter-number">Chapter 19</span>Prompt 17: The Architecture Decision Record</h1>
+
+<p><strong>When to use:</strong> You need to make a technical decision and document why.</p>
+<h3>The Prompt</h3>
+<pre><code>I need to make an architecture decision. Help me think through it as an ADR (Architecture Decision Record).
+
+Context: {describe_the_situation}
+The decision I need to make: {what_you_need_to_decide}
+Constraints: {time_budget_team_size_etc}
+
+Generate a complete ADR with:
+1. **Status:** Proposed
+2. **Context:** Why this decision needs to be made now
+3. **Options considered:** At least 3 realistic options (not strawmen)
+4. **Decision matrix:** Compare options on: complexity, scalability, team familiarity, migration effort, operational cost
+5. **Recommendation:** Which option and why
+6. **Consequences:** What we gain, what we give up, what we'll need to revisit later
+7. **Migration path:** If we're changing from an existing approach, how do we get there?
+
+Be opinionated. Give me a recommendation, not &quot;it depends.&quot;
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;be opinionated&rdquo; instruction is critical. Without it, Claude will present all options as equally valid. Real architecture decisions require someone to make a call. The decision matrix forces structured comparison rather than vibes-based decisions.</p>
+<h3>Example Output (abbreviated)</h3>
+<blockquote>
+<p><strong>Decision: Message Queue for Event Processing</strong></p>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th style="text-align: center;">Redis Streams</th>
+<th style="text-align: center;">RabbitMQ</th>
+<th style="text-align: center;">Kafka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Complexity</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">Very High</td>
+</tr>
+<tr>
+<td>Team familiarity</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td>Migration effort</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td>Operational cost</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">High</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation:</strong> Redis Streams.
+You&rsquo;re processing ~5K events/day with a team of 3. Kafka is overkill. RabbitMQ is a good fit technically but nobody on the team has operated it. Redis Streams gives you at-least-once delivery, consumer groups, and your team already runs Redis. Revisit when you hit 500K events/day.</p>
+</blockquote>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your current tech stack — the best choice depends on what you already operate</li>
+<li>Specify your team size and skill set — this dramatically affects the recommendation</li>
+<li>Add your growth projections for the next 12-18 months</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-20">
+<h1><span class="chapter-number">Chapter 20</span>Prompt 18: The System Design Collaborator</h1>
+
+<p><strong>When to use:</strong> You&rsquo;re designing a new system or feature from scratch.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm designing a {type_of_system} that needs to:
+{list_requirements}
+
+Current infrastructure: {what_you_already_run}
+Team: {size_and_skills}
+Timeline: {when_it_needs_to_work}
+
+Walk me through the design:
+1. Start with the simplest architecture that meets the requirements
+2. Identify the first bottleneck it will hit
+3. Show how to evolve the design to handle that bottleneck
+4. Repeat for the next 2 bottlenecks
+
+At each stage, show me:
+- Component diagram (as ASCII art or Mermaid)
+- Data flow for the primary use case
+- What breaks if each component goes down
+
+Don't over-engineer for day 1. Design for today but show me the evolution path.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The iterative approach — &ldquo;simplest first, then evolve&rdquo; — matches how good systems are actually built. Most system design prompts ask for the final architecture, which leads to over-engineered solutions. This prompt produces a roadmap.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your SLA requirements (uptime, latency, throughput)</li>
+<li>Mention regulatory constraints (data residency, audit logging)</li>
+<li>Specify if this is greenfield or needs to integrate with existing systems</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-21">
+<h1><span class="chapter-number">Chapter 21</span>Prompt 19: The Database Schema Designer</h1>
+
+<p><strong>When to use:</strong> Designing or restructuring a database schema.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm designing a database schema for {describe_domain}.
+
+Key entities and their relationships:
+{list_entities_and_how_they_relate}
+
+Query patterns (ranked by frequency):
+1. {most_common_query}
+2. {second_most_common}
+3. {third_most_common}
+
+Write patterns:
+1. {most_common_write}
+
+Constraints:
+- Database: {PostgreSQL/MySQL/MongoDB/etc.}
+- Expected data volume: {rows_per_table_after_1_year}
+- Read/write ratio: {e.g., 90/10}
+
+Give me:
+1. Complete schema with all tables, columns, types, and constraints
+2. Indices that support the query patterns above (and explain WHY each index helps)
+3. What this schema makes easy and what it makes hard
+4. The first migration you'll need when requirements change (predict it)
+</code></pre>
+<h3>Why It Works</h3>
+<p>Starting with query patterns rather than entities produces better schemas because the schema should be optimised for how it&rsquo;s <em>used</em>, not how it&rsquo;s <em>modelled</em>. The &ldquo;predict the first migration&rdquo; question forces future-proofing without over-engineering.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include sample queries if you have them</li>
+<li>Specify if you need multi-tenancy support</li>
+<li>Mention your ORM — some schemas work better with certain ORMs</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-22">
+<h1><span class="chapter-number">Chapter 22</span>Prompt 20: The API Design Workshop</h1>
+
+<p><strong>When to use:</strong> Designing an API from scratch or restructuring an existing one.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm designing a {REST/GraphQL/gRPC} API for {domain_description}.
+
+Users of this API: {who_consumes_it — frontend, mobile app, third parties, etc.}
+
+Core operations:
+{list_operations}
+
+Design the API with:
+1. Resource/endpoint structure with HTTP methods and paths
+2. Request/response schemas for each endpoint (JSON examples, not just types)
+3. Error response format (consistent across all endpoints)
+4. Authentication and authorisation approach
+5. Pagination, filtering, and sorting strategy
+6. Rate limiting tiers
+
+Follow these principles:
+- Predictable: If a developer knows one endpoint, they can guess the rest
+- Evolvable: We can add features without breaking existing clients
+- Debuggable: Errors tell you what went wrong and how to fix it
+
+Show me the OpenAPI/Swagger spec (YAML) for the top 5 endpoints.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The three principles (predictable, evolvable, debuggable) give Claude an opinionated framework to make consistent decisions. Asking for JSON examples rather than just types produces concrete, testable contracts. The OpenAPI spec output is immediately usable.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include existing API conventions if you have them (header naming, envelope format, etc.)</li>
+<li>Specify webhook requirements if the API needs push capabilities</li>
+<li>Add caching requirements (ETags, Cache-Control, etc.)</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-23">
+<h1><span class="chapter-number">Chapter 23</span>Prompt 21: The Refactoring Strategy</h1>
+
+<p><strong>When to use:</strong> You know the code needs restructuring but aren&rsquo;t sure where to start.</p>
+<h3>The Prompt</h3>
+<pre><code>This codebase/module has grown organically and needs restructuring. Here's the current state:
+
+{paste_code_or_describe_structure}
+
+Current pain points:
+{list_pain_points — e.g., &quot;hard to test&quot;, &quot;changes require touching 5 files&quot;, &quot;new devs get confused&quot;}
+
+Design a refactoring plan that:
+1. Can be executed in small, safe steps (each step passes all tests)
+2. Prioritises the highest-impact changes first
+3. Doesn't require a feature freeze
+4. Includes a rollback plan for each step
+
+For each step:
+- What changes
+- What the code looks like after (show before/after)
+- How to verify it worked (specific tests to run)
+- Time estimate (hours, not days)
+
+I want to chip away at this over {time_period}, not do a big rewrite.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The incremental approach is the key constraint. Big rewrites fail. Small, verified steps succeed. The &ldquo;doesn&rsquo;t require a feature freeze&rdquo; constraint ensures the refactoring plan is realistic for a team that&rsquo;s also shipping features.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your test suite status: &ldquo;80% coverage&rdquo; vs &ldquo;no tests&rdquo; changes the approach</li>
+<li>Mention team size: solo refactoring vs coordinated across developers</li>
+<li>Specify your deployment frequency: continuous vs weekly releases</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-24">
+<h1><span class="chapter-number">Chapter 24</span>Prompt 22: The Monolith Decomposition Planner</h1>
+
+<p><strong>When to use:</strong> Breaking a monolith into services (or deciding not to).</p>
+<h3>The Prompt</h3>
+<pre><code>I have a {language} monolith that handles:
+{list_major_features}
+
+Pain points:
+{why_you_want_to_decompose}
+
+Team: {size} developers
+Deploys: {frequency}
+Database: {shared_db_details}
+
+Before jumping to microservices, answer honestly:
+1. Would a well-structured modular monolith solve these pain points? Why or why not?
+2. If services are the right answer, which boundary should I extract FIRST? (Based on: independent data, independent scaling needs, independent release cycle)
+3. How do I handle the shared database? (Strangler fig? Separate DBs? Shared with schemas?)
+4. What's the communication pattern? (Sync REST/gRPC? Async events? Both?)
+5. What operational complexity am I signing up for? (Be brutally honest)
+
+Give me a 6-month roadmap with milestones, not a theoretical architecture diagram.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;answer honestly&rdquo; framing and question 1 prevent the common trap of decomposing for the sake of it. Most monoliths should stay monoliths. This prompt forces Claude to justify decomposition before planning it.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your monitoring and observability setup — it constrains what&rsquo;s operationally feasible</li>
+<li>Mention your CI/CD pipeline maturity</li>
+<li>Specify team structure: one team or multiple teams with different domains</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-25">
+<h1><span class="chapter-number">Chapter 25</span>Prompt 23: The Design Pattern Advisor</h1>
+
+<p><strong>When to use:</strong> You have a recurring problem and suspect there&rsquo;s a pattern for it.</p>
+<h3>The Prompt</h3>
+<pre><code>I keep running into this problem in my {language} codebase:
+
+{describe_the_recurring_problem}
+
+Here's a concrete example:
+{paste_example_code}
+
+1. Is there a design pattern that solves this? (Name it, but don't lecture me on the textbook definition)
+2. Show me the pattern applied to MY code (not a generic Animal/Dog example)
+3. Show me what the code looks like BEFORE and AFTER the pattern is applied
+4. What are the downsides? When should I NOT use this pattern?
+5. Is there a simpler solution that doesn't require a formal pattern?
+
+If the simpler solution is better, just give me that. I don't want patterns for the sake of patterns.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Question 5 is the secret weapon. Most pattern advice jumps straight to the Gang of Four without considering whether a simple function or a dictionary lookup would do the job. This prompt ensures you get the right level of abstraction.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Paste multiple examples of the recurring problem — patterns become clearer with more instances</li>
+<li>Include your team&rsquo;s experience level: &ldquo;We&rsquo;re all senior&rdquo; vs &ldquo;Mixed levels&rdquo; affects the recommendation</li>
+<li>Mention if you&rsquo;re using a framework that might already provide the pattern</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-26">
+<h1><span class="chapter-number">Chapter 26</span>Prompt 24: The Migration Planner</h1>
+
+<p><strong>When to use:</strong> Moving between databases, frameworks, languages, or cloud providers.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm migrating from {current_tech} to {target_tech}.
+
+Current state:
+- Codebase size: {lines_of_code_or_file_count}
+- Usage of current tech: {how_deeply_integrated}
+- Data volume: {if_database_migration}
+
+Why we're migrating: {business_reasons}
+Deadline: {when}
+
+Create a migration plan that:
+1. Runs both old and new in parallel during transition (no big bang)
+2. Has a verification step at each stage (how do we know the migration is correct?)
+3. Includes a rollback plan (what if we need to go back at each stage?)
+4. Identifies the riskiest step (and how to de-risk it)
+5. Accounts for ongoing development (features don't stop during migration)
+
+What automated tooling can help with this specific migration?
+What's the one thing teams always underestimate when doing this migration?
+</code></pre>
+<h3>Why It Works</h3>
+<p>The final two questions surface practical wisdom. The &ldquo;one thing teams always underestimate&rdquo; question consistently produces the most valuable insight — it&rsquo;s the kind of thing you&rsquo;d only learn from someone who&rsquo;s done this migration before.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your testing strategy — it determines how confidently you can verify the migration</li>
+<li>Mention data sensitivity: &ldquo;This is financial data&rdquo; requires more careful migration</li>
+<li>Specify if the migration needs to be invisible to users or if you can have planned downtime</li>
+</ul>
+<hr />
+<h1>Part 4: Documentation</h1>
+<p><em>Prompts that produce documentation people actually read — because if nobody reads it, it doesn&rsquo;t exist.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-27">
+<h1><span class="chapter-number">Chapter 27</span>Prompt 25: The README Generator</h1>
+
+<p><strong>When to use:</strong> Your project needs a README that doesn&rsquo;t make people close the tab.</p>
+<h3>The Prompt</h3>
+<pre><code>Write a README for this project. It should make a developer go from &quot;what is this?&quot; to &quot;I'm using it&quot; in under 5 minutes.
+
+Project: {name}
+Language: {language}
+What it does: {one_paragraph_description}
+Key source files: {paste_main_entry_point_or_describe_structure}
+
+Structure the README as:
+1. **One-line description** (what it does, not what it is)
+2. **Quick start** (3-5 commands to go from clone to running — tested, not theoretical)
+3. **Why this exists** (what problem it solves, 2-3 sentences max)
+4. **Core concepts** (the 3-5 things someone needs to understand to use this effectively)
+5. **Configuration** (table of env vars / config options with defaults and descriptions)
+6. **Examples** (3 real-world usage examples, increasing in complexity)
+7. **Troubleshooting** (top 5 things that go wrong and how to fix them)
+8. **Contributing** (how to run tests, code style, PR process)
+
+Rules:
+- No badges unless they're genuinely informative (build status yes, &quot;made with love&quot; no)
+- Code examples must be copy-pasteable (no `...` truncation)
+- Every command must include expected output
+</code></pre>
+<h3>Why It Works</h3>
+<p>The 5-minute goal is the key constraint. Most READMEs are either a one-liner or a novel. This structure gives developers the fastest path to productivity while still being comprehensive. The &ldquo;code examples must be copy-pasteable&rdquo; rule catches the most common README sin.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your actual setup commands so Claude can verify they work</li>
+<li>Paste your <code>.env.example</code> for the configuration section</li>
+<li>Add your most common support questions for the troubleshooting section</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-28">
+<h1><span class="chapter-number">Chapter 28</span>Prompt 26: The Code Documentation Writer</h1>
+
+<p><strong>When to use:</strong> Complex code that needs inline documentation.</p>
+<h3>The Prompt</h3>
+<pre><code>Add documentation to this {language} code. Follow these rules strictly:
+
+{paste_code_here}
+
+Rules:
+1. Document the WHY, not the WHAT. If the code says `x = x + 1`, don't write &quot;increment x&quot;
+2. Every function/method gets a docstring with: purpose, parameters (with types and constraints), return value, exceptions raised, and a usage example
+3. Complex algorithms get a block comment explaining the approach and why alternatives were rejected
+4. Magic numbers become named constants with explanatory comments
+5. TODO/FIXME comments include: who should fix it, why it's deferred, and what the fix should look like
+
+Don't over-document simple code. A clear name is better than a comment.
+
+Output format: The complete code with documentation added. Don't separate docs from code.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Rule 1 alone makes this prompt 10x better than &ldquo;add comments to this code.&rdquo; The explicit instruction to not document the obvious prevents the clutter that makes developers ignore documentation entirely.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify your docstring format: Google style, NumPy style, JSDoc, Javadoc, etc.</li>
+<li>Add &ldquo;This code will be read by {audience}&rdquo; for targeted detail level</li>
+<li>Include your documentation linter rules if you have them (e.g., <code>pydocstyle</code>)</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-29">
+<h1><span class="chapter-number">Chapter 29</span>Prompt 27: The Changelog Writer</h1>
+
+<p><strong>When to use:</strong> You need to communicate what changed to users who don&rsquo;t read code.</p>
+<h3>The Prompt</h3>
+<pre><code>Here are the git commits/changes since the last release:
+
+{paste_git_log_or_diff_summary}
+
+Write a changelog entry for version {version} that:
+1. Groups changes into: Added, Changed, Fixed, Removed, Security, Deprecated
+2. Writes each entry from the USER's perspective, not the developer's perspective
+3. Leads with impact: &quot;You can now...&quot; not &quot;Implemented feature...&quot;
+4. For breaking changes: explains exactly what the user needs to change, with before/after code
+5. Includes migration steps if needed
+
+Bad: &quot;Refactored authentication module&quot;
+Good: &quot;Sign-in now works with magic links — no password required. Existing password logins still work.&quot;
+
+Skip internal changes (refactors, dependency updates, CI fixes) unless they affect users.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The bad/good example is the most important part of this prompt. It teaches Claude the <em>voice</em> you want. The &ldquo;user&rsquo;s perspective&rdquo; instruction transforms technical git messages into readable changelogs.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify your audience: developers using your API vs end users vs both</li>
+<li>Include your previous changelog entries for consistent tone</li>
+<li>Add &ldquo;Keep it under {n} entries — combine related changes&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-30">
+<h1><span class="chapter-number">Chapter 30</span>Prompt 28: The Runbook Writer</h1>
+
+<p><strong>When to use:</strong> You need operational documentation for incidents and deployments.</p>
+<h3>The Prompt</h3>
+<pre><code>Write a runbook for: {scenario — e.g., &quot;Database failover&quot;, &quot;Deploying to production&quot;, &quot;Handling a spike in error rates&quot;}
+
+Context:
+- Infrastructure: {describe_setup}
+- Monitoring: {what_tools_you_use}
+- On-call rotation: {how_it_works}
+
+The runbook must be usable by someone who:
+- Has never seen this system before
+- Is being paged at 3 AM
+- Has access to {list_of_tools_and_dashboards}
+
+Structure:
+1. **Symptoms:** How do you know this is happening? (Specific alerts, metrics, logs)
+2. **Impact:** What's affected and how urgently? (Decision tree: page vs wait until morning)
+3. **Diagnosis:** Step-by-step commands to determine the specific cause
+4. **Resolution:** Step-by-step fix for each likely cause (with copy-pasteable commands)
+5. **Verification:** How to confirm it's actually fixed (not just &quot;it stopped erroring&quot;)
+6. **Follow-up:** What to do after the immediate fix (post-mortem, preventive measures)
+
+Every command must include expected output. Every step must include &quot;if this doesn't work, do X instead.&quot;
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;3 AM, never seen this system&rdquo; constraint is the quality test. If a runbook can&rsquo;t be followed by a sleep-deprived engineer who&rsquo;s never touched the system, it&rsquo;s not a runbook — it&rsquo;s a knowledge dump. The fallback instructions (&ldquo;if this doesn&rsquo;t work&rdquo;) are what separate good runbooks from mediocre ones.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your actual monitoring dashboard URLs</li>
+<li>Add your escalation path: &ldquo;If step 3 doesn&rsquo;t resolve it, page {person}&rdquo;</li>
+<li>Specify your communication protocol: &ldquo;Post updates in #incidents every 15 minutes&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-31">
+<h1><span class="chapter-number">Chapter 31</span>Prompt 29: The ADR From Existing Code</h1>
+
+<p><strong>When to use:</strong> You need to retroactively document why code was written a certain way.</p>
+<h3>The Prompt</h3>
+<pre><code>This code exists but nobody documented why it was built this way. I need a retroactive ADR (Architecture Decision Record).
+
+{paste_code_here}
+
+Based on the code itself, reverse-engineer:
+1. What problem was this solving?
+2. What were the likely alternatives? (What would a different developer have done?)
+3. Why was this approach chosen over the alternatives? (Infer from the code's characteristics)
+4. What are the trade-offs of this approach?
+5. Under what conditions should we revisit this decision?
+
+Be transparent about what you're inferring vs what's obvious from the code. Mark inferences clearly.
+
+Also flag any &quot;this looks like it was written in a hurry&quot; indicators — they suggest technical debt to address.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Legacy codebases are full of undocumented decisions. This prompt uses the code itself as evidence to reconstruct the reasoning. The &ldquo;mark inferences clearly&rdquo; instruction maintains intellectual honesty — you don&rsquo;t want false confidence in the reconstructed reasoning.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include git blame / commit messages if available — they provide additional context</li>
+<li>Paste related code or tests that might reveal intent</li>
+<li>Add &ldquo;The original author is no longer on the team&rdquo; for Claude to be more speculative</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-32">
+<h1><span class="chapter-number">Chapter 32</span>Prompt 30: The Architecture Diagram Describer</h1>
+
+<p><strong>When to use:</strong> You need clear text-based architecture documentation.</p>
+<h3>The Prompt</h3>
+<pre><code>I need architecture documentation for my system. Here's what we run:
+
+Components:
+{list_components_and_what_they_do}
+
+How they communicate:
+{describe_data_flows}
+
+Create:
+1. A Mermaid diagram showing all components and their interactions
+2. A text description of each component (what it does, what it depends on, what depends on it)
+3. The critical path (which failures cause the most damage?)
+4. A &quot;where does data live?&quot; summary (which component is the source of truth for what)
+
+Keep the Mermaid diagram readable — max 15 nodes. If the system is larger, create multiple focused diagrams (e.g., one per domain).
+</code></pre>
+<h3>Why It Works</h3>
+<p>Mermaid diagrams are version-controllable, diff-able, and render in GitHub/GitLab. The 15-node limit prevents unreadable spaghetti diagrams. The &ldquo;source of truth&rdquo; summary is consistently the most useful part of architecture documentation.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify sync vs async communication for each connection</li>
+<li>Include your deployment topology: &ldquo;These three services run on the same box&rdquo;</li>
+<li>Add SLA requirements per component: &ldquo;This must be up 99.9%&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-33">
+<h1><span class="chapter-number">Chapter 33</span>Prompt 31: The Technical RFC Writer</h1>
+
+<p><strong>When to use:</strong> Proposing a significant technical change to your team.</p>
+<h3>The Prompt</h3>
+<pre><code>I want to propose the following technical change to my team:
+
+{describe_the_change}
+
+Current state: {how_things_work_now}
+Motivation: {why_change_is_needed}
+
+Write a technical RFC that will convince sceptical senior engineers. Include:
+
+1. **Summary** (2-3 sentences a busy person can skim)
+2. **Motivation** (the specific pain this addresses, with data/examples if possible)
+3. **Detailed Design** (how it works, with enough detail to implement without follow-up questions)
+4. **Alternatives Considered** (at least 2, with genuine analysis of why they were rejected)
+5. **Migration Plan** (how we get from here to there without breaking things)
+6. **Risks &amp; Mitigations** (what could go wrong, how we'll detect it, how we'll roll back)
+7. **Open Questions** (what you don't know yet and need input on)
+8. **Success Metrics** (how we'll know this worked, measured 3 months after launch)
+
+Tone: Technical but not academic. Confident but not arrogant. Acknowledge trade-offs honestly.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;convince sceptical senior engineers&rdquo; framing sets the quality bar correctly. RFCs that don&rsquo;t address counterarguments get rejected. The success metrics section is often omitted but is crucial — it makes the proposal accountable.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your team&rsquo;s RFC template if you have one</li>
+<li>Add known objections: &ldquo;The team will probably push back on X because&hellip;&rdquo;</li>
+<li>Specify your decision-making process: &ldquo;We need consensus&rdquo; vs &ldquo;Tech lead decides&rdquo;</li>
+</ul>
+<hr />
+<h1>Part 5: Testing</h1>
+<p><em>From unit tests to property-based testing — prompts that produce tests developers actually want to maintain.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-34">
+<h1><span class="chapter-number">Chapter 34</span>Prompt 32: The Unit Test Writer</h1>
+
+<p><strong>When to use:</strong> You need comprehensive unit tests for a function or class.</p>
+<h3>The Prompt</h3>
+<pre><code>Write unit tests for this {language} code using {test_framework}.
+
+{paste_code_here}
+
+Cover these categories:
+1. **Happy path:** Normal, expected inputs produce correct output
+2. **Edge cases:** Empty inputs, boundary values, single-element collections, very large inputs
+3. **Error cases:** Invalid inputs, null/undefined, wrong types, missing required fields
+4. **State transitions:** If the code modifies state, test before/after for each operation
+
+Rules:
+- Each test tests ONE thing (single assertion unless testing a sequence)
+- Test names describe the behaviour, not the method: `test_rejects_negative_quantities` not `test_validate`
+- No test should depend on another test's output
+- Include setup/teardown if needed, but explain what it does
+- Mock external dependencies, don't mock the code under test
+
+Generate at least {number} tests. Group them logically.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The four categories ensure systematic coverage. The naming rule produces self-documenting tests that serve as executable specifications. The &ldquo;don&rsquo;t mock the code under test&rdquo; rule prevents the common mistake of testing mocks instead of actual behaviour.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your test utilities and factories</li>
+<li>Specify your mocking library and approach</li>
+<li>Add &ldquo;Use parameterised tests for variations of the same scenario&rdquo; for cleaner test suites</li>
+<li>Include your CI constraints: &ldquo;Tests must complete in under 30 seconds&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-35">
+<h1><span class="chapter-number">Chapter 35</span>Prompt 33: The Integration Test Designer</h1>
+
+<p><strong>When to use:</strong> Testing how components work together (API routes, database operations, etc.).</p>
+<h3>The Prompt</h3>
+<pre><code>Design integration tests for this {language} {component_type} (e.g., API endpoint, service layer).
+
+Source code:
+{paste_code_here}
+
+External dependencies this code touches:
+{list_databases_apis_queues_etc}
+
+For each integration test:
+1. What's being tested (the integration boundary, not business logic)
+2. Setup: What state needs to exist before the test (database seeds, mock server config)
+3. Action: The exact call being made
+4. Assertions: What to check (response, database state, side effects)
+5. Cleanup: How to reset state after the test
+
+Handle these scenarios:
+- Happy path through the full integration
+- External service is down/slow (timeout, 500 error)
+- Data integrity (concurrent modifications, partial failures)
+- Authentication/authorisation at the integration level
+
+Use {test_framework}. Use {real_or_containerised} dependencies where possible, mock only when necessary.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Integration tests are harder than unit tests because they require managing state across components. This prompt explicitly addresses setup and cleanup, which are where most integration tests go wrong. The &ldquo;mock only when necessary&rdquo; instruction produces more realistic tests.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your Docker Compose / Testcontainers setup</li>
+<li>Specify your test database strategy: shared, per-test, per-suite</li>
+<li>Add your CI environment constraints: &ldquo;We can&rsquo;t run Docker in CI&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-36">
+<h1><span class="chapter-number">Chapter 36</span>Prompt 34: The Property-Based Test Generator</h1>
+
+<p><strong>When to use:</strong> You want tests that find bugs you didn&rsquo;t think of.</p>
+<h3>The Prompt</h3>
+<pre><code>Generate property-based tests for this {language} code using {property_testing_library — e.g., Hypothesis, fast-check, QuickCheck}.
+
+{paste_code_here}
+
+For each function/method, identify:
+1. **Invariants:** What must ALWAYS be true regardless of input? (e.g., &quot;encode then decode returns the original&quot;)
+2. **Relationships:** How do outputs relate to inputs? (e.g., &quot;sort output has same length as input&quot;)
+3. **Equivalences:** Is there a simpler (slower) reference implementation to compare against?
+4. **Boundaries:** What constraints must outputs satisfy? (e.g., &quot;result is never negative&quot;)
+
+For each property:
+- Write the test with appropriate generators
+- Include a shrinking strategy for failures
+- Set a sensible example count (not too few to catch bugs, not too many to slow CI)
+
+Also identify inputs that should be specifically included in the strategy (known edge cases: 0, -1, empty string, MAX_INT, Unicode, etc.).
+</code></pre>
+<h3>Why It Works</h3>
+<p>Property-based testing is the most effective testing technique most developers don&rsquo;t use. This prompt bridges the gap by teaching Claude to identify properties from code, which is the hardest part. The four property categories (invariants, relationships, equivalences, boundaries) provide a systematic framework.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your custom data types — Claude can generate composite strategies</li>
+<li>Specify CI time budget: &ldquo;Property tests must run in under 60 seconds&rdquo;</li>
+<li>Add known edge cases your codebase has hit before</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-37">
+<h1><span class="chapter-number">Chapter 37</span>Prompt 35: The Test Data Factory</h1>
+
+<p><strong>When to use:</strong> You need realistic test data that&rsquo;s easy to create and maintain.</p>
+<h3>The Prompt</h3>
+<pre><code>Create a test data factory for my {language} domain models.
+
+Models:
+{paste_model_definitions}
+
+Requirements:
+1. Every factory produces valid data by default (passes all validations)
+2. Every field can be overridden: `build_user(email=&quot;specific@test.com&quot;)`
+3. Relationships are handled: `build_order()` automatically creates a valid user
+4. Sequences are used for unique fields (email_1@test.com, email_2@test.com)
+5. Edge case factories for specific test scenarios: `build_expired_subscription()`, `build_user_near_rate_limit()`
+
+Use {factory_library — e.g., Factory Boy, Fishery, ExMachina} if applicable, otherwise plain functions.
+
+Also create:
+- A seed script that populates a test database with a realistic dataset
+- Documentation showing how to use the factories in tests
+</code></pre>
+<h3>Why It Works</h3>
+<p>Test data is the foundation of a good test suite. Without factories, every test constructs its own data, leading to brittle, repetitive test code. The &ldquo;valid by default&rdquo; rule ensures factories are trustworthy — you only override what the specific test cares about.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your validation rules so the factory respects them</li>
+<li>Add your most common test scenarios: &ldquo;We often test users with 0, 1, and many orders&rdquo;</li>
+<li>Specify locale requirements: &ldquo;Addresses should be UK format&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-38">
+<h1><span class="chapter-number">Chapter 38</span>Prompt 36: The Mutation Testing Analyst</h1>
+
+<p><strong>When to use:</strong> You have tests but aren&rsquo;t sure they actually catch bugs.</p>
+<h3>The Prompt</h3>
+<pre><code>I have this {language} code and these tests. Analyse the test quality through mutation testing.
+
+Source code:
+{paste_source_code}
+
+Tests:
+{paste_tests}
+
+Manually apply these mutation categories to the source code:
+1. **Boundary mutations:** Change `&lt;` to `&lt;=`, `&gt;` to `&gt;=`
+2. **Value mutations:** Change `+1` to `-1`, `0` to `1`, `true` to `false`
+3. **Removal mutations:** Remove function calls, null checks, error handling
+4. **Logic mutations:** Swap `&amp;&amp;` and `||`, negate conditions
+5. **Return mutations:** Return null/empty instead of the computed value
+
+For each mutation:
+- Show the mutated code
+- Does any existing test catch it? (Cite the specific test)
+- If not, write a test that would catch it
+
+Score: What percentage of mutations are caught? Which areas are undertested?
+</code></pre>
+<h3>Why It Works</h3>
+<p>Mutation testing measures the <em>effectiveness</em> of your tests, not just coverage. A test suite can have 100% line coverage but still miss bugs if the assertions are weak. This prompt simulates what mutation testing tools do, but with explanations.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Focus on critical code paths: &ldquo;Only mutate the payment processing code&rdquo;</li>
+<li>Include your mutation testing tool config if you have one (Stryker, mutmut, Pitest)</li>
+<li>Specify your survival threshold: &ldquo;No mutation should survive in authentication code&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-39">
+<h1><span class="chapter-number">Chapter 39</span>Prompt 37: The Contract Test Writer</h1>
+
+<p><strong>When to use:</strong> Testing API contracts between services.</p>
+<h3>The Prompt</h3>
+<pre><code>Write contract tests for this API interaction:
+
+Consumer (the service making the call):
+{describe_or_paste_consumer_code}
+
+Provider (the service being called):
+{describe_or_paste_provider_endpoint}
+
+Current contract (request/response examples):
+{paste_example_request_response}
+
+Generate:
+1. **Consumer-side contract tests** that verify:
+   - We send the right request format
+   - We handle every documented response correctly (success AND errors)
+   - We handle undocumented responses gracefully (500, timeout, malformed JSON)
+
+2. **Provider-side contract tests** that verify:
+   - We respond to valid requests with the documented format
+   - We reject invalid requests with proper error responses
+   - Our response schema matches what consumers expect
+
+3. **Breaking change detection:**
+   - Tests that would FAIL if either side makes a breaking change
+   - Categorise changes as breaking vs non-breaking
+
+Use {contract_testing_framework — e.g., Pact, Spring Cloud Contract}.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Contract tests are the most practical way to test service boundaries without running the entire system. The &ldquo;breaking change detection&rdquo; section is particularly valuable — it turns contract tests into a change management tool.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your API versioning strategy</li>
+<li>Specify your contract broker setup (Pact Broker, etc.)</li>
+<li>Add &ldquo;Include backward compatibility tests for the last 2 versions&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-40">
+<h1><span class="chapter-number">Chapter 40</span>Prompt 38: The End-to-End Test Scenario Writer</h1>
+
+<p><strong>When to use:</strong> Defining E2E test scenarios for critical user flows.</p>
+<h3>The Prompt</h3>
+<pre><code>Write end-to-end test scenarios for this critical user flow:
+
+Flow: {describe_the_user_journey — e.g., &quot;User signs up, verifies email, creates first project, invites team member&quot;}
+
+System components involved:
+{list_frontend_backend_db_email_etc}
+
+Write test scenarios in Gherkin (Given/When/Then) for:
+1. The happy path (everything works perfectly)
+2. Each failure point (what happens when each component fails?)
+3. Concurrent users (what if two users do this simultaneously?)
+4. Recovery (user starts the flow, gets interrupted, comes back later)
+5. Edge cases (back button, double click, expired session, browser refresh)
+
+For each scenario:
+- Specify what to assert (not just &quot;it works&quot; — what specifically should be true?)
+- Specify what to clean up after
+- Flag which scenarios are stable enough for CI vs which should be manual/scheduled
+
+Then translate the top 5 scenarios into {e2e_framework — e.g., Playwright, Cypress, Selenium} test code.
+</code></pre>
+<h3>Why It Works</h3>
+<p>E2E tests are expensive to write and maintain, so choosing the right scenarios is critical. This prompt ensures you cover not just the happy path but also the realistic failure modes that users actually encounter (back button, double click, expired session).</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your feature flags — E2E tests need to account for different feature states</li>
+<li>Specify your test environment: staging URL, test accounts, etc.</li>
+<li>Add flakiness tolerance: &ldquo;These run in CI — they cannot be flaky&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-41">
+<h1><span class="chapter-number">Chapter 41</span>Prompt 39: The Test Refactoring Guide</h1>
+
+<p><strong>When to use:</strong> Your test suite is slow, flaky, or hard to maintain.</p>
+<h3>The Prompt</h3>
+<pre><code>My test suite has become a liability. Here's a representative sample:
+
+{paste_problematic_tests}
+
+Problems I'm experiencing:
+{list_problems — e.g., &quot;takes 20 minutes&quot;, &quot;3 tests flake randomly&quot;, &quot;adding a field means updating 50 tests&quot;}
+
+Analyse and fix:
+1. **Coupling:** Which tests break when unrelated code changes? Extract those into separate test categories.
+2. **Duplication:** Where is setup duplicated? Extract shared fixtures/factories.
+3. **Brittleness:** Which tests test implementation details instead of behaviour? Rewrite them.
+4. **Speed:** Which tests are slow and why? Can any integration tests become unit tests?
+5. **Flakiness:** What's causing non-determinism? (Time, randomness, shared state, external calls)
+
+Give me:
+- Refactored test code
+- A recommended test categorisation (fast unit / integration / slow E2E)
+- A CI strategy (what runs on every push vs nightly)
+</code></pre>
+<h3>Why It Works</h3>
+<p>Test suites degrade just like production code, but most teams never refactor them. This prompt addresses the five most common test suite pathologies with specific fixes. The CI strategy output is immediately actionable.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your CI timing requirements</li>
+<li>Specify your test parallelisation setup</li>
+<li>Add &ldquo;We&rsquo;re migrating from {old_framework} to {new_framework}&rdquo; if applicable</li>
+</ul>
+<hr />
+<h1>Part 6: Refactoring</h1>
+<p><em>Prompts for improving existing code without changing what it does — safely, incrementally, and with confidence.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-42">
+<h1><span class="chapter-number">Chapter 42</span>Prompt 40: The Code Smell Identifier</h1>
+
+<p><strong>When to use:</strong> You know code is off but can&rsquo;t articulate why.</p>
+<h3>The Prompt</h3>
+<pre><code>Identify code smells in this {language} code. I want a diagnosis, not generic advice.
+
+{paste_code_here}
+
+For each smell:
+1. Name it (use established terminology: God class, feature envy, shotgun surgery, etc.)
+2. Show the exact lines that exhibit it
+3. Explain the CONCRETE consequence (not &quot;it's bad practice&quot; — what specific problem will this cause?)
+4. Rate the urgency: Fix now / Fix soon / Fix when you're in the area
+5. Show the refactored version
+
+Only flag smells that have practical consequences. Skip style-level nitpicks.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;concrete consequence&rdquo; requirement eliminates the common problem of listing code smells as abstract principles. &ldquo;Long method&rdquo; means nothing; &ldquo;this function handles user validation AND payment processing AND email sending, so any bug fix requires understanding all three domains&rdquo; is actionable.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include the broader module structure for &ldquo;shotgun surgery&rdquo; and &ldquo;divergent change&rdquo; detection</li>
+<li>Specify your team&rsquo;s tolerance: &ldquo;We prefer explicit over clever&rdquo;</li>
+<li>Add your codebase age: &ldquo;This is 5 years old&rdquo; helps prioritise legacy vs recent smells</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-43">
+<h1><span class="chapter-number">Chapter 43</span>Prompt 41: The Extract and Inject Refactorer</h1>
+
+<p><strong>When to use:</strong> Making code testable by extracting dependencies.</p>
+<h3>The Prompt</h3>
+<pre><code>This {language} code is hard to test because it has embedded dependencies (database calls, API calls, file I/O, etc.).
+
+{paste_code_here}
+
+Refactor it using dependency injection:
+1. Identify every external dependency (anything that touches the outside world)
+2. Extract each into an interface/protocol/abstract class
+3. Inject dependencies through the constructor
+4. Show the refactored production code
+5. Show a test that uses mock/fake implementations
+6. Show the wiring code (where dependencies are assembled)
+
+Rules:
+- Don't create interfaces for things that don't need to be swapped (pure utility functions, etc.)
+- Keep the public API identical — callers shouldn't need to change
+- Use {di_approach — e.g., &quot;constructor injection&quot;, &quot;function parameters&quot;, &quot;dependency container&quot;}
+</code></pre>
+<h3>Why It Works</h3>
+<p>Dependency injection is the most impactful refactoring technique for testability, but developers often over-apply it. The &ldquo;don&rsquo;t create interfaces for things that don&rsquo;t need to be swapped&rdquo; rule prevents the common over-abstraction that makes DI-heavy codebases hard to navigate.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Specify your DI framework if you use one (Spring, Dagger, Inversify, etc.)</li>
+<li>Include existing tests so the refactoring can be verified</li>
+<li>Add &ldquo;This code is called from {n} places&rdquo; to understand the blast radius</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-44">
+<h1><span class="chapter-number">Chapter 44</span>Prompt 42: The Performance Refactorer</h1>
+
+<p><strong>When to use:</strong> Code is correct but slow and needs optimisation.</p>
+<h3>The Prompt</h3>
+<pre><code>This {language} code is too slow. Current performance: {current_metrics — e.g., &quot;3 seconds for 10K rows&quot;}.
+Target performance: {target — e.g., &quot;under 500ms for 100K rows&quot;}.
+
+{paste_code_here}
+
+Optimise it:
+1. Profile the code conceptually — where is time being spent? (Use Big-O analysis)
+2. Identify the single biggest bottleneck
+3. Fix that bottleneck and show the new code
+4. If still not at target, repeat for the next bottleneck
+5. Stop when we reach the target or hit diminishing returns
+
+For each optimisation:
+- Show before/after code
+- Explain the expected speedup with reasoning (don't guess — show the math)
+- Note any tradeoffs (memory usage, code complexity, maintainability)
+
+Constraints:
+- Keep the same public interface
+- Don't sacrifice correctness (especially edge cases)
+- {additional_constraints — e.g., &quot;must work with streaming data&quot;, &quot;cannot add new dependencies&quot;}
+</code></pre>
+<h3>Why It Works</h3>
+<p>The iterative approach (fix one bottleneck, measure, repeat) matches real-world performance optimisation. The &ldquo;show the math&rdquo; requirement prevents wishful thinking about speedups. Stopping at &ldquo;diminishing returns&rdquo; prevents over-optimisation.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include profiling data if you have it (cProfile output, flame graphs)</li>
+<li>Specify your hardware constraints: &ldquo;This runs on a 2-core VM with 4GB RAM&rdquo;</li>
+<li>Add your scaling model: &ldquo;Data grows linearly at 10K rows/month&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-45">
+<h1><span class="chapter-number">Chapter 45</span>Prompt 43: The Legacy Code Moderniser</h1>
+
+<p><strong>When to use:</strong> You&rsquo;ve inherited old code and need to bring it up to modern standards.</p>
+<h3>The Prompt</h3>
+<pre><code>This {language} code was written for {old_version — e.g., &quot;Python 2.7&quot;, &quot;Node 10&quot;, &quot;Java 8&quot;} and needs to be modernised for {current_version}.
+
+{paste_code_here}
+
+Modernise it:
+1. Replace deprecated APIs with their modern equivalents
+2. Apply modern language features that improve clarity (async/await, pattern matching, optional chaining, etc.)
+3. Replace hand-rolled implementations with standard library equivalents
+4. Update error handling to modern patterns
+5. Fix any security issues that exist in the old patterns
+
+For each change:
+- Show before/after
+- Explain what's better about the modern version (not just &quot;it's newer&quot;)
+- Flag any behaviour changes (however subtle)
+
+Don't change the logic. Don't add features. Just modernise the implementation.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;don&rsquo;t change the logic&rdquo; constraint is essential. Modernisation and feature changes mixed together are impossible to review. By isolating the modernisation, each change can be verified independently.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your linter configuration — it may already flag some of these</li>
+<li>Specify your minimum supported version: &ldquo;Must still work on Node 18+&rdquo;</li>
+<li>Add your migration timeline: &ldquo;We&rsquo;re doing this file by file over 3 sprints&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-46">
+<h1><span class="chapter-number">Chapter 46</span>Prompt 44: The Dead Code Eliminator</h1>
+
+<p><strong>When to use:</strong> Clearing out code nobody uses any more.</p>
+<h3>The Prompt</h3>
+<pre><code>Analyse this {language} code for dead code — anything that's defined but never used, reachable but never reached, or maintained but no longer needed.
+
+{paste_code_here}
+
+Entry points (these are the roots — everything else must be reachable from these):
+{list_entry_points — e.g., &quot;API routes in routes.py&quot;, &quot;main() function&quot;, &quot;exported functions&quot;}
+
+Identify:
+1. **Unreachable code:** Functions/classes/variables that nothing calls
+2. **Dead branches:** Conditions that can never be true (based on the type system or logic)
+3. **Feature flags that are always on/off** (permanent flags that can be removed)
+4. **Compatibility code for versions we no longer support**
+5. **Commented-out code** (it's in git history — just delete it)
+
+For each piece of dead code:
+- Show what can be safely removed
+- Explain why it's dead (not just &quot;it's unused&quot; — why did it become unused?)
+- Flag anything that LOOKS dead but might be used via reflection, dynamic dispatch, or external calls
+
+Give me the confidence level for each removal: Certain / Probable / Needs verification.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The confidence level is crucial for dead code removal. Some &ldquo;dead&rdquo; code is actually accessed dynamically (reflection, metaprogramming, external scripts). The entry points framing gives Claude the context to trace reachability accurately.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your test suite — tests that cover dead code are also dead tests</li>
+<li>Mention frameworks that use reflection/convention (Rails, Django, Spring) — they hide usage</li>
+<li>Add &ldquo;Check if this is used by any cron job or background worker&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-47">
+<h1><span class="chapter-number">Chapter 47</span>Prompt 45: The Error Handling Moderniser</h1>
+
+<p><strong>When to use:</strong> Upgrading scattered try/catch blocks into a coherent error handling strategy.</p>
+<h3>The Prompt</h3>
+<pre><code>My {language} codebase has inconsistent error handling. Some functions throw, some return null, some return error codes, some silently swallow errors.
+
+Here's a representative sample:
+{paste_code_with_various_error_patterns}
+
+Design a consistent error handling strategy and refactor this code:
+
+1. Classify errors into categories: {e.g., &quot;validation errors (user's fault)&quot;, &quot;infrastructure errors (our fault)&quot;, &quot;business rule violations&quot;}
+2. Define a custom error hierarchy for each category
+3. Establish clear rules: when to throw, when to return Result/Either types, when to propagate
+4. Refactor the code to follow the strategy consistently
+5. Add an error boundary/handler at the top level that converts errors to appropriate responses
+
+Rules:
+- Every error must be either handled or explicitly propagated (no silent swallowing)
+- Error messages must be useful for debugging (include context: what was attempted, with what input)
+- User-facing error messages must be safe (no stack traces, no internal details)
+</code></pre>
+<h3>Why It Works</h3>
+<p>Error handling inconsistency is one of the most common codbase issues, and it&rsquo;s usually addressed piecemeal. This prompt takes a strategic approach — designing the error system top-down, then refactoring bottom-up.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your logging and monitoring setup — errors should flow into observability</li>
+<li>Specify your API error format (RFC 7807, custom envelope, etc.)</li>
+<li>Add your error tracking service (Sentry, Bugsnag, Rollbar) — integration affects the strategy</li>
+</ul>
+<hr />
+<h1>Part 7: Performance &amp; Optimisation</h1>
+<p><em>Prompts for when speed matters — database queries, algorithms, caching, and profiling.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-48">
+<h1><span class="chapter-number">Chapter 48</span>Prompt 46: The Query Optimiser</h1>
+
+<p><strong>When to use:</strong> Slow database queries that need tuning.</p>
+<h3>The Prompt</h3>
+<pre><code>This {database} query is too slow.
+
+Query:
+{paste_query}
+
+EXPLAIN/EXPLAIN ANALYSE output:
+{paste_explain_output}
+
+Table schema and current indices:
+{paste_schema}
+
+Table sizes: {approximate_row_counts}
+
+Optimise this query:
+1. Analyse the EXPLAIN output — where is time being spent?
+2. Is the query plan doing sequential scans where it shouldn't be?
+3. Are there missing indices? (Show the exact CREATE INDEX statement)
+4. Can the query be rewritten to be more efficient? (Show the new query)
+5. Would denormalisation or materialised views help? (Only if the query fundamentally can't be fast with the current schema)
+
+Show me the expected improvement with reasoning. Don't guess — explain why the optimiser will choose a better plan.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Including the EXPLAIN output is what separates this from generic &ldquo;make my query faster&rdquo; prompts. It gives Claude the actual execution plan to diagnose, not just the SQL to guess about. The &ldquo;don&rsquo;t guess&rdquo; instruction forces reasoned analysis.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your PostgreSQL/MySQL configuration (work_mem, shared_buffers, etc.)</li>
+<li>Mention your read/write ratio for the tables involved</li>
+<li>Add &ldquo;This query runs {n} times per second&rdquo; for context on how much optimisation is worth</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-49">
+<h1><span class="chapter-number">Chapter 49</span>Prompt 47: The Caching Strategy Designer</h1>
+
+<p><strong>When to use:</strong> You need to add caching to improve performance.</p>
+<h3>The Prompt</h3>
+<pre><code>I need a caching strategy for this {language} application.
+
+What's slow:
+{describe_slow_operations}
+
+Current architecture:
+{describe_components}
+
+Available caching infrastructure: {Redis/Memcached/CDN/in-process/none}
+
+Design a caching strategy:
+1. What to cache (and what explicitly NOT to cache — some things shouldn't be)
+2. Cache keys: How to construct them to be unique and predictable
+3. TTL strategy for each cached item (and why that TTL was chosen)
+4. Invalidation strategy: How does the cache learn the data changed?
+5. Cache warming: Should we pre-populate on startup? On deploy?
+6. Failure mode: What happens when the cache is down? (Degrade gracefully, don't crash)
+
+Address these specific risks:
+- Cache stampede (1000 requests all miss at the same time)
+- Stale data (how stale is acceptable for each data type?)
+- Memory budget (how much RAM does this caching strategy need?)
+
+Show me the implementation code for the two most impactful caches.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Caching is easy to add and hard to get right. This prompt addresses the full lifecycle — not just &ldquo;put it in Redis&rdquo; but invalidation, failure modes, and stampede protection. The &ldquo;what NOT to cache&rdquo; question prevents the common mistake of caching mutable, high-consistency data.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your data update frequency: &ldquo;Prices change every 5 minutes&rdquo; vs &ldquo;User profiles change monthly&rdquo;</li>
+<li>Specify your consistency requirements: &ldquo;Eventual consistency is fine&rdquo; vs &ldquo;Must be strongly consistent&rdquo;</li>
+<li>Add your memory budget: &ldquo;We have 2GB Redis with 500MB available&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-50">
+<h1><span class="chapter-number">Chapter 50</span>Prompt 48: The N+1 Query Detector</h1>
+
+<p><strong>When to use:</strong> Your ORM is generating too many database queries.</p>
+<h3>The Prompt</h3>
+<pre><code>Analyse this {language} code using {ORM} for N+1 query problems.
+
+{paste_code_here}
+
+Models/relationships:
+{paste_model_definitions_or_describe_relationships}
+
+For each N+1 issue found:
+1. Show the code that causes it
+2. Show the SQL queries it generates (approximate)
+3. Calculate how many queries it generates for N={realistic_number} records
+4. Show the fix (eager loading, batch loading, query rewrite)
+5. Show the SQL the fix generates (should be 1-2 queries regardless of N)
+
+Also check for:
+- Lazy loading in loops (the classic N+1)
+- Serialisation-triggered loads (accessing relationships in JSON serialisation)
+- Count queries in loops (checking `has_many` count for each record)
+
+Use {ORM_specific_eager_loading — e.g., &quot;select_related/prefetch_related&quot;, &quot;includes/eager_load&quot;, &quot;JOIN FETCH&quot;}.
+</code></pre>
+<h3>Why It Works</h3>
+<p>N+1 queries are the most common ORM performance problem, and they&rsquo;re invisible until you check. This prompt not only finds them but quantifies the impact and shows the ORM-idiomatic fix.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your query logging output if you have it</li>
+<li>Mention your ORM version — eager loading APIs change between versions</li>
+<li>Add &ldquo;We use a GraphQL layer&rdquo; — GraphQL adds unique N+1 challenges (DataLoader pattern)</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-51">
+<h1><span class="chapter-number">Chapter 51</span>Prompt 49: The Bundle Size Reducer</h1>
+
+<p><strong>When to use:</strong> Your frontend bundle is too large and you need to slim it down.</p>
+<h3>The Prompt</h3>
+<pre><code>My frontend bundle is {current_size} and needs to be under {target_size}.
+
+Here's my package.json:
+{paste_package_json}
+
+Here's my webpack/vite/rollup config:
+{paste_config}
+
+Bundle analysis output (if available):
+{paste_bundle_analysis}
+
+Reduce the bundle size:
+1. Identify the largest dependencies and suggest smaller alternatives
+2. Find code that's included but never used (tree-shaking failures)
+3. Identify dependencies that should be lazy-loaded instead of included in the main bundle
+4. Suggest code-splitting opportunities (route-based, feature-based)
+5. Check for duplicate packages (different versions of the same library)
+
+For each suggestion:
+- Expected size reduction (be specific — &quot;removes 45KB gzipped&quot;)
+- Migration effort (trivial / moderate / significant)
+- Risk level (drop-in replacement / needs testing / behaviour change)
+
+Priority order: biggest size reduction with lowest effort first.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Bundle size is a concrete, measurable target. The priority ordering (biggest reduction, lowest effort) ensures you tackle the high-impact wins first. Including the bundle analysis output gives Claude real data instead of requiring guesswork.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your target devices: &ldquo;Must work on 3G mobile connections&rdquo; changes acceptable sizes</li>
+<li>Specify your code-splitting framework (React.lazy, dynamic imports, etc.)</li>
+<li>Add your CDN caching strategy — it affects the tradeoffs of splitting</li>
+</ul>
+<hr />
+<h1>Part 8: DevOps &amp; CI/CD</h1>
+<p><em>Prompts for pipelines, deployments, infrastructure, and the scripts that keep everything running.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-52">
+<h1><span class="chapter-number">Chapter 52</span>Prompt 50: The CI Pipeline Designer</h1>
+
+<p><strong>When to use:</strong> Setting up or improving your CI/CD pipeline.</p>
+<h3>The Prompt</h3>
+<pre><code>Design a CI/CD pipeline for my {language} {framework} project.
+
+Repository structure: {monorepo_or_standard}
+Team size: {number_of_developers}
+Deployment target: {where_it_runs}
+Current CI: {what_you_have_now_or_starting_from_scratch}
+
+Design a pipeline with these stages:
+1. **Fast feedback** (&lt; 2 min): What runs on every push to catch obvious issues?
+2. **Full validation** (&lt; 10 min): What runs on every PR before merge?
+3. **Pre-deploy** (&lt; 5 min): What validates the build before deployment?
+4. **Deployment**: How does code get to production? (Blue/green, rolling, canary?)
+5. **Post-deploy**: How do we verify the deployment worked? (Smoke tests, health checks)
+
+For each stage, specify:
+- Exact steps (with commands)
+- What triggers it
+- What blocks if it fails
+- Caching strategy (to keep it fast)
+
+Write the pipeline config for {ci_platform — e.g., GitHub Actions, GitLab CI, CircleCI}.
+
+Include:
+- Branch protection rules
+- Required checks before merge
+- Automatic rollback triggers
+</code></pre>
+<h3>Why It Works</h3>
+<p>The time budgets per stage are the key constraint. Without them, pipelines grow until they take 45 minutes and everyone ignores them. The five-stage structure matches how production-grade pipelines actually work.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your test suite timing breakdown</li>
+<li>Specify your deployment frequency target: &ldquo;We want to deploy 5x per day&rdquo;</li>
+<li>Add your compliance requirements: &ldquo;We need approval gates for production&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-53">
+<h1><span class="chapter-number">Chapter 53</span>Prompt 51: The Dockerfile Optimiser</h1>
+
+<p><strong>When to use:</strong> Your Docker builds are slow or your images are too large.</p>
+<h3>The Prompt</h3>
+<pre><code>Optimise this Dockerfile for build speed and image size.
+
+Current Dockerfile:
+{paste_dockerfile}
+
+Current image size: {size}
+Current build time: {time}
+Target image size: {target_size}
+Target build time: {target_time}
+
+Optimise:
+1. Layer ordering: What should change order to maximise cache hits?
+2. Multi-stage build: What can be built in a separate stage and not included in the final image?
+3. Base image: Is there a smaller base that works? (Alpine, distroless, slim?)
+4. Dependencies: What's installed but not needed at runtime?
+5. COPY strategy: What files are copied that trigger unnecessary rebuilds?
+6. Security: Is anything in the image that shouldn't be? (Secrets, build tools, test files)
+
+Show me the optimised Dockerfile with comments explaining each decision.
+Also provide a .dockerignore that prevents unnecessary context from being sent.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Docker optimisation has well-known best practices, but applying them to a specific Dockerfile requires understanding the build context. This prompt addresses the six most impactful optimisation categories in order of typical impact.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your CI caching setup — it affects the layer ordering strategy</li>
+<li>Mention your target platform: &ldquo;Must run on ARM64&rdquo; or &ldquo;x86 only&rdquo;</li>
+<li>Add security requirements: &ldquo;This runs in production with a read-only filesystem&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-54">
+<h1><span class="chapter-number">Chapter 54</span>Prompt 52: The Infrastructure as Code Reviewer</h1>
+
+<p><strong>When to use:</strong> Reviewing Terraform, Pulumi, CloudFormation, or similar.</p>
+<h3>The Prompt</h3>
+<pre><code>Review this infrastructure code for production readiness.
+
+{paste_iac_code}
+
+Cloud provider: {AWS/GCP/Azure}
+Environment: {staging/production}
+
+Check for:
+1. **Security:** Overly permissive IAM roles, public resources that should be private, unencrypted storage, missing audit logging
+2. **Reliability:** Single points of failure, missing health checks, no auto-scaling, no backup strategy
+3. **Cost:** Over-provisioned resources, always-on resources that could be on-demand, missing spot/preemptible instances where appropriate
+4. **Operability:** Missing tags/labels, no monitoring, unclear resource naming, missing output values
+5. **Drift risk:** Hardcoded values that should be variables, resources that might be modified outside IaC
+
+For each issue:
+- Severity (Critical / Important / Nice to have)
+- The fix (show the corrected code)
+- Cost impact if applicable
+
+Also: Is there anything this code SHOULD be managing that it isn't? (DNS, SSL certs, log aggregation, etc.)
+</code></pre>
+<h3>Why It Works</h3>
+<p>IaC reviews are different from code reviews because the consequences of mistakes are immediate and expensive (data exposure, unexpected bills, outages). The five-category checklist covers the full spectrum of IaC concerns.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your compliance framework (SOC 2, HIPAA, GDPR) for security-specific checks</li>
+<li>Specify your cost budget: &ldquo;Monthly spend should stay under £500&rdquo;</li>
+<li>Add your existing infrastructure context: &ldquo;We already have a VPC set up in a separate stack&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-55">
+<h1><span class="chapter-number">Chapter 55</span>Prompt 53: The Incident Post-Mortem Writer</h1>
+
+<p><strong>When to use:</strong> After an incident, you need to write a blameless post-mortem.</p>
+<h3>The Prompt</h3>
+<pre><code>Help me write a blameless post-mortem for this incident.
+
+What happened: {describe_the_incident}
+Timeline: {list_key_events_with_timestamps}
+Impact: {who_was_affected_and_how}
+Resolution: {how_it_was_fixed}
+Duration: {how_long_it_lasted}
+
+Write the post-mortem with:
+1. **Summary** (3 sentences: what happened, how long, who was affected)
+2. **Timeline** (formatted table of events)
+3. **Root cause** (the actual root cause, not &quot;human error&quot;)
+4. **Contributing factors** (what made this possible — missing monitoring, inadequate testing, etc.)
+5. **What went well** (detection time, response, communication)
+6. **What went poorly** (where the process broke down)
+7. **Action items** (specific, assigned, with deadlines — not vague &quot;improve monitoring&quot;)
+
+Rules:
+- No blame. No names in the narrative (use roles: &quot;the on-call engineer&quot;)
+- Focus on systemic issues, not individual mistakes
+- Every action item must be concrete enough to create a ticket from it
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;no names, focus on systems&rdquo; rules enforce blameless culture. The action item quality requirement — &ldquo;concrete enough to create a ticket&rdquo; — is what separates useful post-mortems from performative ones. &ldquo;Improve monitoring&rdquo; is not a ticket; &ldquo;Add p99 latency alert for /api/payments endpoint with 2-second threshold&rdquo; is.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your incident severity framework for proper classification</li>
+<li>Add your SLA/SLO context: &ldquo;We have a 99.9% uptime SLA&rdquo;</li>
+<li>Specify your audience: &ldquo;This goes to the whole engineering org&rdquo; vs &ldquo;Just our team&rdquo;</li>
+</ul>
+<hr />
+<h1>Part 9: Bonus — Power Prompts</h1>
+<p><em>Advanced techniques for getting the most out of Claude in development workflows.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-56">
+<h1><span class="chapter-number">Chapter 56</span>Prompt 54: The Chain-of-Thought Debugger</h1>
+
+<p><strong>When to use:</strong> For complex logic errors where you need Claude to show its reasoning.</p>
+<h3>The Prompt</h3>
+<pre><code>I need you to think through this problem step by step. Show ALL your reasoning, even if it seems obvious.
+
+Problem: {describe_the_issue}
+Code: {paste_code_here}
+
+At each step:
+- State what you're looking at
+- State what you expect to find
+- State what you actually find
+- If they differ, explain why
+
+Don't jump to the answer. Walk me through it like you're pair programming with me and thinking out loud. I want to follow your logic so I can learn the debugging approach, not just get the fix.
+</code></pre>
+<h3>Why It Works</h3>
+<p>This prompt turns Claude from an answer machine into a teaching tool. The explicit &ldquo;show ALL reasoning&rdquo; instruction produces a mental model you can learn from, not just a fix you can paste.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Add &ldquo;Assume I have {n} years of experience&rdquo; to calibrate the explanation depth</li>
+<li>Use this when the first-attempt prompt didn&rsquo;t produce a satisfying answer</li>
+<li>Chain it with Prompt 1 for the most thorough debugging</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-57">
+<h1><span class="chapter-number">Chapter 57</span>Prompt 55: The Rubber Duck Pro</h1>
+
+<p><strong>When to use:</strong> You&rsquo;re stuck and need a structured thinking partner.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm stuck on this problem. I'm going to explain what I'm doing, and I need you to be an aggressive rubber duck — challenge every assumption I make.
+
+Here's my current understanding:
+{explain_what_you_think_is_happening}
+
+Here's what I've tried:
+{list_what_you_ve_tried}
+
+Here's where I'm stuck:
+{describe_the_sticking_point}
+
+Your job:
+1. Identify my unstated assumptions (things I think are true but haven't verified)
+2. For each assumption, suggest how to verify it (a specific command, test, or experiment)
+3. Suggest at least one completely different approach I haven't considered
+4. Ask me 3 questions that would narrow the problem down if I can answer them
+
+Don't try to solve it yet. Help me think about it better.
+</code></pre>
+<h3>Why It Works</h3>
+<p>&ldquo;Don&rsquo;t solve it yet&rdquo; is the key instruction. Most developers don&rsquo;t need someone to solve the problem — they need help thinking about it differently. The assumption-challenging approach replicates what the best technical mentors do.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>This prompt works particularly well for design problems, not just bugs</li>
+<li>Follow up with answers to the 3 questions for a much more targeted second attempt</li>
+<li>Use this when you&rsquo;ve been stuck for more than 30 minutes</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-58">
+<h1><span class="chapter-number">Chapter 58</span>Prompt 56: The Code Review Reviewer</h1>
+
+<p><strong>When to use:</strong> You want to improve your own code review skills.</p>
+<h3>The Prompt</h3>
+<pre><code>I reviewed this code and here are my comments:
+
+Code:
+{paste_code_under_review}
+
+My review comments:
+{paste_your_review_comments}
+
+Evaluate my review:
+1. What did I catch that was important? (Confirm I'm right, or correct me if I'm wrong)
+2. What did I miss that I should have caught? (With explanations)
+3. Which of my comments are nit-picks that I should have skipped?
+4. How's my communication? (Am I being constructive? Specific? Actionable?)
+5. Give me a score out of 10 for review thoroughness
+
+Help me become a better code reviewer.
+</code></pre>
+<h3>Why It Works</h3>
+<p>Code review is a skill that improves with feedback, but reviewers rarely get feedback on their reviews. This prompt creates a meta-review loop that systematically improves your review abilities.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your team&rsquo;s code review guidelines for context</li>
+<li>Specify your relationship to the author: &ldquo;I&rsquo;m reviewing a junior&rsquo;s code&rdquo; vs &ldquo;I&rsquo;m reviewing a senior&rsquo;s code&rdquo;</li>
+<li>Use this regularly to track your improvement over time</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-59">
+<h1><span class="chapter-number">Chapter 59</span>Prompt 57: The Specification to Implementation</h1>
+
+<p><strong>When to use:</strong> You have clear requirements and want production-quality implementation.</p>
+<h3>The Prompt</h3>
+<pre><code>Here's a specification. Implement it in {language} using {framework}.
+
+Specification:
+{paste_spec_or_user_story_or_acceptance_criteria}
+
+Implementation requirements:
+1. Production-quality code (not a prototype — include error handling, validation, logging)
+2. Tests for every acceptance criterion
+3. Database migrations if needed
+4. API documentation if it's an endpoint
+5. Configuration for any tuneable parameters (don't hardcode)
+
+Architecture constraints:
+{your_patterns — e.g., &quot;We use repository pattern for data access&quot;, &quot;All async code uses async/await&quot;}
+
+Before writing code, confirm your understanding:
+- List the acceptance criteria as you understand them
+- List any ambiguities in the spec and how you plan to resolve them
+- List any edge cases the spec doesn't address
+
+Then implement.
+</code></pre>
+<h3>Why It Works</h3>
+<p>The &ldquo;confirm your understanding&rdquo; step catches misinterpretations before they become wasted code. Most spec-to-code prompts skip this and end up with an implementation that solves the wrong problem. The &ldquo;list ambiguities&rdquo; instruction surfaces decisions that need human input.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include your project&rsquo;s existing code style for consistent implementation</li>
+<li>Paste your model definitions so Claude uses the correct data structures</li>
+<li>Add &ldquo;Follow our existing patterns — here&rsquo;s an example of a similar feature: {paste_example}&rdquo;</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-60">
+<h1><span class="chapter-number">Chapter 60</span>Prompt 58: The Git History Archaeologist</h1>
+
+<p><strong>When to use:</strong> You need to understand why code evolved to its current state.</p>
+<h3>The Prompt</h3>
+<pre><code>I'm trying to understand why this code exists in its current form. Here's the code and its git history:
+
+Current code:
+{paste_current_code}
+
+Git log (relevant commits):
+{paste_git_log_with_messages_and_dates}
+
+Key diffs:
+{paste_relevant_diffs}
+
+Reconstruct the evolution:
+1. What was the original intent? (Based on the earliest version)
+2. Why was each significant change made? (Infer from commit messages and diffs)
+3. Were any changes fixing bugs from previous changes? (Identify the chain)
+4. Is the current version the &quot;right&quot; architecture, or has it drifted from the original design?
+5. Are there any changes that contradicted earlier changes? (A changed, then B changed back)
+
+Based on this history, should this code be:
+a) Left as is (it's evolved to a good state)
+b) Refactored to match a clearer design (the evolution introduced inconsistencies)
+c) Rewritten (the accumulated changes no longer make a coherent whole)
+</code></pre>
+<h3>Why It Works</h3>
+<p>Understanding code history is crucial for making good refactoring decisions. This prompt turns git archaeology from a manual, time-consuming process into a structured analysis. The a/b/c recommendation at the end provides actionable guidance.</p>
+<h3>Customisation Tips</h3>
+<ul>
+<li>Include <code>git blame</code> output for the most confusing sections</li>
+<li>Mention if original authors are available: &ldquo;I can ask the original author about commit {hash}&rdquo;</li>
+<li>Add related issues/tickets if they&rsquo;re linked in commit messages</li>
+</ul>
+<hr />
+<h1>Appendix A: Prompt Chaining Recipes</h1>
+<p><em>These recipes combine multiple prompts from this toolkit for complex workflows.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-61">
+<h1><span class="chapter-number">Chapter 61</span>Recipe 1: The Full Code Review Pipeline</h1>
+
+<ol>
+<li><strong>Start with Prompt 9 (Senior Engineer Review)</strong> → Get the issue list</li>
+<li><strong>For any security issues, use Prompt 10 (Security Audit)</strong> → Deep-dive on vulnerabilities</li>
+<li><strong>Use Prompt 11 (Performance Review)</strong> → Check scalability</li>
+<li><strong>Use Prompt 14 (Test Gap Finder)</strong> → Ensure tests cover the changes</li>
+<li><strong>Finish with Prompt 15 (New Hire Review)</strong> → Verify readability</li>
+</ol>
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-62">
+<h1><span class="chapter-number">Chapter 62</span>Recipe 2: The Bug Investigation Flow</h1>
+
+<ol>
+<li><strong>Start with Prompt 3 (Stack Trace Decoder)</strong> → Understand the error</li>
+<li><strong>Use Prompt 1 (Root Cause Analyst)</strong> → Find the cause</li>
+<li><strong>Use Prompt 4 (Reproduction Builder)</strong> → Create a repro case</li>
+<li><strong>Use Prompt 32 (Unit Test Writer)</strong> → Write a test that catches the bug</li>
+<li><strong>Fix the bug, verify the test passes</strong></li>
+</ol>
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-63">
+<h1><span class="chapter-number">Chapter 63</span>Recipe 3: The System Design Pipeline</h1>
+
+<ol>
+<li><strong>Start with Prompt 18 (System Design Collaborator)</strong> → Design the architecture</li>
+<li><strong>Use Prompt 19 (Database Schema Designer)</strong> → Design the data model</li>
+<li><strong>Use Prompt 20 (API Design Workshop)</strong> → Design the API</li>
+<li><strong>Use Prompt 17 (ADR)</strong> → Document the key decisions</li>
+<li><strong>Use Prompt 31 (RFC Writer)</strong> → Propose to the team</li>
+</ol>
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-64">
+<h1><span class="chapter-number">Chapter 64</span>Recipe 4: The Legacy Code Rescue</h1>
+
+<ol>
+<li><strong>Start with Prompt 40 (Code Smell Identifier)</strong> → Diagnose the problems</li>
+<li><strong>Use Prompt 44 (Dead Code Eliminator)</strong> → Remove the noise</li>
+<li><strong>Use Prompt 43 (Legacy Code Moderniser)</strong> → Update the language/patterns</li>
+<li><strong>Use Prompt 21 (Refactoring Strategy)</strong> → Plan the restructuring</li>
+<li><strong>Use Prompt 41 (Extract and Inject)</strong> → Make it testable</li>
+<li><strong>Use Prompt 32 (Unit Test Writer)</strong> → Add tests before further changes</li>
+</ol>
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-65">
+<h1><span class="chapter-number">Chapter 65</span>Recipe 5: The Performance Rescue</h1>
+
+<ol>
+<li><strong>Start with Prompt 11 (Performance Review)</strong> → Identify bottlenecks</li>
+<li><strong>Use Prompt 48 (N+1 Detector)</strong> → Fix query problems</li>
+<li><strong>Use Prompt 46 (Query Optimiser)</strong> → Tune remaining slow queries</li>
+<li><strong>Use Prompt 47 (Caching Strategy)</strong> → Add caching where needed</li>
+<li><strong>Use Prompt 42 (Performance Refactorer)</strong> → Optimise hot code paths</li>
+</ol>
+<hr />
+<h1>Appendix B: Customising Prompts for Your Stack</h1>
+<p>Here are specific additions for popular technology stacks:</p>
+<h3>Python (Django/FastAPI/Flask)</h3>
+<p>Add to any prompt:</p>
+<pre><code>Python version: {version}
+Framework: {Django 5.x / FastAPI / Flask}
+ORM: {Django ORM / SQLAlchemy / Tortoise}
+Type checking: {mypy strict / loose / none}
+Linter: {ruff / flake8 / pylint}
+</code></pre>
+<h3>TypeScript (React/Next.js/Node)</h3>
+<p>Add to any prompt:</p>
+<pre><code>TypeScript version: {version} with {strict mode / loose}
+Runtime: {Node / Deno / Bun}
+Framework: {Next.js / Express / Fastify / NestJS}
+State management: {Redux / Zustand / Jotai / none}
+Styling: {Tailwind / CSS Modules / styled-components}
+</code></pre>
+<h3>Go</h3>
+<p>Add to any prompt:</p>
+<pre><code>Go version: {version}
+Key libraries: {gin / echo / chi / standard library}
+Error handling: {stdlib errors / pkg/errors / custom}
+Concurrency model: {goroutines + channels / errgroup / worker pool}
+</code></pre>
+<h3>Rust</h3>
+<p>Add to any prompt:</p>
+<pre><code>Rust edition: {2021 / 2024}
+Async runtime: {tokio / async-std / none}
+Error handling: {anyhow / thiserror / custom}
+Serialisation: {serde}
+Web framework: {axum / actix-web / rocket}
+</code></pre>
+<h3>Java/Kotlin (Spring Boot)</h3>
+<p>Add to any prompt:</p>
+<pre><code>Java/Kotlin version: {version}
+Spring Boot version: {version}
+Build tool: {Gradle / Maven}
+ORM: {JPA/Hibernate / jOOQ / exposed}
+Testing: {JUnit 5 / Kotest / TestNG}
+</code></pre>
+<hr />
+<h1>Appendix C: Quick Reference Card</h1>
+<p><em>Print this page and keep it next to your monitor.</em></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Prompt #</th>
+<th>Key Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Error I don&rsquo;t understand</td>
+<td>1</td>
+<td>&ldquo;Root cause, not symptom&rdquo;</td>
+</tr>
+<tr>
+<td>No error, just wrong</td>
+<td>2</td>
+<td>&ldquo;Walk through line by line&rdquo;</td>
+</tr>
+<tr>
+<td>Wall of stack trace</td>
+<td>3</td>
+<td>&ldquo;My code vs library code&rdquo;</td>
+</tr>
+<tr>
+<td>Works locally, fails in prod</td>
+<td>5</td>
+<td>&ldquo;Ranked hypotheses&rdquo;</td>
+</tr>
+<tr>
+<td>Need code review</td>
+<td>9</td>
+<td>&ldquo;🔴 BLOCKER / 🟡 SHOULD FIX / 🟢 NIT&rdquo;</td>
+</tr>
+<tr>
+<td>Security check</td>
+<td>10</td>
+<td>&ldquo;Step-by-step exploit scenario&rdquo;</td>
+</tr>
+<tr>
+<td>Slow code</td>
+<td>11</td>
+<td>&ldquo;At what scale does it break?&rdquo;</td>
+</tr>
+<tr>
+<td>Design decision</td>
+<td>17</td>
+<td>&ldquo;Be opinionated, not &lsquo;it depends&rsquo;&rdquo;</td>
+</tr>
+<tr>
+<td>New system design</td>
+<td>18</td>
+<td>&ldquo;Simplest first, then evolve&rdquo;</td>
+</tr>
+<tr>
+<td>Database schema</td>
+<td>19</td>
+<td>&ldquo;Start with query patterns&rdquo;</td>
+</tr>
+<tr>
+<td>Need tests</td>
+<td>32</td>
+<td>&ldquo;Happy path / edges / errors / state&rdquo;</td>
+</tr>
+<tr>
+<td>Test quality check</td>
+<td>36</td>
+<td>&ldquo;Mutation testing analysis&rdquo;</td>
+</tr>
+<tr>
+<td>Code smells</td>
+<td>40</td>
+<td>&ldquo;Concrete consequences, not principles&rdquo;</td>
+</tr>
+<tr>
+<td>Legacy modernisation</td>
+<td>43</td>
+<td>&ldquo;Don&rsquo;t change logic, just modernise&rdquo;</td>
+</tr>
+<tr>
+<td>Slow queries</td>
+<td>46</td>
+<td>&ldquo;Include EXPLAIN output&rdquo;</td>
+</tr>
+<tr>
+<td>CI/CD setup</td>
+<td>50</td>
+<td>&ldquo;Time budget per stage&rdquo;</td>
+</tr>
+<tr>
+<td>Post-mortem</td>
+<td>53</td>
+<td>&ldquo;No blame, concrete action items&rdquo;</td>
+</tr>
+<tr>
+<td>Stuck on a problem</td>
+<td>55</td>
+<td>&ldquo;Don&rsquo;t solve — help me think&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1>About This Toolkit</h1>
+<p>This toolkit was built for developers who use Claude (or similar AI assistants) daily in professional software development. Every prompt has been tested in real-world codebases across multiple languages and frameworks.</p>
+<p>The prompts work because they follow a simple principle: <strong>the more specific your input, the more useful the output.</strong> Generic prompts produce generic answers. These prompts are designed to extract specific, actionable, expert-level analysis.</p>
+<p><strong>Version:</strong> 1.0
+<strong>Last updated:</strong> February 2026</p>
+<hr />
+<p><em>Built with ☕ and extensive iteration. If a prompt saved you more than 30 minutes of debugging, it paid for itself.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Developer's Claude Toolkit</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

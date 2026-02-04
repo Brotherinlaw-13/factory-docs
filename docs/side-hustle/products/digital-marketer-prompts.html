@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Digital Marketer's Prompt Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Marketing Tools</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Digital Marketer's Prompt Library</h1>
+    <p class="cover-subtitle">50+ ready-to-use AI prompts for SEO, ads, email, social, and content strategy</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">1 · SEO & Content Strategy</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">2 · Email Marketing</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">3 · Social Media</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">4 · Paid Advertising</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">5 · Analytics & Reporting</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">6 · Brand & Messaging</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">7 · Growth & CRO</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">8 · Bonus: Campaign Planning Workflow</span></a></li>
+      <li><a href="#chapter-9"><span class="toc-chapter-title">Quick Reference — Prompt Index</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Digital Marketer&rsquo;s AI Prompt Library</h1>
+<h3>50+ Battle-Tested Prompts to 10x Your Marketing Output</h3>
+<hr />
+<blockquote>
+<p><strong>How to use this library:</strong> Copy-paste each prompt directly into ChatGPT, Claude, or any major AI tool. Replace <code>[bracketed placeholders]</code> with your details. The more specific your inputs, the better your outputs.</p>
+</blockquote>
+<hr />
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>1 · SEO &amp; Content Strategy</h1>
+
+<h3>1.1 — Keyword Cluster Builder</h3>
+<pre><code>I'm building a content strategy for [brand] in the [industry] space. Take this seed list of keywords and group them into topical clusters based on search intent and semantic relevance. For each cluster provide: a pillar page topic, 3-5 supporting article ideas, dominant search intent (informational/commercial/transactional), and estimated content difficulty (low/medium/high).
+
+Seed keywords: [paste 15-30 keywords]
+</code></pre>
+<p><strong>Why It Works:</strong> Forces the AI to organise existing research into actionable content architecture rather than generating generic keyword ideas. The pillar-and-cluster output maps directly to site structure.</p>
+<blockquote>
+<p><em>Cluster: Home Espresso Brewing</em> — Pillar: &ldquo;The Complete Guide to Making Espresso at Home&rdquo; | Supporting: best machines under £500 (commercial), dialling in grind size (informational), espresso vs filter compared (informational) | Difficulty: Medium</p>
+</blockquote>
+<h3>1.2 — Content Brief Generator</h3>
+<pre><code>Write a content brief for &quot;[article title]&quot; targeting &quot;[primary keyword]&quot;. Include: primary/secondary keywords with placement suggestions, search intent analysis, recommended word count and format, detailed H2/H3 outline, 3 unique angles to differentiate from current top-ranking content, internal linking suggestions (our site covers [topics]), and a meta title + description within character limits.
+</code></pre>
+<p><strong>Why It Works:</strong> Replicates the brief a senior SEO strategist would write. The &ldquo;unique angles&rdquo; instruction prevents generic rehashing of page-one results.</p>
+<blockquote>
+<p><em>Unique angle:</em> Survey 3-5 Reddit threads for real-user complaints that competing articles ignore (wobble at max height, customer service times).</p>
+</blockquote>
+<h3>1.3 — Competitor Content Gap Analysis</h3>
+<pre><code>I run [brand] in the [industry] niche. My top 3 competitors are [URLs]. Identify: 5 topic areas they likely cover that I'm missing, 5 content formats I'm not using, and 3 &quot;blue ocean&quot; content opportunities with lower competition. For each gap, explain the commercial value and suggest a content piece.
+</code></pre>
+<p><strong>Why It Works:</strong> Asking the AI to find <em>gaps</em> produces strategic recommendations. The &ldquo;blue ocean&rdquo; instruction pushes beyond obvious ideas.</p>
+<blockquote>
+<p><em>Gap:</em> &ldquo;[Tool] vs [Competitor]&rdquo; comparison pages capturing high-intent traffic — these convert at 2-3x blog rates because readers are one step from purchase.</p>
+</blockquote>
+<h3>1.4 — Topical Authority Map</h3>
+<pre><code>Map a complete content ecosystem for &quot;[broad topic]&quot;. Include: 1 core pillar (3,000+ words), 8-12 cluster topics (1,000-1,500 words each), internal linking structure with rationale, suggested publication order that builds authority progressively, and content types for each piece. Our audience is [describe].
+</code></pre>
+<p><strong>Why It Works:</strong> Produces a full content roadmap with publication sequencing — transforms a topic list into a genuine execution plan.</p>
+<blockquote>
+<p><em>Phase 1:</em> &ldquo;What Is Revenue Operations?&rdquo; → &ldquo;RevOps vs Sales Ops&rdquo; → &ldquo;How to Structure a RevOps Team&rdquo; (each links backward, building authority progressively)</p>
+</blockquote>
+<h3>1.5 — Search Intent Classifier</h3>
+<pre><code>Classify each keyword by search intent. For each provide: intent type (informational/commercial/transactional/navigational), confidence level, ideal content format, and one-sentence description of what the searcher wants.
+
+Keywords: [one per line]
+</code></pre>
+<p><strong>Why It Works:</strong> Intent classification determines whether you write a blog post or a landing page. This does in seconds what takes 30+ minutes with a spreadsheet.</p>
+<blockquote>
+<p>&ldquo;best CRM for small business&rdquo; → Commercial Investigation / High / Comparison listicle / Evaluating options before buying</p>
+</blockquote>
+<h3>1.6 — Blog-to-Video Script Converter</h3>
+<pre><code>Convert this blog post into a 90-second [YouTube Shorts / TikTok / Reels] script. Tone: [describe]. Structure: hook (first 3 seconds), setup (10-15 seconds), value delivery (2-3 punchy points), CTA. Include [on-screen text suggestions]. Max 15 words per sentence.
+
+Blog post: [paste content]
+</code></pre>
+<p><strong>Why It Works:</strong> Handles the creative work of format translation — repurposing content across platforms without the mental overhead.</p>
+<blockquote>
+<p><em>Hook:</em> &ldquo;Your email open rates are lying to you.&rdquo; [TEXT: &ldquo;STOP trusting open rates&rdquo;]</p>
+</blockquote>
+<h3>1.7 — SERP Feature Opportunity Finder</h3>
+<pre><code>For &quot;[target keyword]&quot;, analyse which SERP features likely appear (featured snippets, PAA, video carousels, etc.). For each: describe the content format needed to win it, provide a structural recommendation, and rate effort-to-impact.
+</code></pre>
+<p><strong>Why It Works:</strong> Ranking #1 matters less than owning SERP real estate. This maps the specific moves to capture featured snippets and PAA boxes.</p>
+<blockquote>
+<p><em>Featured Snippet:</em> Write a 40-50 word definition directly under &ldquo;What is [term]?&rdquo; — Google favours concise answers beginning with &ldquo;[Term] is a…&rdquo; | Effort: Low / Impact: High</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>2 · Email Marketing</h1>
+
+<h3>2.1 — Subject Line Generator</h3>
+<pre><code>Generate 15 subject lines for: product/offer [describe], audience [describe], goal [opens/clicks/purchases], tone [urgent/playful/professional]. Tag each with its psychological trigger (curiosity gap, social proof, FOMO, specificity, personalisation, pattern interrupt). Group by trigger. All under 50 characters.
+</code></pre>
+<p><strong>Why It Works:</strong> Tagging psychological triggers lets you A/B test <em>mechanisms</em>, not just words — producing compounding learnings.</p>
+<blockquote>
+<p><em>Curiosity Gap:</em> &ldquo;We almost didn&rsquo;t send this&rdquo; | <em>Specificity:</em> &ldquo;23% more demos in 11 days&rdquo;</p>
+</blockquote>
+<h3>2.2 — Welcome Sequence Architect</h3>
+<pre><code>Design a 5-email welcome sequence for [brand]. Subscriber source: [lead magnet/trial/newsletter]. For each email: send timing, 2 subject line options, purpose and emotional arc, body copy (150-200 words), primary + fallback CTA, and the psychological bridge to the next email. Move from trust-building to soft-sell by Email 5.
+</code></pre>
+<p><strong>Why It Works:</strong> The &ldquo;psychological bridge&rdquo; ensures a coherent narrative instead of five disconnected broadcasts.</p>
+<blockquote>
+<p><em>Email 3 bridge:</em> End with &ldquo;Tomorrow I&rsquo;ll show you the exact process — including the spreadsheet template we use internally.&rdquo;</p>
+</blockquote>
+<h3>2.3 — Re-Engagement Campaign</h3>
+<pre><code>Write a 3-email win-back sequence for subscribers inactive [60/90/120] days. Tone progression: friendly check-in → value reminder → &quot;should we part ways?&quot; with clear unsubscribe. Under 100 words per email, single low-commitment CTA each.
+</code></pre>
+<p><strong>Why It Works:</strong> The &ldquo;part ways&rdquo; instruction produces authentic copy that paradoxically increases re-engagement — treating readers as adults works.</p>
+<blockquote>
+<p><em>Email 3:</em> &ldquo;We&rsquo;ll quietly remove you in 7 days. Either way, thanks for giving us a shot.&rdquo;</p>
+</blockquote>
+<h3>2.4 — A/B Test Copy Variants</h3>
+<pre><code>Here's my control email: [paste subject, body, CTA]. Generate 3 variants, each changing ONE variable: Variant A — different emotional angle, B — different structure, C — different CTA. For each, state: &quot;This will outperform the control if [specific assumption].&quot;
+</code></pre>
+<p><strong>Why It Works:</strong> Single-variable constraint produces testable hypotheses. The &ldquo;outperform if&rdquo; statement turns every test into a learning opportunity regardless of result.</p>
+<blockquote>
+<p><em>Variant B hypothesis:</em> Will outperform if audience is suffering &ldquo;listicle fatigue&rdquo; and responds better to narrative.</p>
+</blockquote>
+<h3>2.5 — Newsletter Content Planner</h3>
+<pre><code>Create a 4-week newsletter plan for [brand], [frequency], audience [describe]. Pillars: [list 3]. For each edition: theme, subject line, 3-4 content sections (50 words each), one pattern interrupt (poll/hot take/challenge), and suggested word count.
+</code></pre>
+<p><strong>Why It Works:</strong> A month of thematic variety upfront prevents newsletter burnout and ensures you balance education, entertainment, and promotion.</p>
+<blockquote>
+<p><em>Week 3 — &ldquo;The Contrarian Edition&rdquo;:</em> Subject: &ldquo;Unpopular opinion: your content calendar is holding you back&rdquo;</p>
+</blockquote>
+<h3>2.6 — Transactional Email Humaniser</h3>
+<pre><code>Rewrite this automated email to match our brand voice while keeping all essential info. Add one moment of personality, ensure scannability, include a soft brand touchpoint. Voice: [describe].
+
+Current email: [paste]
+</code></pre>
+<p><strong>Why It Works:</strong> Transactional emails have the highest open rates yet most brands waste them on robotic boilerplate.</p>
+<blockquote>
+<p><em>After:</em> &ldquo;Your order just left our warehouse. Track it here — and our setup guide means you&rsquo;ll be ready the moment it arrives.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>3 · Social Media</h1>
+
+<h3>3.1 — Platform Content Adaptor</h3>
+<pre><code>Adapt this content for [LinkedIn/X/Instagram/TikTok]: [paste source]. Match platform conventions, optimise for algorithm signals, include a scroll-stopping first line, suggest posting time and format, add a conversation-starting question.
+</code></pre>
+<p><strong>Why It Works:</strong> Forces reasoning about platform-specific algorithm mechanics — producing native content, not cross-posts.</p>
+<blockquote>
+<p><em>LinkedIn:</em> &ldquo;I spent £12,000 on Google Ads. Here&rsquo;s what the dashboard didn&rsquo;t tell me: ↓&rdquo; [line break triggers &lsquo;see more&rsquo;]</p>
+</blockquote>
+<h3>3.2 — Engagement Hook Generator</h3>
+<pre><code>Generate 10 hooks for [platform] about [topic], each using a different technique: contrarian statement, specific statistic, &quot;you're doing X wrong&quot;, before/after, knowledge gap question, bold prediction, relatable frustration, social proof, urgency, curiosity gap. First 2 lines only. Mark each as best for awareness/engagement/conversion.
+</code></pre>
+<p><strong>Why It Works:</strong> Ten distinct psychological techniques create a diverse creative bank instead of ten angles on the same idea.</p>
+<blockquote>
+<p><em>Before/After (conversion):</em> &ldquo;6 months ago: 20 hours/week on reporting. Last week: 45 minutes.&rdquo;</p>
+</blockquote>
+<h3>3.3 — Hashtag Strategy Builder</h3>
+<pre><code>Build a hashtag strategy for [brand] on [platform], [follower count]. Provide: 5 high-volume, 10 mid-volume, 5 low-volume hashtags, 3 branded suggestions, recommended mix per post, and 3 hashtags to avoid (with reasons).
+</code></pre>
+<p><strong>Why It Works:</strong> The tiered approach balances discoverability with targeting, and the &ldquo;avoid&rdquo; list prevents mistakes that quietly tank reach.</p>
+<blockquote>
+<p><em>Avoid:</em> #MarketingTips (oversaturated — posts vanish instantly), #FollowForFollow (spam signal)</p>
+</blockquote>
+<h3>3.4 — Community Response Framework</h3>
+<pre><code>Create response templates for: positive review, valid complaint, angry comment, feature request, competitor comparison, spam/troll, media enquiry. Each needs: human-sounding template, principles, escalation criteria, response time target.
+</code></pre>
+<p><strong>Why It Works:</strong> Community management at scale requires frameworks, not improvisation.</p>
+<blockquote>
+<p><em>Competitor comparison:</em> &ldquo;Great question! [Competitor] does [strength] well. Where we focus differently is [differentiator].&rdquo; Principle: never disparage — confidence beats defensiveness.</p>
+</blockquote>
+<h3>3.5 — Viral Content Framework</h3>
+<pre><code>Design a [platform] content piece using framework [A: Myth vs Reality / B: &quot;I analysed 100 things&quot; / C: Starter Pack / D: Day in the Life]. Topic: [your topic]. Provide: full copy, visual direction, engagement drivers (saves/shares/comments), and a &quot;reply bait&quot; element.
+</code></pre>
+<p><strong>Why It Works:</strong> Viral content follows structural patterns — choosing a proven framework dramatically increases shareability.</p>
+<blockquote>
+<p><em>Reply bait:</em> &ldquo;What&rsquo;s the biggest marketing myth YOU still see? Drop it below 👇&rdquo; — works because people love correcting others.</p>
+</blockquote>
+<h3>3.6 — Content Calendar Batch Creator</h3>
+<pre><code>Create 20 posts for [brand] on [platform], 4 weeks. Pillars: educational, social proof, behind-the-scenes, engagement. Rotate evenly, vary formats, include 2 timely posts. Each: full caption + format + best posting day. No consecutive same-pillar posts.
+</code></pre>
+<p><strong>Why It Works:</strong> Batching eliminates daily &ldquo;what do I post?&rdquo; paralysis. Rotation rules prevent defaulting to one content type.</p>
+<blockquote>
+<p><em>Post 7:</em> &ldquo;Honest question: when a brand emails after your free trial, does it make you MORE or LESS likely to buy?&rdquo; [poll]</p>
+</blockquote>
+<h3>3.7 — LinkedIn Thought Leadership Writer</h3>
+<pre><code>Write a LinkedIn post about [topic] as a [title] with [X years] experience. Bold opening insight, specific story or failure, 2-3 actionable takeaways, reflective question. No clichés (&quot;thrilled to announce&quot;, &quot;Agree?&quot;). 150-200 words, line breaks every 1-2 sentences.
+</code></pre>
+<p><strong>Why It Works:</strong> The anti-cliché instruction and story requirement prevent generic hustle-culture content.</p>
+<blockquote>
+<p>&ldquo;Last year I killed our best-performing campaign. It drove 40% of leads. My team thought I&rsquo;d lost the plot. But those leads converted at 2%&hellip;&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>4 · Paid Advertising</h1>
+
+<h3>4.1 — Google Ads Copy Generator</h3>
+<pre><code>Write 3 responsive search ad sets for &quot;[keyword]&quot;. USPs: [list 3]. Each set: 15 headlines (≤30 chars, mix benefit/feature/CTA/proof), 4 descriptions (≤90 chars), pin recommendations. Include exact keyword in 3+ headlines. Include numbers in 2+ headlines.
+</code></pre>
+<p><strong>Why It Works:</strong> Matches Google&rsquo;s RSA structure exactly, including pin strategy and character limits.</p>
+<blockquote>
+<p><em>Headline 8:</em> &ldquo;Trusted by 2,400+ UK Teams&rdquo; (28 chars) — Pin to Position 1 for B2B.</p>
+</blockquote>
+<h3>4.2 — Meta Ads Creative Brief</h3>
+<pre><code>Create a Meta ad brief: objective [awareness/consideration/conversion], product [describe], audience [describe], budget [amount]. Provide: 3 ad concepts (emotional/rational/social proof angles), each with primary text (≤125 words), headline, description, CTA button, visual direction, and audience targeting suggestions. Include a testing plan.
+</code></pre>
+<p><strong>Why It Works:</strong> Three distinct angles test genuinely different approaches. Visual direction bridges the copywriter-designer gap.</p>
+<blockquote>
+<p><em>Rational visual:</em> Split-screen. Left: cluttered desk, chaos. Right: clean dashboard, coffee. Muted tones vs bright.</p>
+</blockquote>
+<h3>4.3 — LinkedIn Audience Persona Builder</h3>
+<pre><code>Build 3 audience personas for LinkedIn ads promoting [product] to [market]. Each: specific job titles (5-10), seniority and company size, industry verticals, daily pain points, success metrics, objections, LinkedIn targeting parameters, and tailored messaging angle.
+</code></pre>
+<p><strong>Why It Works:</strong> Persona-specific campaigns match LinkedIn&rsquo;s targeting granularity with message relevance.</p>
+<blockquote>
+<p><em>&ldquo;The Overwhelmed Ops Lead&rdquo;:</em> Spends 60% of the week on reports instead of strategy. Feels invisible until something breaks.</p>
+</blockquote>
+<h3>4.4 — Landing Page Copy Generator</h3>
+<pre><code>Write landing page copy for [offer]. Traffic source: [channel], visitor awareness level: [describe]. Include: hero section (headline, sub-head, CTA, proof), problem section (3 pains in customer language), solution section, 3-5 features with benefits, social proof structure, 3 objections with counters, final CTA (3 button text options). Paragraphs under 3 lines.
+</code></pre>
+<p><strong>Why It Works:</strong> Traffic source context ensures copy matches the visitor&rsquo;s mindset on arrival.</p>
+<blockquote>
+<p><em>Objection counter:</em> &ldquo;Most tools give you dashboards. We give you answers. If it doesn&rsquo;t click in the first week, we&rsquo;ll rebuild it or refund you.&rdquo;</p>
+</blockquote>
+<h3>4.5 — A/B Test Hypothesis Bank</h3>
+<pre><code>Generate 10 A/B test hypotheses for [page/campaign/sequence]. Each: element to test, control vs variant, hypothesis (&quot;If we [change], then [metric] will [outcome] because [reasoning]&quot;), expected impact, sample size needed. Prioritise by effort-to-impact — quick wins first.
+</code></pre>
+<p><strong>Why It Works:</strong> Most teams struggle with knowing <em>what</em> to test. This creates a prioritised experiment backlog.</p>
+<blockquote>
+<p><em>Quick win:</em> CTA &ldquo;Get Started&rdquo; → &ldquo;See My Results&rdquo; — outcome-oriented CTAs outperform action-oriented for consideration-stage visitors.</p>
+</blockquote>
+<h3>4.6 — Ad Spend Audit</h3>
+<pre><code>I'm spending [budget] across [platforms]. Metrics: [paste CTR, CPC, conversion rate, CPA, ROAS per campaign]. Identify: underperforming campaigns vs [industry] benchmarks, where spend is wasted, budget reallocation recommendations, 3 optimisations for this week, and metrics I'm likely NOT tracking.
+</code></pre>
+<p><strong>Why It Works:</strong> Real numbers produce specific analysis. The &ldquo;not tracking&rdquo; question surfaces blind spots.</p>
+<blockquote>
+<p><em>Alert:</em> Brand term campaign at £2.10 CPC with no competition. Pause, verify organic captures it, redirect £600/month to your CPA-constrained campaign.</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>5 · Analytics &amp; Reporting</h1>
+
+<h3>5.1 — Data Interpreter</h3>
+<pre><code>Analyse this data as a senior marketing analyst: [paste metrics]. Provide: 3 most important trends (with numbers), what to double down on, what needs attention, 2 non-obvious insights, and recommended next actions.
+</code></pre>
+<p><strong>Why It Works:</strong> &ldquo;Non-obvious insights&rdquo; pushes beyond restating data. Actions prevent analysis paralysis.</p>
+<blockquote>
+<p><em>Non-obvious:</em> Mobile bounce spiked 18% on Tuesdays — cross-reference with email sends driving mobile traffic to non-mobile-optimised pages.</p>
+</blockquote>
+<h3>5.2 — Executive Campaign Summary</h3>
+<pre><code>Write a 250-word executive summary: campaign [name], duration [dates], budget [spend], results [metrics]. Lead with revenue impact, include one honest underperformance, end with &quot;what's next&quot;. No jargon.
+</code></pre>
+<p><strong>Why It Works:</strong> Execs scan summaries, not dashboards. Impact first, honesty included, action-oriented ending.</p>
+<blockquote>
+<p>&ldquo;The webinar funnel converted at 4% — below our 12% benchmark — suggesting topic-audience mismatch.&rdquo;</p>
+</blockquote>
+<h3>5.3 — Campaign Post-Mortem</h3>
+<pre><code>Post-mortem for [campaign]. Goal: [KPIs], results: [metrics], budget: [vs planned]. Structure: what worked (specific tactics), what didn't (with WHY hypotheses), surprises, root causes (deeper than surface), action items with suggested owners.
+</code></pre>
+<p><strong>Why It Works:</strong> The &ldquo;root causes&rdquo; instruction prevents stopping at symptoms.</p>
+<blockquote>
+<p><em>Root cause:</em> Ads promised &ldquo;simple pricing&rdquo; but the landing page led with a feature matrix. Expectation violated within 3 seconds.</p>
+</blockquote>
+<h3>5.4 — Attribution Analysis Explainer</h3>
+<pre><code>Channels: [list with spend]. Conversion data: [paste]. Explain: what last-touch tells and misses, what linear/time-decay would reveal, which channels are undervalued, a realistic attribution approach for our tooling, and 3 decisions to make differently.
+</code></pre>
+<p><strong>Why It Works:</strong> Turns attribution confusion into a narrative explaining <em>why</em> your current model misleads.</p>
+<blockquote>
+<p><em>Undervalued:</em> Organic social shows zero last-touch conversions but builds trust over 3-4 impressions before the branded Google search that gets all the credit.</p>
+</blockquote>
+<h3>5.5 — KPI Framework Designer</h3>
+<pre><code>Design a KPI framework for [team] at a [company size] [industry] company. Primary objective: [describe]. Include: 3-5 north star metrics, supporting weekly metrics, vanity metrics to stop tracking (with reasons), reporting cadence, and alert thresholds.
+</code></pre>
+<p><strong>Why It Works:</strong> Distinguishes signal from noise with built-in action triggers.</p>
+<blockquote>
+<p><em>Drop:</em> Follower count. A 2,000-follower account at 8% engagement outperforms 10,000 at 1%. Track engagement rate instead.</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>6 · Brand &amp; Messaging</h1>
+
+<h3>6.1 — Brand Voice Guidelines</h3>
+<pre><code>Create brand voice guidelines for [brand] targeting [audience]. Personality: [3 words]. Produce: 4 voice traits with &quot;this, not that&quot; examples, tone shifts across contexts (social/support/web/crisis), 10 always-use and 10 never-use words, grammar rules, and 3 sample paragraphs (homepage/tweet/support reply).
+</code></pre>
+<p><strong>Why It Works:</strong> &ldquo;This, not that&rdquo; and specific word lists create guidelines a new team member can follow on day one.</p>
+<blockquote>
+<p>✅ &ldquo;We&rsquo;ve helped 200 teams streamline onboarding.&rdquo; ❌ &ldquo;We&rsquo;re the #1 onboarding solution.&rdquo; — Specific proof vs empty superlatives.</p>
+</blockquote>
+<h3>6.2 — Messaging Framework Builder</h3>
+<pre><code>Build a messaging framework for [product] targeting [audience]. Include: one-line positioning (under 15 words), 30-second elevator pitch, 3 key messages with proof points, messaging per awareness stage (unaware/problem-aware/solution-aware/product-aware), and objections mapped to counter-messages.
+</code></pre>
+<p><strong>Why It Works:</strong> Awareness-stage mapping prevents using conversion language on people who don&rsquo;t yet understand the problem.</p>
+<blockquote>
+<p><em>Problem-aware:</em> &ldquo;You&rsquo;re spending 15 hours/week reconciling data. Every tool you&rsquo;ve tried adds another dashboard to check.&rdquo;</p>
+</blockquote>
+<h3>6.3 — Competitor Differentiation Matrix</h3>
+<pre><code>I compete with [3 competitors] in [market]. Create: feature comparison weighted by customer value, messaging comparison (what each leads with), gaps nobody's addressing, our &quot;only we&quot; statement, and positioning recommendation (1-2 word category to own).
+</code></pre>
+<p><strong>Why It Works:</strong> The &ldquo;only we&rdquo; exercise forces genuine uniqueness rather than manufactured differentiation.</p>
+<blockquote>
+<p><em>Gap:</em> Every competitor talks about &ldquo;saving time.&rdquo; None addresses migration anxiety. Lead with &ldquo;zero switching pain.&rdquo;</p>
+</blockquote>
+<h3>6.4 — Value Proposition Canvas</h3>
+<pre><code>Refine our value proposition using Jobs-To-Be-Done. Customer: [describe]. Map: customer jobs (functional/social/emotional), pains, gains, our pain relievers, our gain creators, and a fit statement paragraph.
+</code></pre>
+<p><strong>Why It Works:</strong> JTBD produces value props grounded in customer reality, separating pains from gains to address both benefits and anxieties.</p>
+<blockquote>
+<p><em>Emotional job:</em> Feel competent during board presentations. Current tools produce data dumps, not stories.</p>
+</blockquote>
+<h3>6.5 — Tone-of-Voice Audit</h3>
+<pre><code>Audit these content pieces for voice consistency against our intended brand: [paste 3-4 samples]. For each: rate 1-10, identify on-brand and off-brand phrases, suggest rewrites, note contradictions between pieces.
+</code></pre>
+<p><strong>Why It Works:</strong> Turns subjective &ldquo;does this sound like us?&rdquo; into a structured, repeatable review.</p>
+<blockquote>
+<p><em>Social post — 4/10:</em> &ldquo;We&rsquo;re absolutely thrilled!&rdquo; reads as corporate excitement. Rewrite: &ldquo;New feature, live today. Here&rsquo;s what it does.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>7 · Growth &amp; CRO</h1>
+
+<h3>7.1 — Conversion Funnel Analyser</h3>
+<pre><code>Analyse our funnel: [list stages with numbers]. For each drop-off: conversion rate vs [industry] benchmarks, top 3 likely causes, one quick fix + one strategic fix. Identify which stage improved by just 10% would have the biggest revenue impact.
+</code></pre>
+<p><strong>Why It Works:</strong> The &ldquo;10% improvement&rdquo; calculation focuses attention on the highest-leverage stage.</p>
+<blockquote>
+<p><em>Impact:</em> Improving sign-up→first-action by 10% adds 34 paid conversions/month. Onboarding friction — not acquisition — is your growth constraint.</p>
+</blockquote>
+<h3>7.2 — CRO Audit Checklist</h3>
+<pre><code>Generate a CRO audit for [page/flow]. Organise by: above the fold, trust elements, friction points, copy, mobile experience, psychology. Rate each: critical/important/nice-to-have. Provide the specific fix, not just the diagnosis.
+</code></pre>
+<p><strong>Why It Works:</strong> Prioritised items with specific fixes prevent vague &ldquo;improve the headline&rdquo; recommendations.</p>
+<blockquote>
+<p><em>Critical:</em> Form asks for company size before showing value. Reduce from 6 to 3 fields — typically increases completion 25-40%.</p>
+</blockquote>
+<h3>7.3 — Growth Experiment Designer</h3>
+<pre><code>Design 5 growth experiments for [product] targeting [metric]. Each: hypothesis, experiment design, success metric, minimum viable test, timeline, kill criteria. Prioritise by ICE score (Impact × Confidence × Ease).
+</code></pre>
+<p><strong>Why It Works:</strong> Kill criteria and minimum viable tests prevent the two most common failures: running too long and over-building.</p>
+<blockquote>
+<p><em>MVP test:</em> Manually email 50 inactive signups with a personalised nudge. Track completion rate before building automation.</p>
+</blockquote>
+<h3>7.4 — User Journey Mapper</h3>
+<pre><code>Map the journey for [persona] from awareness through advocacy. Each stage: what they think/feel, actions taken, channels involved, friction risks, ideal experience, one improvement. Include emotional state markers (frustrated/curious/confident/anxious).
+</code></pre>
+<p><strong>Why It Works:</strong> Extending past purchase through retention reveals where the highest-value optimisation lives.</p>
+<blockquote>
+<p><em>Decision stage — anxious:</em> No case study matching their industry. They leave to &ldquo;think about it&rdquo; and never return.</p>
+</blockquote>
+<h3>7.5 — Pricing Page Optimisation</h3>
+<pre><code>Critique our pricing page: [describe tiers, prices, features, CTAs]. Analyse: tier clarity (can visitors choose in 10 seconds?), anchoring, feature ordering, missing elements, and rewrite tier names/descriptions/CTAs for conversion.
+</code></pre>
+<p><strong>Why It Works:</strong> Pricing pages are the highest-intent page on most sites yet often designed by product teams, not conversion experts.</p>
+<blockquote>
+<p>All tiers use &ldquo;Get Started.&rdquo; Rewrite: Free → &ldquo;Start Free&rdquo;, Growth → &ldquo;Start Growing&rdquo;, Enterprise → &ldquo;Talk to Us.&rdquo;</p>
+</blockquote>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>8 · Bonus: Campaign Planning Workflow</h1>
+
+<p><em>Run these five prompts in sequence — each builds on the previous output.</em></p>
+<h3>Step 1 — Strategy Brief</h3>
+<pre><code>Planning a campaign for [product/service], objective: [describe]. Define: measurable goal, target personas, key message (one sentence), success metrics, budget allocation framework (% split), timeline with milestones, single biggest risk and mitigation.
+</code></pre>
+<h3>Step 2 — Channel Plan</h3>
+<pre><code>Based on the strategy from Step 1, create a channel plan. Per channel: role (awareness/consideration/conversion), content formats needed, budget %, expected KPI contribution, one channel-specific tactic that beats generic execution.
+</code></pre>
+<h3>Step 3 — Content &amp; Creative Brief</h3>
+<pre><code>From the channel plan, create a production brief. Per content piece: format/platform, message/CTA, copy length/tone, visual direction for designers, production timeline. Group by dependency — parallel vs sequential work.
+</code></pre>
+<h3>Step 4 — Launch Sequence</h3>
+<pre><code>Create a 14-day launch sequence. Per day: what goes live, what to monitor, decision points (&quot;If [metric] below [threshold] by Day [X], then [action]&quot;). Include a Day -3 pre-launch checklist.
+</code></pre>
+<h3>Step 5 — Measurement Plan</h3>
+<pre><code>Design the measurement plan. Include: dashboard structure, reporting cadence (daily launch week, weekly after), attribution approach, post-mortem template, and 3 early-warning signals with specific pivots.
+</code></pre>
+<p><strong>Why the workflow works:</strong> Five sequential prompts produce a campaign plan that would typically take a senior marketer 2-3 days. Each prompt references the previous output, creating a coherent strategy rather than disconnected documents.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-9">
+<h1><span class="chapter-number">Chapter 09</span>Quick Reference — Prompt Index</h1>
+
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Category</th>
+<th>Prompt</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1</td>
+<td>SEO</td>
+<td>Keyword Cluster Builder</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>SEO</td>
+<td>Content Brief Generator</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td>SEO</td>
+<td>Competitor Content Gap Analysis</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>1.4</td>
+<td>SEO</td>
+<td>Topical Authority Map</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>1.5</td>
+<td>SEO</td>
+<td>Search Intent Classifier</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>1.6</td>
+<td>SEO</td>
+<td>Blog-to-Video Script Converter</td>
+<td>Repurposing</td>
+</tr>
+<tr>
+<td>1.7</td>
+<td>SEO</td>
+<td>SERP Feature Opportunity Finder</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>2.1</td>
+<td>Email</td>
+<td>Subject Line Generator</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>Email</td>
+<td>Welcome Sequence Architect</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td>Email</td>
+<td>Re-Engagement Campaign</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td>Email</td>
+<td>A/B Test Copy Variants</td>
+<td>Testing</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>Email</td>
+<td>Newsletter Content Planner</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>2.6</td>
+<td>Email</td>
+<td>Transactional Email Humaniser</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>3.1</td>
+<td>Social</td>
+<td>Platform Content Adaptor</td>
+<td>Repurposing</td>
+</tr>
+<tr>
+<td>3.2</td>
+<td>Social</td>
+<td>Engagement Hook Generator</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>3.3</td>
+<td>Social</td>
+<td>Hashtag Strategy Builder</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>3.4</td>
+<td>Social</td>
+<td>Community Response Framework</td>
+<td>Operations</td>
+</tr>
+<tr>
+<td>3.5</td>
+<td>Social</td>
+<td>Viral Content Framework</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>3.6</td>
+<td>Social</td>
+<td>Content Calendar Batch Creator</td>
+<td>Planning</td>
+</tr>
+<tr>
+<td>3.7</td>
+<td>Social</td>
+<td>LinkedIn Thought Leadership Writer</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>4.1</td>
+<td>Ads</td>
+<td>Google Ads Copy Generator</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>4.2</td>
+<td>Ads</td>
+<td>Meta Ads Creative Brief</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>4.3</td>
+<td>Ads</td>
+<td>LinkedIn Audience Persona Builder</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>4.4</td>
+<td>Ads</td>
+<td>Landing Page Copy Generator</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>4.5</td>
+<td>Ads</td>
+<td>A/B Test Hypothesis Bank</td>
+<td>Testing</td>
+</tr>
+<tr>
+<td>4.6</td>
+<td>Ads</td>
+<td>Ad Spend Audit</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>5.1</td>
+<td>Analytics</td>
+<td>Data Interpreter</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>5.2</td>
+<td>Analytics</td>
+<td>Executive Campaign Summary</td>
+<td>Reporting</td>
+</tr>
+<tr>
+<td>5.3</td>
+<td>Analytics</td>
+<td>Campaign Post-Mortem</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>5.4</td>
+<td>Analytics</td>
+<td>Attribution Analysis Explainer</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>5.5</td>
+<td>Analytics</td>
+<td>KPI Framework Designer</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>6.1</td>
+<td>Brand</td>
+<td>Brand Voice Guidelines</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>6.2</td>
+<td>Brand</td>
+<td>Messaging Framework Builder</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>6.3</td>
+<td>Brand</td>
+<td>Competitor Differentiation Matrix</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>6.4</td>
+<td>Brand</td>
+<td>Value Proposition Canvas</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>6.5</td>
+<td>Brand</td>
+<td>Tone-of-Voice Audit</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>7.1</td>
+<td>Growth</td>
+<td>Conversion Funnel Analyser</td>
+<td>Analysis</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td>Growth</td>
+<td>CRO Audit Checklist</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>7.3</td>
+<td>Growth</td>
+<td>Growth Experiment Designer</td>
+<td>Testing</td>
+</tr>
+<tr>
+<td>7.4</td>
+<td>Growth</td>
+<td>User Journey Mapper</td>
+<td>Strategy</td>
+</tr>
+<tr>
+<td>7.5</td>
+<td>Growth</td>
+<td>Pricing Page Optimisation</td>
+<td>Execution</td>
+</tr>
+<tr>
+<td>8.1–5</td>
+<td>Bonus</td>
+<td>Campaign Planning Workflow</td>
+<td>Strategy</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Built for marketers who&rsquo;d rather ship campaigns than stare at a blinking cursor.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Digital Marketer's Prompt Library</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

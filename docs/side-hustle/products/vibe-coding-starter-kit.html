@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vibe Coding Starter Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">Developer Tools</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The Vibe Coding Starter Kit</h1>
+    <p class="cover-subtitle">Build real apps with AI as your co-pilot: prompts, workflows, and project templates</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">What is Vibe Coding?</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">Tool Setup Guide</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">System Prompts Collection</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Workflow Patterns</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Advanced Techniques</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Appendix</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>Vibe Coding Starter Kit</h1>
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>System Prompts &amp; Workflows for AI-Assisted Development</h1>
+
+<p><em>Stop writing code. Start directing it.</em></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>What is Vibe Coding?</h1>
+
+<p>Vibe coding is a development philosophy where you describe what you want in natural language and let an AI assistant write the implementation. You&rsquo;re not pair programming — you&rsquo;re directing. Think of yourself as a technical product manager who happens to sit inside an IDE.</p>
+<p>The term caught fire in early 2025, but developers have been doing this since GPT-4 landed in coding tools. What&rsquo;s changed is that it actually <em>works</em> now. Not for everything, but for a surprisingly large chunk of day-to-day development.</p>
+<p><strong>When it works brilliantly:</strong></p>
+<ul>
+<li>CRUD APIs and standard backend routes</li>
+<li>React components with well-known patterns</li>
+<li>Unit tests (AI is genuinely excellent at this)</li>
+<li>Boilerplate: config files, Docker setups, CI pipelines</li>
+<li>Converting designs to code when you describe them clearly</li>
+<li>Refactoring existing code to a new pattern</li>
+</ul>
+<p><strong>When it fails spectacularly:</strong></p>
+<ul>
+<li>Complex state management across many files</li>
+<li>Performance-critical code where you need to reason about memory</li>
+<li>Anything requiring deep domain knowledge (financial calculations, medical logic)</li>
+<li>Novel algorithms — AI can only remix what it&rsquo;s seen</li>
+<li>Security-sensitive code (auth flows, encryption) — always review manually</li>
+</ul>
+<p><strong>The skill shift</strong> is real. Traditional development rewards knowing syntax, memorising APIs, and typing fast. Vibe coding rewards clear thinking, precise descriptions, and knowing <em>what</em> to build. You spend less time in documentation and more time in conversation. The developers who thrive aren&rsquo;t the fastest typists — they&rsquo;re the clearest thinkers.</p>
+<p>The catch: you still need to understand the code AI produces. Vibe coding without code literacy is just generating technical debt at superhuman speed. This guide assumes you can read code and spot problems. What it teaches you is how to get AI to produce better code in the first place.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>Tool Setup Guide</h1>
+
+<h3>Cursor</h3>
+<p>Cursor is a fork of VS Code built around AI-first development. It&rsquo;s currently the best all-round vibe coding environment.</p>
+<p><strong>Setup:</strong>
+1. Download from <a href="https://cursor.com">cursor.com</a>
+2. Import your VS Code settings (it&rsquo;ll offer on first launch)
+3. Sign up for Pro (£16/month) — the free tier is too limited for serious work</p>
+<p><strong>Essential keybindings:</strong>
+- <code>Cmd+K</code> / <code>Ctrl+K</code> — Inline edit (highlight code, describe the change)
+- <code>Cmd+L</code> / <code>Ctrl+L</code> — Open chat panel
+- <code>Cmd+I</code> / <code>Ctrl+I</code> — Composer (multi-file generation)
+- <code>Tab</code> — Accept autocomplete suggestion
+- <code>Esc</code> — Dismiss suggestion</p>
+<p><strong>Best practices:</strong>
+- Use <code>.cursorrules</code> files (covered in detail in Section 3) to set project-wide context
+- Keep the chat panel open — it remembers conversation context within a session
+- Use <code>@file</code> to reference specific files in chat: &ldquo;Refactor @utils/auth.ts to use JWT instead of sessions&rdquo;
+- Composer mode for anything touching 3+ files; inline edit for single-file changes
+- Set your preferred model in Settings → Models (Claude Sonnet 4 for speed, Claude Opus 4 for complex work)</p>
+<h3>GitHub Copilot</h3>
+<p>Still the most widely-used AI coding tool, and it&rsquo;s improved dramatically.</p>
+<p><strong>Setup:</strong>
+1. Install the GitHub Copilot extension in VS Code
+2. Enable Copilot Chat (comes bundled now)
+3. Settings to tweak:
+   - <code>github.copilot.enable</code> — toggle per language
+   - <code>github.copilot.advanced</code> — set temperature lower (0.1) for more predictable output</p>
+<p><strong>Best use cases:</strong>
+- Line-by-line autocomplete while you&rsquo;re already writing code
+- Copilot Chat for quick explanations (&ldquo;what does this regex do?&rdquo;)
+- <code>/fix</code> command in chat for error resolution
+- <code>/tests</code> command to generate test files</p>
+<p>Copilot is best when you&rsquo;re <em>writing alongside it</em>, not when you&rsquo;re trying to generate whole files from scratch.</p>
+<h3>Aider</h3>
+<p>Aider is the power tool. It&rsquo;s a CLI that connects to any LLM and edits your actual files on disc.</p>
+<p><strong>Setup:</strong></p>
+<pre><code class="language-bash">pip install aider-chat
+cd your-project
+aider --model claude-sonnet-4
+</code></pre>
+<p><strong>Model selection:</strong>
+- <code>claude-sonnet-4</code> — best balance of speed and quality (recommended default)
+- <code>claude-opus-4</code> — use for complex refactors, architecture work
+- <code>gpt-4o</code> — solid alternative, better at certain Python patterns
+- <code>deepseek-chat</code> — budget option, surprisingly capable</p>
+<p><strong>Key commands inside Aider:</strong>
+- <code>/add filename</code> — add files to context
+- <code>/drop filename</code> — remove files from context
+- <code>/ask</code> — ask without making changes
+- <code>/diff</code> — show pending changes before applying
+- <code>/undo</code> — revert last change</p>
+<p><strong>Why Aider over Cursor?</strong> Context control. You explicitly choose which files the AI can see and edit. For large codebases, this precision matters enormously.</p>
+<h3>Claude Code (CLI)</h3>
+<p>Anthropic&rsquo;s official CLI tool. Think of it as an AI pair programmer that lives in your terminal.</p>
+<p><strong>Setup:</strong></p>
+<pre><code class="language-bash">npm install -g @anthropic-ai/claude-code
+cd your-project
+claude
+</code></pre>
+<p><strong>Strengths:</strong>
+- Reads your entire project structure automatically
+- Can run commands, create files, and execute tests
+- Excellent at multi-step tasks (&ldquo;set up a new API endpoint with tests and update the router&rdquo;)
+- CLAUDE.md file in your project root acts like <code>.cursorrules</code> for Claude Code</p>
+<p><strong>When to use which tool:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Best Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quick autocomplete while typing</td>
+<td>Copilot</td>
+</tr>
+<tr>
+<td>Single-file edits with context</td>
+<td>Cursor inline</td>
+</tr>
+<tr>
+<td>Multi-file feature generation</td>
+<td>Cursor Composer</td>
+</tr>
+<tr>
+<td>Large refactors in big codebases</td>
+<td>Aider</td>
+</tr>
+<tr>
+<td>Full feature with tests + docs</td>
+<td>Claude Code</td>
+</tr>
+<tr>
+<td>Exploring/prototyping ideas</td>
+<td>Any chat interface</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>System Prompts Collection</h1>
+
+<p>The <code>.cursorrules</code> file (or <code>CLAUDE.md</code> for Claude Code) sits in your project root and gives the AI persistent context about your project. It&rsquo;s the single highest-leverage thing you can do to improve AI output quality.</p>
+<p>Every project type needs different rules. Here are ten battle-tested configs.</p>
+<h3>3.1 React / Next.js App</h3>
+<pre><code>You are an expert React and Next.js developer.
+
+Tech stack:
+- Next.js 15 with App Router
+- TypeScript (strict mode)
+- Tailwind CSS for styling
+- shadcn/ui component library
+- Zustand for client state
+- TanStack Query for server state
+
+Code style:
+- Use functional components exclusively. No class components.
+- Prefer named exports over default exports.
+- Use 'use client' directive only when the component genuinely needs client-side interactivity.
+- Server Components are the default. Do not add 'use client' unless the component uses hooks, event handlers, or browser APIs.
+- Collocate types with their components. Only extract to a shared types file if used in 3+ places.
+- Use Tailwind utility classes directly. Do not create CSS modules or styled-components.
+- Prefer composition over prop drilling. Use compound component patterns for complex UI.
+
+File naming:
+- Components: PascalCase (UserProfile.tsx)
+- Utilities: camelCase (formatDate.ts)
+- Routes: kebab-case directories (app/user-profile/page.tsx)
+
+Patterns:
+- Data fetching happens in Server Components or route handlers. Never fetch in client components directly — use TanStack Query hooks that call your API routes.
+- Form handling: use react-hook-form with zod validation schemas.
+- Error boundaries: every route segment should have an error.tsx.
+- Loading states: use Suspense boundaries with skeleton components, not spinner icons.
+
+Do not:
+- Use the pages/ directory. This project uses App Router exclusively.
+- Install new dependencies without asking first.
+- Use any state management other than Zustand and TanStack Query.
+- Write inline styles or CSS-in-JS.
+</code></pre>
+<p><strong>Why these rules matter:</strong> The biggest issue with AI-generated React code is inconsistency. Without rules, you&rsquo;ll get a mix of client and server components, random state management choices, and three different styling approaches in one project. This config eliminates that drift.</p>
+<h3>3.2 Python FastAPI Backend</h3>
+<pre><code>You are an expert Python backend developer using FastAPI.
+
+Tech stack:
+- Python 3.12+
+- FastAPI with async handlers
+- SQLAlchemy 2.0 with async sessions
+- Pydantic v2 for validation
+- Alembic for migrations
+- pytest with pytest-asyncio for testing
+
+Code style:
+- All route handlers must be async.
+- Use type hints everywhere. No untyped function signatures.
+- Pydantic models for all request/response schemas. Never return raw dicts.
+- Use dependency injection for database sessions, auth, and config.
+- Keep route handlers thin: business logic belongs in service modules.
+
+Project structure:
+- app/api/routes/ — route definitions grouped by domain
+- app/models/ — SQLAlchemy models
+- app/schemas/ — Pydantic request/response models
+- app/services/ — business logic
+- app/core/ — config, security, dependencies
+- tests/ — mirrors app/ structure
+
+Patterns:
+- Every endpoint returns a typed Pydantic response model.
+- Database queries go in repository classes, not in route handlers.
+- Use BackgroundTasks for non-blocking operations (emails, webhooks).
+- All datetimes are UTC. Use datetime.datetime with timezone info.
+- Pagination: use cursor-based pagination, not offset/limit.
+
+Error handling:
+- Raise HTTPException with specific status codes and detail messages.
+- Never catch broad Exception classes. Catch specific exceptions.
+- Log errors with structlog, not print statements.
+
+Do not:
+- Use synchronous database calls.
+- Return raw SQLAlchemy model instances from endpoints.
+- Use global mutable state.
+- Write SQL strings directly. Use SQLAlchemy's query builder.
+</code></pre>
+<h3>3.3 Node.js / Express API</h3>
+<pre><code>You are an expert Node.js backend developer.
+
+Tech stack:
+- Node.js 22 LTS
+- Express 5 with TypeScript
+- Prisma ORM with PostgreSQL
+- Zod for runtime validation
+- Jest for testing
+- Winston for logging
+
+Code style:
+- TypeScript strict mode. No 'any' types.
+- Async/await everywhere. No callback-style code.
+- Use ES module syntax (import/export), not CommonJS require.
+- Prefer const over let. Never use var.
+- Functions should do one thing. Max 30 lines per function.
+
+Architecture:
+- routes/ — Express route definitions (thin, validation + delegation only)
+- controllers/ — request handling and response formatting
+- services/ — business logic (framework-agnostic, testable)
+- repositories/ — database access via Prisma
+- middleware/ — auth, error handling, validation, rate limiting
+- types/ — shared TypeScript interfaces and types
+
+Patterns:
+- Validate all input at the route level using Zod schemas.
+- Centralised error handling middleware. Routes throw typed errors, middleware catches.
+- Use dependency injection: services receive their dependencies as constructor params.
+- Environment config via a validated config module, not raw process.env access.
+- All responses follow the shape: { data, meta, errors }.
+
+Do not:
+- Use Mongoose or MongoDB. This project uses PostgreSQL via Prisma.
+- Put business logic in route handlers or controllers.
+- Use try/catch in every route. Let errors propagate to the error middleware.
+- Install Express middleware without discussing it first.
+</code></pre>
+<h3>3.4 Mobile App (React Native)</h3>
+<pre><code>You are an expert React Native developer building a cross-platform mobile app.
+
+Tech stack:
+- React Native 0.76+ (New Architecture enabled)
+- Expo SDK 52 (managed workflow)
+- TypeScript strict mode
+- React Navigation v7 (native stack)
+- Zustand for state management
+- TanStack Query for API calls
+- expo-secure-store for sensitive data
+
+Code style:
+- Functional components with hooks only.
+- StyleSheet.create for all styles. No inline style objects.
+- Prefer platform-agnostic components. Use Platform.select only when truly necessary.
+- Dimensions: use useWindowDimensions hook, not Dimensions.get (it doesn't update on rotation).
+
+Patterns:
+- Navigation: typed route params using RootStackParamList.
+- Forms: react-hook-form with zod schemas (same as web).
+- Images: use expo-image, not React Native's Image component.
+- Lists: FlatList with keyExtractor for all scrollable lists. Never use ScrollView + map.
+- Animations: use react-native-reanimated for performant animations. No Animated API.
+
+Performance:
+- Memoize expensive computations with useMemo.
+- Use React.memo on list item components.
+- Avoid anonymous functions in render (extract to named handlers).
+- Use FlashList instead of FlatList for lists with 100+ items.
+
+Do not:
+- Use class components.
+- Access AsyncStorage for sensitive data (use expo-secure-store).
+- Use absolute pixel values for layout. Use flex and percentage-based sizing.
+- Install native modules that aren't Expo-compatible without discussing first.
+</code></pre>
+<h3>3.5 CLI Tool</h3>
+<pre><code>You are an expert developer building a command-line tool.
+
+Tech stack:
+- Node.js 22 with TypeScript
+- Commander.js for argument parsing
+- Chalk for coloured output
+- Ora for spinners/progress
+- Inquirer for interactive prompts
+- Vitest for testing
+
+Code style:
+- Single entry point: src/index.ts (thin, just wires up commands)
+- Each command in its own file under src/commands/
+- Shared utilities in src/utils/
+- Config handling in src/config.ts
+
+Patterns:
+- Every command has: name, description, arguments, options, and a handler function.
+- Validate all user input before processing. Fail fast with clear error messages.
+- Exit codes: 0 for success, 1 for user errors, 2 for system errors.
+- Long-running operations must show a spinner with status updates.
+- Support both interactive and non-interactive (piped) usage.
+- Config files: use XDG base directory spec (~/.config/toolname/).
+- Output: structured data goes to stdout, human messages go to stderr.
+
+Error messages:
+- Always suggest what the user should do next.
+- Bad: &quot;Error: file not found&quot;
+- Good: &quot;Could not find config.yml. Run 'mytool init' to create one, or specify a path with --config.&quot;
+
+Do not:
+- Use console.log for user-facing output. Use the chalk-wrapped output helpers.
+- Assume a particular shell or OS. Test cross-platform.
+- Require global installation. Support npx usage.
+</code></pre>
+<h3>3.6 Data Pipeline</h3>
+<pre><code>You are an expert data engineer building ETL/ELT pipelines.
+
+Tech stack:
+- Python 3.12+
+- Polars for data manipulation (not pandas)
+- DuckDB for analytical queries
+- Prefect for orchestration
+- Great Expectations for data validation
+- PyArrow for file I/O (Parquet format)
+
+Code style:
+- Type hints on every function. Use Polars type system for DataFrame operations.
+- Immutable transformations: never mutate DataFrames in place. Chain operations.
+- Each pipeline stage is a pure function: input DataFrame → output DataFrame.
+
+Patterns:
+- Extract, Transform, Load as separate modules.
+- Schema validation at every boundary (after extract, before load).
+- Idempotent operations: running the same pipeline twice produces the same result.
+- Incremental processing by default. Full refreshes only when explicitly requested.
+- Logging: log row counts at each stage, flag anomalies (&gt;20% change in row count).
+- Date handling: all timestamps in UTC, partitioned by date.
+
+Do not:
+- Use pandas. This project uses Polars for performance.
+- Write CSV files. Use Parquet for all intermediate and output data.
+- Use string concatenation for SQL queries. Use parameterised queries.
+- Ignore null handling. Every transformation must explicitly handle nulls.
+</code></pre>
+<h3>3.7 Chrome Extension</h3>
+<pre><code>You are an expert Chrome extension developer.
+
+Tech stack:
+- Manifest V3 (required for Chrome Web Store)
+- TypeScript
+- Vite for bundling
+- Tailwind CSS for popup/options UI
+- Chrome Storage API for persistence
+
+Architecture:
+- src/background/ — service worker (event-driven, no persistent state)
+- src/content/ — content scripts injected into pages
+- src/popup/ — popup UI (small React app)
+- src/options/ — options page
+- src/shared/ — types, utilities, message definitions
+
+Patterns:
+- Message passing between content script ↔ background ↔ popup via typed messages.
+- Define all message types in src/shared/messages.ts with discriminated unions.
+- Storage: use chrome.storage.local for data, chrome.storage.sync for user preferences.
+- Permissions: request only what's needed. Use optional permissions where possible.
+- Content scripts: minimal footprint. Inject only what's necessary.
+
+Security:
+- Never use eval() or innerHTML with untrusted content.
+- Content Security Policy must be strict in manifest.json.
+- Sanitise all data from web pages before processing.
+- Use externally_connectable cautiously.
+
+Do not:
+- Use Manifest V2 patterns (persistent background pages, browserAction).
+- Bundle large libraries in content scripts (they run on every matched page).
+- Store sensitive data in chrome.storage without encryption.
+- Use broad host permissions. Prefer activeTab where possible.
+</code></pre>
+<h3>3.8 Landing Page</h3>
+<pre><code>You are an expert frontend developer building a high-converting landing page.
+
+Tech stack:
+- Astro 5 (static output)
+- Tailwind CSS
+- TypeScript for any interactive islands
+- Motion One for animations
+- Sharp for image optimisation
+
+Code style:
+- Semantic HTML first. Every section uses appropriate HTML5 elements.
+- Mobile-first responsive design. Start with mobile layout, add md: and lg: breakpoints.
+- Performance budget: &lt;100KB total JavaScript, &lt;1s LCP on 3G.
+
+Structure:
+- src/sections/ — each page section as an Astro component
+- src/components/ — reusable UI elements
+- src/layouts/ — page layouts with SEO meta
+- public/ — static assets (optimised images, fonts)
+
+Patterns:
+- Above the fold: headline, subheading, CTA button, hero image. No navigation links before the CTA.
+- Social proof section: testimonials, logos, metrics.
+- Feature sections: benefit-led headlines (what the user gets), not feature-led (what it does).
+- CTA repetition: primary CTA appears at minimum 3 times on the page.
+- Images: use Astro's Image component for automatic optimisation. WebP format with AVIF fallback.
+
+SEO:
+- Unique title and meta description.
+- Open Graph and Twitter Card meta tags.
+- Structured data (JSON-LD) for the product/service.
+- Canonical URL set explicitly.
+
+Do not:
+- Use a SPA framework for a landing page. Static HTML is faster.
+- Add cookie banners or tracking scripts without discussing first.
+- Use hero carousels or sliders. One strong message beats five rotating ones.
+- Lazy-load above-the-fold images.
+</code></pre>
+<h3>3.9 Full-Stack SaaS</h3>
+<pre><code>You are an expert full-stack developer building a SaaS application.
+
+Tech stack:
+- Next.js 15 (App Router) — frontend and API routes
+- TypeScript strict mode throughout
+- PostgreSQL with Drizzle ORM
+- NextAuth.js v5 for authentication
+- Stripe for billing
+- Resend for transactional email
+- Tailwind CSS + shadcn/ui
+- Vercel for deployment
+
+Architecture:
+- app/(marketing)/ — public pages (landing, pricing, docs)
+- app/(app)/ — authenticated app pages (behind auth middleware)
+- app/api/ — API routes
+- lib/ — shared utilities, database, auth config
+- components/ — reusable UI (organised by domain, not by type)
+
+Patterns:
+- Multi-tenancy: workspace/organisation model. Users belong to workspaces.
+- Auth: server-side session checks in layouts, not individual pages.
+- Billing: Stripe webhooks handle all subscription state changes. Never trust client-side billing state.
+- Database: use Drizzle migrations. Schema changes go through migration files, never manual SQL.
+- Feature flags: simple key-value in database, cached in memory. No external service needed initially.
+- Background jobs: use Vercel Cron or Inngest for async work (emails, reports, cleanup).
+
+Security:
+- CSRF protection on all mutations.
+- Rate limiting on auth endpoints and API routes.
+- Input validation with Zod on every API route and server action.
+- Row-level security: every database query filters by workspace_id.
+
+Do not:
+- Build a custom auth system. Use NextAuth.js.
+- Store files in the database. Use S3-compatible storage (R2, S3).
+- Add an admin panel framework. Build admin routes within the app.
+- Over-engineer early. No microservices, no event sourcing, no GraphQL unless the requirements demand it.
+</code></pre>
+<h3>3.10 Open Source Library</h3>
+<pre><code>You are an expert developer building a well-documented open source library.
+
+Tech stack:
+- TypeScript (strict, with declaration files)
+- Vitest for testing
+- tsup for bundling (ESM + CJS dual output)
+- Changesets for version management
+- TypeDoc for API documentation
+- GitHub Actions for CI/CD
+
+Code style:
+- Zero runtime dependencies unless absolutely necessary. Justify every dependency.
+- Tree-shakeable: use named exports, avoid barrel files with side effects.
+- Pure functions where possible. Minimise internal mutable state.
+- Every public function has JSDoc with @param, @returns, @example, and @throws.
+- Generic type parameters over union types for flexibility.
+
+Project structure:
+- src/ — source code
+- src/index.ts — public API surface (re-exports only)
+- tests/ — test files mirroring src/ structure
+- docs/ — additional documentation and guides
+- examples/ — runnable example projects
+
+Patterns:
+- Semantic versioning strictly followed. Breaking changes = major bump.
+- Every PR must include: code changes, tests, documentation updates, changeset entry.
+- README.md: installation, quick start (under 30 seconds to first result), API overview, contributing guide link.
+- Error messages include the function name and expected vs received values.
+- Support both ESM and CommonJS consumers. Test both in CI.
+
+Do not:
+- Export internal implementation details. Only the public API surface is exported.
+- Use Node.js-specific APIs unless the library is Node-only. Prefer Web APIs for cross-platform.
+- Add peer dependencies without major version flexibility (e.g., &quot;react&quot;: &quot;&gt;=17&quot; not &quot;react&quot;: &quot;^18.2.0&quot;).
+- Commit generated files (dist/, docs/api/). These are built in CI.
+</code></pre>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Workflow Patterns</h1>
+
+<h3>The Describe → Generate → Review → Refine Loop</h3>
+<p>This is the fundamental workflow. Every vibe coding session follows this pattern, whether you&rsquo;re aware of it or not. Making it explicit makes you faster.</p>
+<p><strong>Describe:</strong> Be specific about what you want. Bad: &ldquo;make a login form.&rdquo; Good: &ldquo;Create a login form component with email and password fields, client-side validation using zod (email format, password min 8 chars), error messages below each field, a submit button that disables during loading, and calls the /api/auth/login endpoint via a TanStack Query mutation.&rdquo;</p>
+<p>The more specific your description, the fewer refine cycles you need. Spend 60 seconds writing a thorough description. It&rsquo;ll save you 10 minutes of back-and-forth.</p>
+<p><strong>Generate:</strong> Let the AI write the first draft. Don&rsquo;t interrupt it. Don&rsquo;t hover over suggestions and accept them one line at a time. Give it the full prompt and let it produce the complete output.</p>
+<p><strong>Review:</strong> Read the generated code critically. Check for:
+- Does it actually do what you asked?
+- Are there obvious bugs or logic errors?
+- Does it follow your project&rsquo;s patterns?
+- Are there security concerns?
+- Is it importing things that don&rsquo;t exist in your project?</p>
+<p><strong>Refine:</strong> Give targeted feedback. &ldquo;The validation is correct but move the zod schema to a separate file at lib/validations/auth.ts&rdquo; is better than &ldquo;that&rsquo;s not quite right, try again.&rdquo;</p>
+<p>Typically you&rsquo;ll do 2-3 refine cycles. If you&rsquo;re past 5, the AI probably doesn&rsquo;t have enough context. Add more files to the conversation or try a different approach.</p>
+<h3>Architecture-First: Plan Before You Code</h3>
+<p>The most powerful vibe coding technique isn&rsquo;t about writing code at all. It&rsquo;s about getting the AI to <em>plan</em> first.</p>
+<p>Before writing any implementation, prompt:</p>
+<pre><code>I need to build [feature description]. Before writing any code, give me:
+1. The file structure — what files will be created or modified
+2. The data model — what types/interfaces/schemas are needed
+3. The API surface — what endpoints or functions will exist
+4. The dependencies — what existing code this will interact with
+5. Edge cases — what could go wrong
+
+Do not write any implementation code yet. Just the plan.
+</code></pre>
+<p>Review the plan. Adjust it. <em>Then</em> ask for implementation. This avoids the painful situation where the AI generates 500 lines of code that&rsquo;s architecturally wrong.</p>
+<h3>Test-Driven Vibe Coding</h3>
+<p>This is counterintuitive but devastatingly effective: describe the tests first, then ask the AI to write the implementation that makes them pass.</p>
+<pre><code>Write tests for a ShoppingCart class with these behaviours:
+- Adding an item increases the item count
+- Adding the same item twice increases its quantity, doesn't duplicate
+- Removing an item decreases the count
+- Clearing the cart removes all items
+- Total price is calculated from item prices × quantities
+- Applying a percentage discount reduces the total
+- Cannot apply a negative discount (should throw)
+
+Use Vitest. Write the tests first. Do NOT write the implementation yet.
+</code></pre>
+<p>Once you have the tests, review them and then say: &ldquo;Now write the ShoppingCart implementation that makes all these tests pass.&rdquo;</p>
+<p>Why this works: tests are a precise specification. When the AI writes the implementation to match tests, it has an unambiguous definition of &ldquo;correct.&rdquo; The resulting code is testable by design and the tests actually cover meaningful behaviour.</p>
+<h3>Debugging with AI: The Right Way to Share Context</h3>
+<p>When something&rsquo;s broken, resist the urge to paste the error and say &ldquo;fix this.&rdquo; That produces guesswork. Instead, give structured context:</p>
+<pre><code>I'm getting an error in my Next.js app.
+
+**What I'm trying to do:** Fetch user data on the profile page using a server component.
+
+**The error:**
+TypeError: Cannot read properties of undefined (reading 'id')
+  at UserProfile (app/profile/page.tsx:12:34)
+
+**Relevant code:**
+[paste the component]
+
+**What I've already tried:**
+- Checked that the user session exists (it does, I logged it)
+- Verified the API endpoint returns data in Postman
+
+**My suspicion:** I think the async data fetching might not be awaited properly, but I'm not sure where.
+</code></pre>
+<p>This structured format gives the AI enough context to provide a targeted fix rather than a speculative rewrite of your entire component.</p>
+<h3>Code Review Prompts for AI-Generated Code</h3>
+<p>After the AI generates code, use these review prompts to catch issues:</p>
+<pre><code>Review this code for:
+1. Security vulnerabilities (injection, XSS, auth bypass)
+2. Performance issues (N+1 queries, unnecessary re-renders, memory leaks)
+3. Error handling gaps (what happens when the network fails? when data is malformed?)
+4. Edge cases (empty arrays, null values, concurrent access)
+5. Consistency with the rest of the codebase
+</code></pre>
+<p>You can also ask for specific analyses:</p>
+<ul>
+<li>&ldquo;What happens if two users submit this form simultaneously?&rdquo;</li>
+<li>&ldquo;Could this query be slow with 100,000 rows in the table?&rdquo;</li>
+<li>&ldquo;Is there a race condition in this async code?&rdquo;</li>
+</ul>
+<p>Don&rsquo;t skip review because the code &ldquo;looks right.&rdquo; AI-generated code is most dangerous when it&rsquo;s 95% correct — the bugs hide in the last 5%.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Advanced Techniques</h1>
+
+<h3>Multi-File Refactoring Strategies</h3>
+<p>Large refactors are where most people hit the AI&rsquo;s limits. The context window fills up, the AI loses track of the overall goal, and you end up with half-refactored code that doesn&rsquo;t compile.</p>
+<p>The solution is <strong>staged refactoring:</strong></p>
+<ol>
+<li><strong>Map phase:</strong> &ldquo;List every file that imports from lib/old-auth.ts and describe what each one uses from it.&rdquo;</li>
+<li><strong>Plan phase:</strong> &ldquo;Create a migration plan to move from the old auth pattern to the new one. Order the changes so each step leaves the codebase in a working state.&rdquo;</li>
+<li><strong>Execute phase:</strong> Do one file at a time. &ldquo;Now refactor app/api/users/route.ts to use the new auth pattern. Here&rsquo;s the new auth utility for reference: [paste new-auth.ts].&rdquo;</li>
+<li><strong>Verify phase:</strong> &ldquo;Check that all imports from lib/old-auth.ts have been migrated. List any remaining references.&rdquo;</li>
+</ol>
+<p>Never try to refactor everything in one prompt. The AI will lose coherence past 3-4 files.</p>
+<h3>Getting AI to Follow Your Existing Patterns</h3>
+<p>The <code>.cursorrules</code> file handles general patterns, but for specific situations, show don&rsquo;t tell:</p>
+<pre><code>Here's how we handle API error responses in this project:
+
+[paste an existing, well-written example]
+
+Now create the same pattern for the /api/orders endpoint.
+</code></pre>
+<p>Providing a concrete example from your own codebase is worth more than paragraphs of description. The AI will match the style, naming, and structure almost exactly.</p>
+<p>Another technique: <strong>@-reference your best files.</strong> In Cursor, say &ldquo;Follow the same pattern as @api/users/route.ts&rdquo; when creating a new endpoint. The AI will read that file and mirror it.</p>
+<h3>Managing Context Window Limitations</h3>
+<p>Every AI model has a finite context window. When you hit it, the AI starts &ldquo;forgetting&rdquo; the beginning of your conversation. Signs you&rsquo;ve hit the limit:</p>
+<ul>
+<li>AI contradicts something it said earlier</li>
+<li>Generated code imports from files you discussed but gets the paths wrong</li>
+<li>Suggestions become more generic and less project-specific</li>
+</ul>
+<p><strong>Mitigation strategies:</strong></p>
+<ul>
+<li>Start new conversations for new tasks (don&rsquo;t reuse a 50-message thread)</li>
+<li>Front-load the important context (project structure, key files, constraints)</li>
+<li>Use <code>.cursorrules</code> / <code>CLAUDE.md</code> — this context is always present, it doesn&rsquo;t eat into your conversation window</li>
+<li>In Aider, actively <code>/drop</code> files you&rsquo;re done with to free up context space</li>
+<li>Summarise long conversations: &ldquo;To recap, we&rsquo;ve built X and Y. Now I need Z.&rdquo;</li>
+</ul>
+<h3>When to Stop Vibing and Write It Yourself</h3>
+<p>Vibe coding is a tool, not a religion. Stop and write the code yourself when:</p>
+<ul>
+<li><strong>You&rsquo;re on refine cycle #5</strong> for the same piece of code. You&rsquo;re spending more time prompt-engineering than coding.</li>
+<li><strong>The logic is genuinely novel.</strong> If you&rsquo;re inventing an algorithm, write it. AI can only recombine existing patterns.</li>
+<li><strong>Performance is critical.</strong> AI-generated code is usually correct but rarely optimal. Hand-tune hot paths.</li>
+<li><strong>You can&rsquo;t explain what you want.</strong> If you can&rsquo;t describe it clearly enough for the AI, you don&rsquo;t understand the problem well enough yet. Sketch it out manually, <em>then</em> bring in the AI.</li>
+<li><strong>The code is security-critical.</strong> Authentication, authorisation, encryption, payment processing. Review AI suggestions here but write the core logic yourself.</li>
+</ul>
+<p>The best vibe coders aren&rsquo;t the ones who use AI for everything. They&rsquo;re the ones who know exactly when to use it and when to step in.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Appendix</h1>
+
+<h3>Quick Reference: Best Prompt Patterns</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Be specific</strong></td>
+<td>&ldquo;Create a paginated API endpoint&rdquo; → &ldquo;Create a GET /api/products endpoint with cursor-based pagination, 20 items per page, sorted by created_at desc, returning a next_cursor field&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Show, don&rsquo;t tell</strong></td>
+<td>&ldquo;Follow clean code practices&rdquo; → &ldquo;Follow the pattern in @api/users/route.ts&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Constrain the output</strong></td>
+<td>&ldquo;Build a form&rdquo; → &ldquo;Build a form using react-hook-form and zod. No other form libraries.&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Define the boundary</strong></td>
+<td>&ldquo;Refactor the auth&rdquo; → &ldquo;Refactor only lib/auth.ts and its direct imports. Don&rsquo;t touch the API routes yet.&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Request format</strong></td>
+<td>&ldquo;Help me with tests&rdquo; → &ldquo;Write Vitest tests. One describe block per public method. Include edge cases for null/undefined inputs.&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Plan first</strong></td>
+<td>&ldquo;Build the feature&rdquo; → &ldquo;Plan the file structure and data model first. Don&rsquo;t write implementation until I approve the plan.&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Provide context</strong></td>
+<td>&ldquo;Fix this bug&rdquo; → &ldquo;This error occurs when [context]. Here&rsquo;s the relevant code [code]. I&rsquo;ve tried [attempts]. I suspect [hypothesis].&rdquo;</td>
+</tr>
+<tr>
+<td><strong>Iterate narrowly</strong></td>
+<td>&ldquo;That&rsquo;s wrong, try again&rdquo; → &ldquo;The validation logic is correct but the error messages should use the field labels, not the field names.&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<h3>Model Comparison for Coding (Early 2025)</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Speed</th>
+<th>Code Quality</th>
+<th>Context Window</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claude Opus 4</strong></td>
+<td>Slow</td>
+<td>Excellent</td>
+<td>200K</td>
+<td>Complex architecture, multi-file refactors, nuanced code review</td>
+</tr>
+<tr>
+<td><strong>Claude Sonnet 4</strong></td>
+<td>Fast</td>
+<td>Very good</td>
+<td>200K</td>
+<td>Daily driver. Best speed/quality ratio for most tasks</td>
+</tr>
+<tr>
+<td><strong>GPT-4o</strong></td>
+<td>Fast</td>
+<td>Very good</td>
+<td>128K</td>
+<td>Python, data science, well-documented APIs</td>
+</tr>
+<tr>
+<td><strong>Gemini 2.5 Pro</strong></td>
+<td>Medium</td>
+<td>Good</td>
+<td>1M</td>
+<td>Massive context tasks, entire codebase analysis</td>
+</tr>
+<tr>
+<td><strong>DeepSeek V3</strong></td>
+<td>Fast</td>
+<td>Good</td>
+<td>128K</td>
+<td>Budget option, strong at algorithmic code</td>
+</tr>
+<tr>
+<td><strong>Llama 3 (local)</strong></td>
+<td>Varies</td>
+<td>Decent</td>
+<td>128K</td>
+<td>Offline work, privacy-sensitive projects</td>
+</tr>
+<tr>
+<td><strong>GPT-4o mini</strong></td>
+<td>Very fast</td>
+<td>Acceptable</td>
+<td>128K</td>
+<td>Autocomplete, simple generation, cost-sensitive bulk work</td>
+</tr>
+</tbody>
+</table>
+<p><strong>My daily setup:</strong> Claude Sonnet 4 for 80% of work. Claude Opus 4 when I need deep reasoning. GPT-4o when Sonnet struggles with a specific API or library. Gemini 2.5 Pro when I need to analyse an entire codebase at once.</p>
+<h3>Resources &amp; Communities</h3>
+<p><strong>Tools:</strong>
+- <a href="https://cursor.com">cursor.com</a> — AI-first code editor
+- <a href="https://aider.chat">aider.chat</a> — CLI coding assistant
+- <a href="https://claude.ai">claude.ai/code</a> — Claude Code CLI
+- <a href="https://github.com/features/copilot">github.com/features/copilot</a> — GitHub Copilot</p>
+<p><strong>Communities:</strong>
+- r/ChatGPTCoding — active subreddit for AI-assisted development
+- Cursor Discord — tool-specific tips and <code>.cursorrules</code> sharing
+- Aider Discord — power user techniques and model comparisons
+- r/LocalLLaMA — if you want to run models locally for coding</p>
+<p><strong>Learning:</strong>
+- <a href="https://docs.cursor.com">docs.cursor.com</a> — official Cursor documentation
+- Simon Willison&rsquo;s blog (simonwillison.net) — excellent writing on AI-assisted development
+- Thorsten Ball&rsquo;s blog — practical vibe coding experiences</p>
+<p><strong>Prompt libraries:</strong>
+- <a href="https://cursor.directory">cursor.directory</a> — community-contributed <code>.cursorrules</code> files
+- GitHub: search &ldquo;cursorrules&rdquo; for project-specific examples</p>
+<hr />
+<p><em>This guide is maintained and updated as tools and models evolve. You&rsquo;ll receive updates when significant changes warrant them.</em></p>
+<p><em>Written by someone who vibe-codes daily and has the commit history to prove it.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The Vibe Coding Starter Kit</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>

@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The SEO Audit Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --teal: #10B981; --teal-dark: #059669; --teal-light: #D1FAE5; --teal-bg: #ECFDF5;
+  --amber: #F59E0B; --amber-dark: #D97706; --amber-light: #FEF3C7; --amber-bg: #FFFBEB;
+  --slate-900: #0F172A; --slate-800: #1E293B; --slate-700: #334155; --slate-600: #475569;
+  --slate-500: #64748B; --slate-400: #94A3B8; --slate-300: #CBD5E1; --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9; --slate-50: #F8FAFC; --bg: #FAFAFA;
+  --text-primary: #1E293B; --text-secondary: #475569; --text-muted: #94A3B8;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --content-width: 720px; --page-padding: 2rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-primary); background: var(--bg); }
+.page-container { max-width: var(--content-width); margin: 0 auto; padding: var(--page-padding); }
+
+.cover-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #064E3B 0%, #065F46 25%, #047857 50%, #059669 75%, #10B981 100%); color: white; text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+.cover-content { position: relative; z-index: 1; max-width: 600px; }
+.cover-badge { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+.cover-title { font-size: 3.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.03em; }
+.cover-subtitle { font-size: 1.25rem; font-weight: 300; line-height: 1.5; opacity: 0.9; margin-bottom: 2.5rem; }
+.cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 2rem; border-radius: 2px; }
+.cover-byline { font-size: 1.1rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.5rem; }
+.cover-meta { font-size: 0.85rem; opacity: 0.6; }
+
+.toc-page { padding: 3rem 0; }
+.toc-page h2 { font-size: 1.8rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.toc-list { list-style: none; padding: 0; counter-reset: toc-counter; }
+.toc-list li { counter-increment: toc-counter; padding-left: 0; }
+.toc-list li::before { display: none; }
+.toc-list li a { display: flex; align-items: baseline; padding: 0.75rem 0; text-decoration: none; color: var(--text-primary); border-bottom: 1px solid var(--slate-100); gap: 1rem; transition: all 0.2s; }
+.toc-list li a:hover { color: var(--teal); padding-left: 0.5rem; }
+.toc-list li a::before { content: counter(toc-counter, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); min-width: 2rem; }
+.toc-chapter-title { font-weight: 600; font-size: 1.05rem; flex: 1; }
+
+.chapter { padding-top: 3rem; margin-top: 2rem; border-top: 1px solid var(--slate-200); }
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--slate-900); line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em; padding-bottom: 1rem; border-bottom: 3px solid var(--teal); }
+h1 .chapter-number { display: block; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--slate-800); line-height: 1.3; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; padding-left: 1rem; border-left: 4px solid var(--teal); }
+h3 { font-size: 1.2rem; font-weight: 600; color: var(--slate-700); margin-top: 2rem; margin-bottom: 0.75rem; }
+h3::before { content: '▸ '; color: var(--teal); font-weight: 400; }
+h4 { font-size: 0.95rem; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1.25rem; color: var(--text-primary); }
+strong { font-weight: 700; color: var(--slate-900); }
+em { font-style: italic; color: var(--slate-700); }
+a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(16,185,129,0.3); text-underline-offset: 2px; }
+hr { border: none; height: 1px; background: var(--slate-200); margin: 2.5rem 0; }
+
+code { font-family: var(--font-mono); font-size: 0.875em; background: var(--slate-100); color: var(--teal-dark); padding: 0.15em 0.4em; border-radius: 4px; border: 1px solid var(--slate-200); font-weight: 500; }
+pre { background: var(--slate-800); color: #E2E8F0; border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--slate-700); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+pre code { background: none; color: inherit; padding: 0; border: none; font-size: 0.875rem; line-height: 1.6; font-weight: 400; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.925rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--slate-200); }
+thead { background: var(--teal); color: white; }
+th { padding: 0.85rem 1rem; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--slate-100); }
+tr:nth-child(even) td { background: var(--slate-50); }
+tr:hover td { background: var(--teal-bg); }
+
+blockquote { border-left: 4px solid var(--teal); background: var(--slate-50); margin: 1.5rem 0; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; color: var(--slate-600); }
+blockquote p { color: var(--slate-600); margin-bottom: 0.5rem; }
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 1rem 0 1.5rem 0; padding-left: 0; }
+ul { list-style: none; }
+ul > li { padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+ul > li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+ul ul > li::before { background: transparent; border: 2px solid var(--teal); width: 5px; height: 5px; }
+ol { list-style: none; counter-reset: ol-counter; }
+ol > li { counter-increment: ol-counter; padding-left: 2rem; position: relative; margin-bottom: 0.5rem; }
+ol > li::before { content: counter(ol-counter); position: absolute; left: 0; top: 0.1em; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.checkbox { list-style: none; padding-left: 1.5rem; }
+.checkbox::before { display: none; }
+.checked { color: var(--teal-dark); }
+
+.page-footer { text-align: center; padding: 3rem 0 2rem; margin-top: 4rem; border-top: 1px solid var(--slate-200); color: var(--text-muted); font-size: 0.8rem; }
+.page-footer a { color: var(--teal); font-weight: 500; }
+.footer-brand { font-weight: 600; color: var(--slate-500); }
+
+@media print {
+  @page { margin: 1.5cm 2cm; size: A4; }
+  body { background: white; font-size: 11pt; color: #1a1a1a; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-container { max-width: none; padding: 0; }
+  .cover-page { height: 100vh; margin: -1.5cm -2cm; padding: 3cm 2cm; width: calc(100% + 4cm); -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .chapter { page-break-before: auto; }
+  pre, .callout, blockquote { break-inside: avoid; }
+  table { break-inside: auto; }
+  tr { break-inside: avoid; break-after: auto; }
+  thead { display: table-header-group; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  tr:nth-child(even) td { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+@media (max-width: 768px) {
+  :root { --page-padding: 1.25rem; }
+  .cover-title { font-size: 2.2rem; }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="cover-page">
+  <div class="cover-content">
+    <div class="cover-badge">SEO Guide</div>
+    <h1 class="cover-title" style="border:none; padding:0; color:white; margin-bottom:1rem; font-size:3rem;">The SEO Audit Checklist</h1>
+    <p class="cover-subtitle">A systematic, page-by-page framework to find and fix every SEO issue on your site</p>
+    <div class="cover-divider"></div>
+    <p class="cover-byline">by Rook 🏰</p>
+    <p class="cover-meta">First Edition · February 2026</p>
+  </div>
+</div>
+
+
+
+<div class="page-container">
+  <div class="toc-page">
+    <h2 style="border:none; padding:0;">Table of Contents</h2>
+    <ol class="toc-list">
+      <li><a href="#chapter-1"><span class="toc-chapter-title">Score Your Site in 30 Minutes</span></a></li>
+      <li><a href="#chapter-2"><span class="toc-chapter-title">Scoring Overview</span></a></li>
+      <li><a href="#chapter-3"><span class="toc-chapter-title">Score Interpretation</span></a></li>
+      <li><a href="#chapter-4"><span class="toc-chapter-title">Category 1: Technical SEO (25%)</span></a></li>
+      <li><a href="#chapter-5"><span class="toc-chapter-title">Category 2: On-Page SEO (25%)</span></a></li>
+      <li><a href="#chapter-6"><span class="toc-chapter-title">Category 3: Off-Page SEO (15%)</span></a></li>
+      <li><a href="#chapter-7"><span class="toc-chapter-title">Category 4: Content Quality & E-E-A-T (15%)</span></a></li>
+      <li><a href="#chapter-8"><span class="toc-chapter-title">Category 5: Local SEO (10%)</span></a></li>
+      <li><a href="#chapter-9"><span class="toc-chapter-title">Category 6: AI & GEO Readiness (10%)</span></a></li>
+      <li><a href="#chapter-10"><span class="toc-chapter-title">Final Score Calculation</span></a></li>
+      <li><a href="#chapter-11"><span class="toc-chapter-title">Quick-Reference Tool Stack</span></a></li>
+      <li><a href="#chapter-12"><span class="toc-chapter-title">Priority Action Matrix</span></a></li>
+      <li><a href="#chapter-13"><span class="toc-chapter-title">Re-Audit Schedule</span></a></li>
+      <li><a href="#chapter-14"><span class="toc-chapter-title">Changelog</span></a></li>
+    </ol>
+  </div>
+
+
+<h1>The Complete SEO Audit Checklist</h1>
+<div class="chapter" id="chapter-1">
+<h1><span class="chapter-number">Chapter 01</span>Score Your Site in 30 Minutes</h1>
+
+<hr />
+<blockquote>
+<p><strong>A structured, weighted framework for evaluating any website&rsquo;s search performance — from technical foundations to AI-readiness.</strong></p>
+</blockquote>
+<hr />
+<h3>How to Use This Checklist</h3>
+<p>This audit is divided into <strong>six weighted categories</strong> that together produce a score out of 100. For each item, mark it as ✅ <strong>Pass</strong>, ⚠️ <strong>Partial</strong>, or ❌ <strong>Fail</strong>. Tally your points at the end of each section, then calculate your final score using the weighting table.</p>
+<p><strong>Scoring per item:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Result</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ Pass</td>
+<td>Full points for that item</td>
+</tr>
+<tr>
+<td>⚠️ Partial</td>
+<td>Half points (round down)</td>
+</tr>
+<tr>
+<td>❌ Fail</td>
+<td>0 points</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Time estimate:</strong> 25–35 minutes with the right tools open.</p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-2">
+<h1><span class="chapter-number">Chapter 02</span>Scoring Overview</h1>
+
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Category</th>
+<th>Weight</th>
+<th>Max Raw Score</th>
+<th>Weighted Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Technical SEO</td>
+<td>25%</td>
+<td>30</td>
+<td>25</td>
+</tr>
+<tr>
+<td>2</td>
+<td>On-Page SEO</td>
+<td>25%</td>
+<td>28</td>
+<td>25</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Off-Page SEO</td>
+<td>15%</td>
+<td>18</td>
+<td>15</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Content Quality &amp; E-E-A-T</td>
+<td>15%</td>
+<td>18</td>
+<td>15</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Local SEO</td>
+<td>10%</td>
+<td>14</td>
+<td>10</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AI &amp; GEO Readiness</td>
+<td>10%</td>
+<td>16</td>
+<td>10</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Total</strong></td>
+<td><strong>100%</strong></td>
+<td></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Your weighted score formula:</strong></p>
+<pre><code>Category Score = (Your Raw Points ÷ Max Raw Score) × Weight
+Final Score = Sum of all Category Scores
+</code></pre>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-3">
+<h1><span class="chapter-number">Chapter 03</span>Score Interpretation</h1>
+
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Rating</th>
+<th>What It Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>90–100</td>
+<td>🟢 Excellent</td>
+<td>Best-in-class. Focus on marginal gains and emerging trends.</td>
+</tr>
+<tr>
+<td>75–89</td>
+<td>🔵 Strong</td>
+<td>Solid foundations. Address the gaps to pull ahead of competitors.</td>
+</tr>
+<tr>
+<td>55–74</td>
+<td>🟡 Needs Work</td>
+<td>Significant opportunities being missed. Prioritise red items.</td>
+</tr>
+<tr>
+<td>35–54</td>
+<td>🟠 Weak</td>
+<td>Fundamental issues present. Likely losing traffic to fixable problems.</td>
+</tr>
+<tr>
+<td>0–34</td>
+<td>🔴 Critical</td>
+<td>Major structural failures. Treat this as a rebuild, not a tune-up.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-4">
+<h1><span class="chapter-number">Chapter 04</span>Category 1: Technical SEO (25%)</h1>
+
+<p><em>The invisible architecture that determines whether search engines can find, crawl, and understand your site.</em></p>
+<p><strong>Max Raw Score: 30</strong></p>
+<h3>Core Web Vitals (12 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1</td>
+<td><strong>Largest Contentful Paint (LCP)</strong> — Is LCP ≤ 2.5s on mobile? Test via PageSpeed Insights or CrUX.</td>
+<td>4</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.2</td>
+<td><strong>Cumulative Layout Shift (CLS)</strong> — Is CLS ≤ 0.1? Check for images without dimensions, injected content, and web fonts causing layout jumps.</td>
+<td>4</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.3</td>
+<td><strong>Interaction to Next Paint (INP)</strong> — Is INP ≤ 200ms? Test interactive elements (menus, forms, accordions) on mobile.</td>
+<td>4</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Run your homepage <em>and</em> a key landing page through <a href="https://pagespeed.web.dev">PageSpeed Insights</a>. Use field data (real users) over lab data where available.</p>
+</blockquote>
+<h3>Crawlability (8 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.4</td>
+<td><strong>Robots.txt</strong> — Does it exist, allow critical paths, and block only what&rsquo;s intended? No accidental <code>Disallow: /</code> directives.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.5</td>
+<td><strong>XML Sitemap</strong> — Is a valid sitemap submitted to Google Search Console and Bing Webmaster Tools? Does it include only indexable, canonical URLs?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.6</td>
+<td><strong>Crawl Errors</strong> — Are there fewer than 5 critical crawl errors in Search Console? No 5xx responses on important pages.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.7</td>
+<td><strong>Site Architecture</strong> — Can every important page be reached within 3 clicks from the homepage? No orphan pages.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Indexation (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.8</td>
+<td><strong>Index Coverage</strong> — Run <code>site:yourdomain.com</code>. Is the indexed page count within 10% of your expected total? No unexpected pages indexed.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.9</td>
+<td><strong>Canonical Tags</strong> — Does every page have a self-referencing canonical tag? Are duplicate/variant pages canonicalised correctly?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.10</td>
+<td><strong>Noindex Audit</strong> — Are any important pages accidentally noindexed? Check meta robots tags and HTTP headers.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Schema Markup (4 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.11</td>
+<td><strong>Structured Data Present</strong> — Does the site implement relevant schema types (Organisation, Product, Article, FAQ, BreadcrumbList, LocalBusiness)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>1.12</td>
+<td><strong>Schema Validation</strong> — Does all structured data pass Google&rsquo;s Rich Results Test with zero errors and zero warnings?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Use <a href="https://validator.schema.org">Schema.org Validator</a> and <a href="https://search.google.com/test/rich-results">Google&rsquo;s Rich Results Test</a> side by side.</p>
+</blockquote>
+<p><strong>Category 1 Raw Score: ____ / 30</strong></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-5">
+<h1><span class="chapter-number">Chapter 05</span>Category 2: On-Page SEO (25%)</h1>
+
+<p><em>The elements on each page that tell search engines — and humans — what your content is about.</em></p>
+<p><strong>Max Raw Score: 28</strong></p>
+<h3>Meta Tags (8 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1</td>
+<td><strong>Title Tags</strong> — Does every key page have a unique title tag, 50–60 characters, containing the primary keyword near the front?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.2</td>
+<td><strong>Meta Descriptions</strong> — Does every key page have a unique, compelling meta description, 140–160 characters, with a clear call to action?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><strong>Open Graph Tags</strong> — Are <code>og:title</code>, <code>og:description</code>, <code>og:image</code>, and <code>og:url</code> set correctly for social sharing?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.4</td>
+<td><strong>Twitter/X Cards</strong> — Are Twitter Card tags present with a valid <code>twitter:card</code> type and preview image?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Heading Structure (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.5</td>
+<td><strong>H1 Tag</strong> — Does every page have exactly one H1 that includes the primary target keyword?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.6</td>
+<td><strong>Heading Hierarchy</strong> — Do headings follow a logical H1 → H2 → H3 structure with no skipped levels?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.7</td>
+<td><strong>Keyword Placement</strong> — Do H2/H3 headings naturally incorporate secondary and related keywords?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Internal Linking (8 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.8</td>
+<td><strong>Contextual Internal Links</strong> — Does each piece of content contain at least 2–3 contextual links to related pages on the site?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.9</td>
+<td><strong>Anchor Text Variety</strong> — Are internal link anchor texts descriptive and varied (not just &ldquo;click here&rdquo; or &ldquo;read more&rdquo;)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.10</td>
+<td><strong>Broken Internal Links</strong> — Are there zero broken internal links? Run a crawl to check for 404s.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.11</td>
+<td><strong>Link Equity Flow</strong> — Do your most important pages receive the most internal links? Check with a crawl tool&rsquo;s internal link distribution report.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>URL Structure (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.12</td>
+<td><strong>Clean URLs</strong> — Are URLs short, lowercase, hyphen-separated, and human-readable? No query parameters, session IDs, or unnecessary folders.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.13</td>
+<td><strong>HTTPS</strong> — Is the entire site served over HTTPS with a valid SSL certificate? No mixed content warnings.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>2.14</td>
+<td><strong>Redirect Chains</strong> — Are there no redirect chains longer than one hop? Every redirect goes directly to the final destination.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Screaming Frog (free up to 500 URLs) will catch most on-page issues in a single crawl: broken links, duplicate titles, missing headings, redirect chains, and more.</p>
+</blockquote>
+<p><strong>Category 2 Raw Score: ____ / 28</strong></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-6">
+<h1><span class="chapter-number">Chapter 06</span>Category 3: Off-Page SEO (15%)</h1>
+
+<p><em>Your site&rsquo;s reputation and authority as perceived through external signals.</em></p>
+<p><strong>Max Raw Score: 18</strong></p>
+<h3>Backlink Profile (10 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td><strong>Domain Authority / Domain Rating</strong> — Is your DA/DR competitive with the top 3 ranking competitors for your primary keywords?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>3.2</td>
+<td><strong>Referring Domains Growth</strong> — Has the number of unique referring domains grown (or remained stable) over the past 6 months?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>3.3</td>
+<td><strong>Toxic Backlinks</strong> — Have you audited for spammy or toxic backlinks and disavowed where necessary? Less than 5% of links flagged as toxic.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>3.4</td>
+<td><strong>Anchor Text Distribution</strong> — Is your anchor text profile natural? A healthy mix of branded, naked URL, generic, and keyword-rich anchors.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>3.5</td>
+<td><strong>Link Relevance</strong> — Do the majority of your backlinks come from topically relevant domains?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Brand Signals (4 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.6</td>
+<td><strong>Brand Mentions</strong> — Is your brand mentioned (linked or unlinked) on relevant industry sites, publications, or forums?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>3.7</td>
+<td><strong>Branded Search Volume</strong> — Does your brand name generate measurable search volume? Check Google Trends or Search Console.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Directory &amp; Citation Presence (4 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.8</td>
+<td><strong>Key Directories</strong> — Is your business listed on the top 5 relevant directories for your industry (e.g., Yelp, Trustpilot, G2, Capterra, industry-specific)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>3.9</td>
+<td><strong>NAP Consistency</strong> — Is your Name, Address, and Phone number identical across all directory listings?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Use Ahrefs, Semrush, or Moz (free tiers available) for backlink analysis. For brand mentions, try Google Alerts or BrandMentions.</p>
+</blockquote>
+<p><strong>Category 3 Raw Score: ____ / 18</strong></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-7">
+<h1><span class="chapter-number">Chapter 07</span>Category 4: Content Quality &amp; E-E-A-T (15%)</h1>
+
+<p><em>Google&rsquo;s quality rater guidelines emphasise Experience, Expertise, Authoritativeness, and Trustworthiness. This is how your content stacks up.</em></p>
+<p><strong>Max Raw Score: 18</strong></p>
+<h3>Content Depth (8 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.1</td>
+<td><strong>Search Intent Match</strong> — Does each key page clearly satisfy the dominant search intent (informational, navigational, commercial, transactional) for its target keyword?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>4.2</td>
+<td><strong>Content Comprehensiveness</strong> — Does your content cover the topic as thoroughly as (or more than) the current top 3 ranking pages?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>4.3</td>
+<td><strong>Freshness</strong> — Has key content been reviewed and updated within the past 12 months? Are &ldquo;last updated&rdquo; dates visible?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>4.4</td>
+<td><strong>Multimedia</strong> — Does content include relevant images, videos, charts, or infographics (not just walls of text)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>E-E-A-T Signals (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.5</td>
+<td><strong>Author Information</strong> — Do articles/content pages display author names with linked bios showing credentials and experience?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>4.6</td>
+<td><strong>About &amp; Trust Pages</strong> — Does the site have a comprehensive About page, Contact page, and Privacy Policy? Are they easily accessible?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>4.7</td>
+<td><strong>External Citations</strong> — Does content reference and link to authoritative external sources where appropriate?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>User Experience (4 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.8</td>
+<td><strong>Readability</strong> — Is content formatted for scannability? Short paragraphs, bullet points, clear subheadings, adequate white space.</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>4.9</td>
+<td><strong>Mobile Experience</strong> — Does content render well on mobile without horizontal scrolling, tiny text, or overlapping elements?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Use Google&rsquo;s &ldquo;People Also Ask&rdquo; and &ldquo;Related Searches&rdquo; to check if your content covers the subtopics users actually care about. Clearscope or SurferSEO can score content comprehensiveness.</p>
+</blockquote>
+<p><strong>Category 4 Raw Score: ____ / 18</strong></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-8">
+<h1><span class="chapter-number">Chapter 08</span>Category 5: Local SEO (10%)</h1>
+
+<p><em>If your business serves a specific geographic area, these signals are non-negotiable. If you&rsquo;re a purely online/global business, score each item you&rsquo;ve optimised or mark N/A and redistribute the weight to Category 4.</em></p>
+<p><strong>Max Raw Score: 14</strong></p>
+<h3>Google Business Profile (8 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.1</td>
+<td><strong>GBP Claimed &amp; Verified</strong> — Is your Google Business Profile claimed, verified, and actively managed?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>5.2</td>
+<td><strong>Complete Profile</strong> — Are all fields filled: business name, category, address, phone, hours, website, description, attributes?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>5.3</td>
+<td><strong>Photos &amp; Posts</strong> — Have you uploaded recent photos (last 90 days) and published Google Posts (last 30 days)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>5.4</td>
+<td><strong>Reviews &amp; Responses</strong> — Do you have ≥10 reviews with a ≥4.0 average rating? Are all reviews responded to within 48 hours?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Local On-Page (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.5</td>
+<td><strong>Location Pages</strong> — If you serve multiple areas, does each have a unique, content-rich location page (not just swapped city names)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>5.6</td>
+<td><strong>Local Schema</strong> — Is <code>LocalBusiness</code> schema implemented with correct NAP data, geo-coordinates, and opening hours?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>5.7</td>
+<td><strong>Localised Content</strong> — Does your content reference local landmarks, events, or context where relevant?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Use the <a href="https://gmbeverywhere.com">GMB Everywhere</a> Chrome extension to audit competitors&rsquo; Google Business Profiles alongside your own.</p>
+</blockquote>
+<p><strong>Category 5 Raw Score: ____ / 14</strong></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-9">
+<h1><span class="chapter-number">Chapter 09</span>Category 6: AI &amp; GEO Readiness (10%)</h1>
+
+<p><em>Generative Engine Optimisation (GEO) is the emerging discipline of optimising for AI-powered search (ChatGPT, Perplexity, Google AI Overviews, Copilot). These checks position your site for the next era of search.</em></p>
+<p><strong>Max Raw Score: 16</strong></p>
+<h3>Structured &amp; Machine-Readable Content (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6.1</td>
+<td><strong>Clear, Quotable Answers</strong> — Do key pages contain concise, direct answers to common questions in the first 100 words or in a clearly marked summary?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>6.2</td>
+<td><strong>FAQ Sections</strong> — Do relevant pages include FAQ sections with <code>FAQPage</code> schema markup?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>6.3</td>
+<td><strong>Data Tables &amp; Lists</strong> — Are comparisons, specifications, and structured information presented in HTML tables or ordered lists (not just prose)?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Authority &amp; Citability (6 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6.4</td>
+<td><strong>Original Research &amp; Data</strong> — Does your site publish original statistics, surveys, case studies, or data that AI models might cite?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>6.5</td>
+<td><strong>Topical Authority</strong> — Do you have a content cluster with 5+ interlinked pieces covering a single topic in depth?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>6.6</td>
+<td><strong>Brand Entity Presence</strong> — Does your brand appear in knowledge panels, Wikipedia, Wikidata, or Crunchbase?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Technical AI Accessibility (4 points)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>Points</th>
+<th>Result</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6.7</td>
+<td><strong>AI Crawler Access</strong> — Does your <code>robots.txt</code> allow (or intentionally block) AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Bytespider)? Is this a deliberate decision?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+<tr>
+<td>6.8</td>
+<td><strong>Semantic HTML</strong> — Is content structured with semantic HTML5 elements (<code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;figure&gt;</code>) rather than generic <code>&lt;div&gt;</code> soup?</td>
+<td>2</td>
+<td>☐</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Tool tip:</strong> Search for your brand on <a href="https://perplexity.ai">Perplexity.ai</a> and <a href="https://chat.openai.com">ChatGPT</a>. If neither mentions you, your GEO signals need serious work. Check your <code>robots.txt</code> for lines mentioning GPTBot, ClaudeBot, or similar.</p>
+</blockquote>
+<p><strong>Category 6 Raw Score: ____ / 16</strong></p>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-10">
+<h1><span class="chapter-number">Chapter 10</span>Final Score Calculation</h1>
+
+<p>Use this table to calculate your weighted score:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Your Raw Score</th>
+<th>÷ Max Raw</th>
+<th>= Ratio</th>
+<th>× Weight</th>
+<th>= Weighted Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Technical SEO</td>
+<td>___</td>
+<td>÷ 30</td>
+<td>= ___</td>
+<td>× 25</td>
+<td>= ___</td>
+</tr>
+<tr>
+<td>2. On-Page SEO</td>
+<td>___</td>
+<td>÷ 28</td>
+<td>= ___</td>
+<td>× 25</td>
+<td>= ___</td>
+</tr>
+<tr>
+<td>3. Off-Page SEO</td>
+<td>___</td>
+<td>÷ 18</td>
+<td>= ___</td>
+<td>× 15</td>
+<td>= ___</td>
+</tr>
+<tr>
+<td>4. Content &amp; E-E-A-T</td>
+<td>___</td>
+<td>÷ 18</td>
+<td>= ___</td>
+<td>× 15</td>
+<td>= ___</td>
+</tr>
+<tr>
+<td>5. Local SEO</td>
+<td>___</td>
+<td>÷ 14</td>
+<td>= ___</td>
+<td>× 10</td>
+<td>= ___</td>
+</tr>
+<tr>
+<td>6. AI &amp; GEO Readiness</td>
+<td>___</td>
+<td>÷ 16</td>
+<td>= ___</td>
+<td>× 10</td>
+<td>= ___</td>
+</tr>
+<tr>
+<td><strong>Final Score</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>___ / 100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-11">
+<h1><span class="chapter-number">Chapter 11</span>Quick-Reference Tool Stack</h1>
+
+<p>These free and freemium tools cover every check in this audit:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What It Covers</th>
+<th>Free Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Google Search Console</strong></td>
+<td>Indexation, crawl errors, Core Web Vitals, search performance</td>
+<td>✅ Fully free</td>
+</tr>
+<tr>
+<td><strong>Google PageSpeed Insights</strong></td>
+<td>Core Web Vitals, performance diagnostics</td>
+<td>✅ Fully free</td>
+</tr>
+<tr>
+<td><strong>Screaming Frog SEO Spider</strong></td>
+<td>On-page audit, broken links, redirects, meta tags, headings</td>
+<td>✅ Up to 500 URLs</td>
+</tr>
+<tr>
+<td><strong>Ahrefs Webmaster Tools</strong></td>
+<td>Backlink profile, referring domains, technical SEO issues</td>
+<td>✅ Limited free</td>
+</tr>
+<tr>
+<td><strong>Google&rsquo;s Rich Results Test</strong></td>
+<td>Schema validation, rich snippet eligibility</td>
+<td>✅ Fully free</td>
+</tr>
+<tr>
+<td><strong>Moz Link Explorer</strong></td>
+<td>Domain authority, link analysis</td>
+<td>✅ 10 queries/month</td>
+</tr>
+<tr>
+<td><strong>Google Business Profile</strong></td>
+<td>Local SEO management</td>
+<td>✅ Fully free</td>
+</tr>
+<tr>
+<td><strong>Perplexity.ai / ChatGPT</strong></td>
+<td>GEO visibility check (search your brand)</td>
+<td>✅ Free tiers</td>
+</tr>
+<tr>
+<td><strong>GTmetrix</strong></td>
+<td>Page speed, waterfall analysis, Core Web Vitals</td>
+<td>✅ Limited free</td>
+</tr>
+<tr>
+<td><strong>WAVE Accessibility Tool</strong></td>
+<td>Accessibility checks (correlates with UX quality)</td>
+<td>✅ Fully free</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-12">
+<h1><span class="chapter-number">Chapter 12</span>Priority Action Matrix</h1>
+
+<p>After scoring, use this matrix to decide what to fix first:</p>
+<pre><code>                    HIGH IMPACT
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+          │   QUICK      │   STRATEGIC  │
+          │   WINS       │   PROJECTS   │
+          │             │             │
+          │  Do these    │  Plan these  │
+          │  THIS WEEK   │  THIS MONTH  │
+          │             │             │
+LOW ──────┼─────────────┼─────────────┼────── HIGH
+EFFORT    │             │             │  EFFORT
+          │             │             │
+          │   FILL       │   BACK       │
+          │   INS        │   BURNER     │
+          │             │             │
+          │  Batch       │  Revisit     │
+          │  when quiet  │  quarterly   │
+          │             │             │
+          └─────────────┼─────────────┘
+                        │
+                    LOW IMPACT
+</code></pre>
+<p><strong>Common quick wins (high impact, low effort):</strong></p>
+<ul>
+<li>Fix broken internal links</li>
+<li>Add missing meta descriptions</li>
+<li>Compress oversized images (LCP improvement)</li>
+<li>Add <code>alt</code> attributes to images</li>
+<li>Submit an updated XML sitemap</li>
+<li>Fix redirect chains</li>
+<li>Claim and complete your Google Business Profile</li>
+</ul>
+<p><strong>Common strategic projects (high impact, high effort):</strong></p>
+<ul>
+<li>Build topical authority content clusters</li>
+<li>Earn backlinks through original research</li>
+<li>Implement comprehensive schema markup</li>
+<li>Improve Core Web Vitals across the site</li>
+<li>Create location-specific landing pages</li>
+<li>Publish FAQ content with structured data for GEO</li>
+</ul>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-13">
+<h1><span class="chapter-number">Chapter 13</span>Re-Audit Schedule</h1>
+
+<table>
+<thead>
+<tr>
+<th>Audit Type</th>
+<th>Frequency</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full audit</strong> (this checklist)</td>
+<td>Every 6 months</td>
+<td>Complete reassessment</td>
+</tr>
+<tr>
+<td><strong>Technical spot-check</strong></td>
+<td>Monthly</td>
+<td>Core Web Vitals, crawl errors, indexation</td>
+</tr>
+<tr>
+<td><strong>Content review</strong></td>
+<td>Quarterly</td>
+<td>Freshness, new keyword opportunities, E-E-A-T</td>
+</tr>
+<tr>
+<td><strong>Competitor benchmark</strong></td>
+<td>Quarterly</td>
+<td>Compare scores against top 3 competitors</td>
+</tr>
+<tr>
+<td><strong>GEO check</strong></td>
+<td>Monthly</td>
+<td>Search your brand in AI tools, monitor visibility</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div><!-- /chapter -->
+<div class="chapter" id="chapter-14">
+<h1><span class="chapter-number">Chapter 14</span>Changelog</h1>
+
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>February 2026</td>
+<td>Initial release</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Built for marketers, founders, and agencies who believe SEO is a system — not a guessing game.</em></p>
+<p><em>© 2026. All rights reserved. For personal and client use. Not for redistribution.</em></p></div><!-- /chapter -->
+
+
+  <div class="final-section" style="text-align:center; padding: 3rem 0; margin-top: 3rem;">
+    <div class="cover-divider" style="background: var(--teal); margin: 0 auto 1.5rem;"></div>
+    <p style="font-size: 1.1rem; font-weight: 600; color: var(--slate-700);">The SEO Audit Checklist</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026. All rights reserved.</p>
+  </div>
+
+  <footer class="page-footer">
+    <p class="footer-brand">Rook's Digital Products</p>
+    <p><a href="https://therookai.gumroad.com">therookai.gumroad.com</a> &middot; Made with care 🏰</p>
+  </footer>
+
+</div><!-- .page-container -->
+
+</body>
+</html>
