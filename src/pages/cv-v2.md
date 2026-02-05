@@ -7,65 +7,74 @@ title: Diego Cuñado — AI Builder (v2)
 
 **AI Builder**
 
-London, UK · diegocunado@gmail.com · +44 74497 10889
+London, UK · [diegocunado@gmail.com](mailto:diegocunado@gmail.com) · +44 74497 10889  
+[LinkedIn](https://www.linkedin.com/in/diego-cunado-001b4776/) · [GitHub](https://github.com/Brotherinlaw-13)
 
 ---
 
 ## Profile
 
-Builder who ships. 8+ years going from idea to deployed product across SaaS, marketplaces, and B2B platforms. Writes TypeScript and SQL daily, builds with AI-assisted tooling (Cursor, Claude, Copilot), and deploys to production — not decks. Currently building and shipping features for a platform serving 5,000+ venues and enterprise clients.
+Builder who ships. 8+ years going from idea to deployed product across SaaS, marketplaces, and B2B platforms. I write TypeScript and SQL daily, build with AI-assisted tooling (Cursor, Claude, Copilot), and deploy to production — not decks.
+
+I built my own AI agent (Rook) that handles research, automation, and now job hunting. If you're reading this email, it found you.
 
 ---
 
 ## What I've Built
 
 ### Hire Space · AI Builder / Head of Product
-**Jan 2024 – Present**
+**Jan 2024 – Present** · Platform serving 5,000+ venues and enterprise clients
 
-- Shipped conversion optimisation flows that nearly doubled bookings on a two-sided marketplace
-- Rebuilt the terms acceptance flow end-to-end — booking issues dropped from 10% to under 1%
-- Built internal tooling used daily by 30+ people (ops dashboards, workflow automation)
-- Engineered data pipelines and reporting that drove win rate from 15% → 21%
-- Shipped technical SEO changes that closed a 30+ point competitor gap to under 8
+- **2x bookings** through conversion optimisation after .NET → Next.js migration
+- **Win rate 15% → 21%** by building AI-assisted tools for the sales team
+- **Booking issues 10% → <1%** by rebuilding the terms acceptance flow end-to-end
+- **Internal tooling** used daily by 30+ people — killed email/spreadsheet workflows
+- **SEO gap 30+ → <8** points vs main competitor
 
 ### Hire Space · Senior PM
 **Feb 2021 – Jan 2024**
 
-- Built Arena from zero — a virtual events platform, full product lifecycle
-- Shipped Instant Book (automated booking engine), win rate 2% → 5%
-- Built MVP corporate portal for enterprise event management
+- **Built Arena from zero** — virtual events platform, full lifecycle
+- **Win rate 2% → 5%** on automated bookings
+- **Shipped Instant Book** — payment in minutes, not days
 
 ### JustPark · PM, B2B
 **Oct 2019 – Feb 2021**
 
-- Built Luna, a data analytics portal for parking operators — sole PM across 20+ devs
-- Launched fleet parking product serving 700k+ drivers
+- **Built Luna** — data analytics portal, sole PM across 20+ devs
+- **Won tenders:** Camden, Dundee, Northern Ireland
+- **Launched fleet parking** serving 700k+ drivers
 
-### Odicci · Oct 2017 – Oct 2019
-Built product roadmap from zero. Shipped features driving 60% revenue growth. GDPR compliance.
-
-### Ringley · Feb – Oct 2017
-Apprentice developer. Shipped production features in Ruby on Rails.
+### Earlier
+**Odicci** (2017–2019): Built roadmap from zero, 60% revenue growth, GDPR compliance.  
+**Ringley** (2017): Apprentice dev, shipped production Ruby on Rails.
 
 ---
 
 ## Side Projects — All Shipped
 
-| Project | What it does | Stack |
-|---|---|---|
-| **Chowdown** | AI food scanner — snap a photo, get dish ID + nutrition | React, Firebase, Gemini API |
-| **Darwin** | AI landing page optimiser — generates and A/B tests variants | Astro, Firestore, LLMs |
-| **Pocket Guide** | AI travel voice guide — real-time cultural context via audio | Voice AI, LLM pipelines |
-| **Root Juice** | Plant care tracker — watering schedules, growth logs | Mobile-first web app |
+| Project | What it does | Stack | Link |
+|---------|--------------|-------|------|
+| **Chowdown** | AI food scanner — photo → dish ID + macros. Social groups + AI coach. "Free forever" positioning. | React, Firebase, Gemini | [chowdown.me](https://chowdown.me) |
+| **Darwin** | AI landing page optimiser — generates variants, runs A/B tests, learns. 5.7KB SDK. | Astro, Firestore, LLMs | [darwin.page](https://darwin.page) |
+| **Pocket Guide** | Point at a landmark → 3-min AI voice guide. Real-time generation. | Voice AI, LLM pipelines | — |
+| **Root Juice** | Plant tracker — photo ID, watering schedules, growth logs. | Mobile-first web | — |
+| **Rook** | My AI agent. Research, automation, job hunting. You're reading its work. | OpenClaw, Claude | — |
 
 ---
 
 ## Stack
 
-**Daily:** TypeScript/JavaScript · SQL · React · Astro · Git
+**Daily:** TypeScript · SQL · React · Astro · Git
 
-**Infrastructure:** AWS · GCP · Vercel · Firebase/Firestore · CI/CD
+**AI Dev:** Cursor · Claude Code · Copilot · Gemini API · Prompt engineering
 
-**AI-Assisted Dev:** Cursor · Claude Code · GitHub Copilot · Gemini API · prompt engineering · LLM integrations
+**Infra:** Vercel · Firebase · AWS · GCP · CI/CD
 
-**Also:** Ruby on Rails · API design · SSO/auth · A/B testing · conversion optimisation
+**Certified Scrum Master** · Scrum Alliance · 2016
+
+---
+
+## What I'm Looking For
+
+A team that ships fast, cares about craft, and doesn't confuse process with progress. Remote-first preferred, up to 2x/week in London works.
