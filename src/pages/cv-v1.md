@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/DocLayout.astro
 title: Diego Cuñado — AI Builder (v1)
+slug: cv-v1
 ---
 
 # Diego Cuñado
