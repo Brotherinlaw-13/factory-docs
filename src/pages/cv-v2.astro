@@ -1,0 +1,296 @@
+---
+// CV v2 - AI Builder (Compact/Builder version)
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diego Cuñado — AI Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+    
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #059669;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .header-left h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .header-left .title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #059669;
+    }
+    .header-right {
+      text-align: right;
+      font-size: 12px;
+      color: #4b5563;
+      line-height: 1.8;
+    }
+    
+    /* Sections */
+    h2 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #059669;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    h2:first-of-type { margin-top: 0; }
+    
+    /* Profile */
+    .profile {
+      background: #f0fdf4;
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .profile p {
+      color: #166534;
+      font-size: 13px;
+    }
+    
+    /* Experience */
+    .job {
+      margin-bottom: 16px;
+      padding-left: 12px;
+      border-left: 2px solid #d1fae5;
+    }
+    .job-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .job-title {
+      font-weight: 600;
+    }
+    .job-meta {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .job-company {
+      font-size: 12px;
+      color: #059669;
+      margin-bottom: 6px;
+    }
+    .job ul {
+      margin-left: 16px;
+      color: #374151;
+    }
+    .job li {
+      margin-bottom: 4px;
+    }
+    .metric {
+      font-weight: 600;
+      color: #059669;
+    }
+    
+    /* Two column layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    
+    /* Projects table */
+    .projects-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .projects-table th {
+      text-align: left;
+      padding: 8px;
+      background: #f0fdf4;
+      color: #166534;
+      font-weight: 600;
+    }
+    .projects-table td {
+      padding: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+    .projects-table .name {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .projects-table .url {
+      color: #059669;
+      font-size: 11px;
+    }
+    
+    /* Skills */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-group {
+      background: #f9fafb;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .skill-group strong {
+      color: #059669;
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+    }
+    .footer p {
+      font-style: italic;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media print {
+      body { font-size: 11px; }
+      .container { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-left">
+        <h1>Diego Cuñado</h1>
+        <div class="title">AI Builder</div>
+      </div>
+      <div class="header-right">
+        diegocunado@gmail.com<br>
+        +44 74497 10889<br>
+        London, UK<br>
+        linkedin.com/in/diego-cunado-001b4776<br>
+        github.com/Brotherinlaw-13
+      </div>
+    </header>
+
+    <div class="profile">
+      <p>Builder who ships. 8+ years from idea → deployed product. TypeScript + SQL daily, AI-assisted dev (Cursor, Claude, Copilot). I built my own AI agent (Rook) that handles research, automation, and job hunting — if you're reading this, it found you.</p>
+    </div>
+
+    <h2>What I've Built</h2>
+    
+    <div class="job">
+      <div class="job-line">
+        <span class="job-title">AI Builder / Head of Product</span>
+        <span class="job-meta">Jan 2024 – Present</span>
+      </div>
+      <div class="job-company">Hire Space · 5,000+ venues · Enterprise clients</div>
+      <ul>
+        <li><span class="metric">2x bookings</span> via conversion optimisation (.NET → Next.js migration)</li>
+        <li><span class="metric">Win rate 15% → 21%</span> with AI-assisted sales tools</li>
+        <li><span class="metric">Booking issues 10% → &lt;1%</span> rebuilding terms flow</li>
+        <li>Internal tooling for 30+ people · <span class="metric">SEO gap 30+ → &lt;8</span> vs competitor</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-line">
+        <span class="job-title">Senior PM</span>
+        <span class="job-meta">Feb 2021 – Jan 2024</span>
+      </div>
+      <div class="job-company">Hire Space</div>
+      <ul>
+        <li>Built Arena (virtual events) from zero · <span class="metric">Win rate 2% → 5%</span> · Shipped Instant Book</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-line">
+        <span class="job-title">PM, B2B</span>
+        <span class="job-meta">Oct 2019 – Feb 2021</span>
+      </div>
+      <div class="job-company">JustPark</div>
+      <ul>
+        <li>Built Luna (data portal) · Sole PM, 20+ devs · Won Camden, Dundee, NI tenders · Fleet parking 700k+ drivers</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-line">
+        <span class="job-title">Digital PM → Apprentice Dev</span>
+        <span class="job-meta">2017 – 2019</span>
+      </div>
+      <div class="job-company">Odicci · Ringley</div>
+      <ul>
+        <li>Odicci: Roadmap from zero, 60% revenue growth, GDPR · Ringley: Ruby on Rails, production deploys</li>
+      </ul>
+    </div>
+
+    <h2>Side Projects — All Shipped</h2>
+    
+    <table class="projects-table">
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>What it does</th>
+          <th>Stack</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Chowdown<br><span class="url">chowdown.me</span></td>
+          <td>AI food scanner — photo → macros. Social groups + AI coach. "Free forever"</td>
+          <td>React, Firebase, Gemini</td>
+        </tr>
+        <tr>
+          <td class="name">Darwin<br><span class="url">darwin.page</span></td>
+          <td>AI landing page optimiser — auto A/B tests. 5.7KB SDK.</td>
+          <td>Astro, Firestore, LLMs</td>
+        </tr>
+        <tr>
+          <td class="name">Pocket Guide</td>
+          <td>Point at landmark → 3-min AI voice guide</td>
+          <td>Voice AI, LLM pipelines</td>
+        </tr>
+        <tr>
+          <td class="name">Rook</td>
+          <td>My AI agent. Research, automation, job hunting.</td>
+          <td>OpenClaw, Claude</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Stack</h2>
+    
+    <div class="skills">
+      <div class="skill-group"><strong>Daily:</strong> TypeScript · SQL · React · Astro · Git</div>
+      <div class="skill-group"><strong>AI:</strong> Cursor · Claude · Copilot · Gemini API</div>
+      <div class="skill-group"><strong>Infra:</strong> Vercel · Firebase · AWS · GCP</div>
+      <div class="skill-group"><strong>Cert:</strong> Scrum Master (2016)</div>
+    </div>
+
+    <div class="footer">
+      <p>Looking for a team that ships fast, cares about craft, and doesn't confuse process with progress.<br>Remote-first preferred · Up to 2x/week London works.</p>
+    </div>
+  </div>
+</body>
+</html>
